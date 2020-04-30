@@ -1,5 +1,4 @@
-import {Animated} from 'react-native';
-import Constants from 'expo-constants';
+import { StyleSheet, Animated } from 'react-native';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -85,3 +84,10 @@ export const Annotation = styled.Text`
   font-size: 12px;
   color: #333;
 `;
+
+export default StyleSheet.create({
+  textInputMask: {
+    fontSize: 16,
+    color: "#333"
+  }
+});

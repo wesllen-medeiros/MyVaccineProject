@@ -5,7 +5,7 @@ import Vaccine from '../models/vaccine';
 class CampaignController {
   async store(req , res) {
 
-    const {descricao,fx_etaria, dt_ini,dt_fim,cidade,municipio,estab_id,vaccine_id} = req.body; /*retorna para o front */
+    const {descricao,fx_etaria, dt_ini,dt_fim,state,municipio,estab_id,vaccine_id} = req.body; /*retorna para o front */
     
     const estab = await Estab.findByPk(estab_id);
     const vaccine = await Vaccine.findByPk(vaccine_id);
@@ -25,7 +25,7 @@ class CampaignController {
     }
    
     const campaign = await Campaign.create({
-      descricao,fx_etaria,dt_ini,dt_fim,cidade,municipio,estab_id,vaccine_id,
+      descricao,fx_etaria,dt_ini,dt_fim,state,municipio,estab_id,vaccine_id,
     });
     
     return res.json(campaign);

@@ -9,13 +9,15 @@ class User extends Model {
       {
         name: Sequelize.STRING,
         email: Sequelize.STRING,
-        cpf: Sequelize.DOUBLE,
+        cpf: Sequelize.STRING,
         sexo: Sequelize.STRING,
         dt_nascimento: Sequelize.DATE,
-        cidade: Sequelize.STRING,
+        state: Sequelize.STRING,
         municipio: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
+        photo_profile: Sequelize.STRING,
+        tipo_sanguineo: Sequelize.STRING
       },
       {
         sequelize,

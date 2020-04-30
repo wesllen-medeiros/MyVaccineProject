@@ -6,10 +6,11 @@ import Vaccine from  '../app/models/vaccine';
 import Application from  '../app/models/Application';
 import Campaign from  '../app/models/Campaign';
 import Estab from  '../app/models/Estab';
+import Schedule from '../app/models/Schedule';
 
 import databaseConfig from '../config/database';
 
-const models = [User,Allergy,Vaccine,Estab,Application,Campaign];
+const models = [User,Allergy,Vaccine,Estab,Application,Campaign,Schedule];
 
 class Database {
   constructor(){

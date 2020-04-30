@@ -8,11 +8,13 @@ import VaccineController from './app/controllers/VaccineController';
 import EstabController from './app/controllers/EstabController';
 import CampaignController from './app/controllers/CampaignController';
 import ApplicationController from './app/controllers/ApplicationController';
+import ScheduleController from './app/controllers/ScheduleController';
 
 const routes = new Router();
 
 /* User */
 routes.post('/users', UserController.store);
+routes.get('/users/:id', UserController.index);
 
 /* UserSession */
 routes.post('/Usersessions', UserSessionController.store);
@@ -34,6 +36,9 @@ routes.post('/campaign', CampaignController.store);
 
 /* Application */
 routes.post('/application', ApplicationController.store);
+
+/* Scheduling */
+routes.post('/schedule', ScheduleController.store);
 
 
 export default routes;

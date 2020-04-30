@@ -8,7 +8,7 @@ class Campaign extends Model {
         fx_etaria: Sequelize.INTEGER,  
         dt_ini: Sequelize.DATE,  
         dt_fim: Sequelize.DATE,  
-        cidade: Sequelize.STRING,  
+        state: Sequelize.STRING,  
         municipio: Sequelize.STRING,  
       },
       {

@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {Animated} from 'react-native';
 import {PanGestureHandler, State} from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
-
+import * as SecureStore from 'expo-secure-store';
+import { TextInputMask } from 'react-native-masked-text';
 
 import { Avatar } from 'react-native-paper';
+
+import styles from './styles';
+
+import api from '../../services/api';
 
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
@@ -29,11 +34,37 @@ import {
   } from './styles';
 
 export default function Main() {
+  const [ user, setUsers] = useState('');
+  const [ cpf, setCpf] = useState('');
+  const [ dt_nascimento, setBirthday] = useState('');
+
+  async function getUser(){
+
+  //Id do usuario da sessão  
+  const userId = await SecureStore.getItemAsync('userSession');
+
+  //busca dados do usuario pelo Id
+  const response = await api.get(`users/${userId}`);
+
+  //atribui os dados recebidos a uma variavel
+  const userData = response.data;
+
+  setUsers(userData);
+
+  //Converte a data para apresentar em tela
+  let birthday = new Date(userData.dt_nascimento);
+
+  let day = parseInt(birthday.getDate()) < 10 ? "0" + (birthday.getDate()) : (birthday.getDate())
+  let month = parseInt(birthday.getMonth() + 1) < 10 ? "0" + (birthday.getMonth() + 1) : (birthday.getMonth() + 1)
+  let year = birthday.getFullYear();
+
+  setBirthday(day+"/"+month+"/"+year);
+  } 
   
   const navigation = useNavigation(); 
 
-  function navigateToProfile(){
-      navigation.navigate('Profile');
+  function navigateToProfile(user){
+      navigation.navigate('Profile', user);
 
   }
 
@@ -77,6 +108,10 @@ export default function Main() {
     }
   }
 
+  useEffect(() => {
+    getUser();
+}, []);
+
   return(
     <Container>
         <Header />
@@ -98,26 +133,41 @@ export default function Main() {
                 ],
             }}
             >
-            <CardHeader onPress={() => {navigateToProfile()}}>
+            <CardHeader onPress={() => {navigateToProfile(user)}}>
               <CardHeaderItem>
                 <Title>Portador</Title>
-                <Description>Marco Antonio</Description>
+                <Description>{user.name}</Description>
               </CardHeaderItem>
             </CardHeader>
-            <CardContent onPress={() => {navigateToProfile()}}>
+            <CardContent onPress={() => {navigateToProfile(user)}}>
               <Top>
                 <CardItem>
                   <TitleCardItem>CPF</TitleCardItem>
-                  <DescriptionCardItem>012.345.678-90</DescriptionCardItem>
+                  <TextInputMask
+                  type={'cpf'}
+                  style={styles.textInputMask}
+                  value={user.cpf}
+                  onChangeText={text => {
+                      setCpf(text)
+                    }}
+                  style={styles.textInputMask}
+                  ></TextInputMask>
                   <TitleCardItem>Data de nascimento</TitleCardItem>
-                  <DescriptionCardItem>30/01/1988</DescriptionCardItem>
+                  <TextInputMask
+                  type={'datetime'}
+                  options={{
+                    format: 'dd/MM/yyyy'
+                  }}
+                  style={styles.textInputMask}
+                  value={dt_nascimento}
+                  onChangeText={(inputVal) => setBirthday(inputVal)}></TextInputMask>
                   <TitleCardItem>Tipo sanguíneo</TitleCardItem>
-                  <DescriptionCardItem>O+</DescriptionCardItem>
+                  <DescriptionCardItem>{user.tipo_sanguineo}</DescriptionCardItem>
                 </CardItem>
                 <CardItem>
                   <Avatar.Image style={{marginRight: 15, backgroundColor: "#34b7f1"}}
                                 size={180} 
-                                source={require('../../assets/708311.jpg')} />
+                                source={{uri: ('data:image/png;base64,' + user.photo_profile)}} />
                 </CardItem>
               </Top>
               <Bottom>
