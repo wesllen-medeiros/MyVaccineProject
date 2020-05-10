@@ -15,6 +15,7 @@ const routes = new Router();
 /* User */
 routes.post('/users', UserController.store);
 routes.get('/users/:id', UserController.index);
+routes.put('/users', UserController.updateUser);
 
 /* UserSession */
 routes.post('/Usersessions', UserSessionController.store);
@@ -24,7 +25,9 @@ routes.post('/Adminsessions', AdminSessionController.store);
 
 /* Allergy */
 routes.post('/allergy', AllergyController.store);
-
+routes.post('/userAllergy', AllergyController.storeUserAllergy);
+routes.get('/allergy', AllergyController.index);
+routes.get('/userAllergy/:userId', AllergyController.indexUserAllergy);
 /* Vaccine */
 routes.post('/vaccine', VaccineController.store);
 

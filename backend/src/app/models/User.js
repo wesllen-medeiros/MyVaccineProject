@@ -34,9 +34,10 @@ class User extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Allergy, {
-      foreignKey: 'allergy_id',
-      as: 'users',
+    this.belongsToMany(models.Allergy, {
+      through: 'user_allergies',
+      as: 'allergies',
+      foreignKey: 'allergy_id'
     });
   }
 

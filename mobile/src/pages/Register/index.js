@@ -100,6 +100,7 @@ export default function Register() {
                 <Form>
                     <Icon style={{padding:4}} name="face" size={35} color="#FFF" />
                     <FormSelect placeholder="Sexo"
+                    mode="dropdown"
                     onValueChange={(inputVal) => setSexo(inputVal)}
                     selectedValue={sexo}>
                         <FormSelect.Item label="Feminino" value="F" />
@@ -122,6 +123,7 @@ export default function Register() {
                 <Form>
                     <Icon style={{padding:4}} name="face" size={35} color="#FFF" />
                     <FormSelect placeholder="Estado"
+                    mode="dropdown"
                     onValueChange={(inputVal) => setState(inputVal)}
                     selectedValue={state}>
                         <FormSelect.Item label="Santa Catarina" value="SC" />

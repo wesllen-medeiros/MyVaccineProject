@@ -34,9 +34,12 @@ import {
   } from './styles';
 
 export default function Main() {
-  const [ user, setUsers] = useState('');
-  const [ cpf, setCpf] = useState('');
-  const [ dt_nascimento, setBirthday] = useState('');
+  const [ user, setUsers ] = useState('');
+  const [ cpf, setCpf ] = useState('');
+  const [ dt_nascimento, setBirthday ] = useState('');
+  const [ name , setName ] = useState('');
+  const [ photoProfile , setPhotoProfile ] = useState('');
+  const [ bloodType , setBloodType ] = useState('');
 
   async function getUser(){
 
@@ -59,6 +62,14 @@ export default function Main() {
   let year = birthday.getFullYear();
 
   setBirthday(day+"/"+month+"/"+year);
+
+  let strg = userData.name;
+  let Nome = strg.split(' ')[0];// separar str por espaços
+  let SegundoNome = strg.split(' ')[1];
+  setName(Nome + " " + SegundoNome);
+
+  //Inicia a variavel da photo
+  setPhotoProfile('data:image/png;base64,' + userData.photo_profile);
   } 
   
   const navigation = useNavigation(); 
@@ -110,7 +121,7 @@ export default function Main() {
 
   useEffect(() => {
     getUser();
-}, []);
+  }, []);
 
   return(
     <Container>
@@ -136,7 +147,7 @@ export default function Main() {
             <CardHeader onPress={() => {navigateToProfile(user)}}>
               <CardHeaderItem>
                 <Title>Portador</Title>
-                <Description>{user.name}</Description>
+                <Description>{name}</Description>
               </CardHeaderItem>
             </CardHeader>
             <CardContent onPress={() => {navigateToProfile(user)}}>
@@ -144,6 +155,7 @@ export default function Main() {
                 <CardItem>
                   <TitleCardItem>CPF</TitleCardItem>
                   <TextInputMask
+                  editable = {false}
                   type={'cpf'}
                   style={styles.textInputMask}
                   value={user.cpf}
@@ -154,6 +166,7 @@ export default function Main() {
                   ></TextInputMask>
                   <TitleCardItem>Data de nascimento</TitleCardItem>
                   <TextInputMask
+                  editable = {false}
                   type={'datetime'}
                   options={{
                     format: 'dd/MM/yyyy'
@@ -167,7 +180,7 @@ export default function Main() {
                 <CardItem>
                   <Avatar.Image style={{marginRight: 15, backgroundColor: "#34b7f1"}}
                                 size={180} 
-                                source={{uri: ('data:image/png;base64,' + user.photo_profile)}} />
+                                source={photoProfile ? {uri: photoProfile} : null} />
                 </CardItem>
               </Top>
               <Bottom>

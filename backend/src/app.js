@@ -13,11 +13,12 @@ class App {
   }
 
   middlewares() {
-    this.server.use(express.json());
+    this.server.use(express.json({limit: '50mb'}));
   }
 
   routes() {
     this.server.use(routes);
   }
+  
 }
 export default new App().server;

@@ -9,8 +9,16 @@ class Allergy extends Model {
       {
         sequelize,
       }
-    );
+    );    
     return this;
+  }
+
+  static associate(models) {
+    this.belongsToMany(models.User, {
+      through: 'user_allergies',
+      as: 'users',
+      foreignKey: 'user_id'
+    });
   }
   
 }

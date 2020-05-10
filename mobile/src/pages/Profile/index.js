@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TextInputMask } from 'react-native-masked-text';
+import * as ImagePicker from 'expo-image-picker';
 
 import { Avatar } from 'react-native-paper';
 
 import styles from './styles';
+
+import api from '../../services/api';
 
 import {
     Container,
@@ -35,7 +38,9 @@ export default function Profile(user) {
     const [state, setState] = useState('');
     const [city, setCity] = useState('');    
     const [photoProfile, setPhotoProfile] = useState('');
-    const [bloodType, setBloodType] = useState('');
+    const [bloodType, setBloodType] = useState('');    
+    const [passwordHash, setPasswordHash] = useState('');
+    const [id, setId] = useState('');
 
     const navigation = useNavigation();     
 
@@ -48,7 +53,9 @@ export default function Profile(user) {
         setState(user.route.params.state);
         setCity(user.route.params.municipio);
         setBloodType(user.route.params.tipo_sanguineo);        
-        setPhotoProfile(user.route.params.photo_profile);
+        setPhotoProfile(user.route.params.photo_profile);        
+        setPasswordHash(user.route.params.password_hash);       
+        setId(user.route.params.id);
 
         //conversão e carga data nascimento
         let dt_temp = user.route.params.dt_nascimento;
@@ -62,26 +69,53 @@ export default function Profile(user) {
         setBirthday(day+"/"+month+"/"+year);
     }
 
-     function navigateToMain(){
-         navigation.navigate('Main');
+    function navigateToMain(){
+        navigation.navigate('Main');
 
-     }
+    }
 
-     async function imagePicker() {
+    async function imagePicker() {
         try {
-          let result = await ImagePicker.launchImageLibraryAsync({
+            let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
-            aspect: [4, 3],
+            aspect: [4, 4],
             quality: 1,
-          });
-          if (!result.cancelled) {
-            this.setState({ image: result.uri });
-          }
-    
-          console.log(result);
-        } catch (E) {
-          console.log(E);
+            base64: true
+            });
+            if (!result.cancelled) {
+                setPhotoProfile(result.base64);
+            }    
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function saveChangesProfile(){
+
+        //converte data para enviar ao backend
+        var dateParts = birthday.split("/");
+
+        var dtNascimento = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]).toISOString();
+
+        const data = {
+            id: id,
+            name: name,
+            email: email,
+            cpf: cpf,
+            sexo: sexo,
+            dt_nascimento: dtNascimento.toString(),
+            state: state,
+            municipio: city,
+            password_hash: passwordHash,
+            photo_profile: photoProfile,
+            tipo_sanguineo: bloodType
+        };
+
+        try {   
+            const response = await api.put('users', data);
+        }catch(e){
+            console.log(e);
         }
     }
 
@@ -98,7 +132,7 @@ export default function Profile(user) {
                 <CardTop>
                     <CardHeader>
                         <Icon onPress={() => {navigateToMain()}} name="close" size={30} color="#333" />
-                        <Icon name="check" size={30} color="#333" />
+                        <Icon name="check" onPress={() => {saveChangesProfile()}} size={30} color="#333" />
                     </CardHeader>
                 </CardTop>
                 <Card>
@@ -111,8 +145,12 @@ export default function Profile(user) {
                     </CardImage>
                     <TextInput 
                     value={name}
-                    placeholder={"Nome"}></TextInput>
+                    placeholder={"Nome"}
+                    onChangeText={text => {
+                        setName(text)
+                        }}></TextInput>
                     <TextInputMask
+                        editable = {false}
                         type={'cpf'}
                         style={styles.textInputMask}
                         value={cpf}
@@ -122,9 +160,14 @@ export default function Profile(user) {
                         style={styles.textInputMask}
                         ></TextInputMask>
                     <TextInput 
+                    editable = {false}
                     value={email}
-                    placeholder={"E-mail"}></TextInput>
+                    placeholder={"E-mail"}
+                    onChangeText={text => {
+                        setEmail(text)
+                        }}></TextInput>
                     <InputSelect placeholder="Tipo Sanguíneo"
+                    mode="dropdown"
                     onValueChange={(inputVal) => setBloodType(inputVal)}
                     selectedValue={bloodType}>
                         <InputSelect.Item label="O-" value="O-" />
@@ -145,6 +188,7 @@ export default function Profile(user) {
                     value={birthday}
                     onChangeText={(inputVal) => setBirthday(inputVal)}></TextInputMask>
                     <InputSelect placeholder="Sexo"
+                    mode="dropdown"
                     onValueChange={(inputVal) => setSexo(inputVal)}
                     selectedValue={sexo}>
                         <InputSelect.Item label="Feminino" value="F" />
@@ -155,8 +199,12 @@ export default function Profile(user) {
                         <CardItemItem>
                             <CardTextInput 
                             value={city}
-                            placeholder={"Municipio"}></CardTextInput>
+                            placeholder={"Municipio"}
+                            onChangeText={text => {
+                                setCity(text)
+                                }}></CardTextInput>
                             <InputSelectState placeholder="Estado"
+                                mode="dropdown"
                                 onValueChange={(inputVal) => setState(inputVal)}
                                 selectedValue={state}>
                                 <InputSelectState.Item label="Santa Catarina" value="SC" />

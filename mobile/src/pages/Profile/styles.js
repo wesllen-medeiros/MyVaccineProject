@@ -147,11 +147,3 @@ export const InputSelectState = styled.Picker`
   font-size: 18px;
   font-weight: bold;
 `;
-
-// border-radius: 4px;
-// padding: 6px;
-// margin: 5px;
-
-// font-size: 18px;
-// color: #fff;
-// font-weight: bold;

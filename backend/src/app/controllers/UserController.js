@@ -49,11 +49,39 @@ class UserController {
                      municipio: user.municipio,
                      photo_profile: new Buffer(fs.readFileSync(path.join(pathImage, user.photo_profile))).toString('base64'),
                      tipo_sanguineo: user.tipo_sanguineo,
+                     password_hash: user.password_hash,
                      allergy_id: user.allergy_id,
                      updatedAt: user.updatedAt,
                      createdAt: user.createdAt
                      });
   }
+
+  async updateUser(req , res) {
+
+    const { id, name, email, cpf, sexo, dt_nascimento, state, municipio, password_hash, photo_profile, tipo_sanguineo} = req.body; /*retorna para o front */
+
+    const userExist = await User.findByPk(id);
+
+    if (!userExist) {
+      return res.status(400).json({error: 'Não existe usuário cadastrado com esse código'});    
+    }
+
+    let photoUpdate = cpf+id+'.png';  
+    
+    let pathImage = path.join('e:/test/',photoUpdate);
+
+    let base64Image = photo_profile.split(';base64,').pop();
+
+    fs.writeFile(pathImage, base64Image, {encoding: 'base64'}, function(err) {
+      console.log('File created');
+    });
+
+    const user = await User.update({name, email, cpf, sexo, dt_nascimento, state, municipio, password_hash, photo_profile: photoUpdate, tipo_sanguineo
+    }, {returning: true, where: {id: id} });
+    
+    return res.json(user);
+  }
+
 }
 
 export default new UserController();

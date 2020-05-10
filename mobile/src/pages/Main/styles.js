@@ -61,6 +61,7 @@ export const DescriptionCardItem = styled.Text`
 `;
 
 export const CardHeaderItem = styled.View`
+  max-height: 50px
 `;
 
 export const Title = styled.Text`

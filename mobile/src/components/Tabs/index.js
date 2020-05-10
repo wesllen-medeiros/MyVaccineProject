@@ -1,9 +1,16 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native'
 
 import {Container, TabsContainer, TabItem, TabText} from './styles';
 
 export default function Tabs({translateY}) {
+  const navigation = useNavigation(); 
+
+  function navigateToAllergy(){
+    navigation.navigate('Allergy');
+  }
+
   return (
     <Container
       style={{
@@ -40,7 +47,7 @@ export default function Tabs({translateY}) {
           <TabText>Unidades</TabText>
         </TabItem>
         <TabItem>
-          <Icon name="report" size={35} color="#FFF" />
+          <Icon onPress={() => {navigateToAllergy()}} name="report" size={35} color="#FFF" />
           <TabText>Alergias</TabText>
         </TabItem>
       </TabsContainer>
