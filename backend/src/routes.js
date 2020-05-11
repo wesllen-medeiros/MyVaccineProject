@@ -36,6 +36,7 @@ routes.post('/estab', EstabController.store);
 
 /* Campaign */
 routes.post('/campaign', CampaignController.store);
+routes.get('/campaign', CampaignController.index);
 
 /* Application */
 routes.post('/application', ApplicationController.store);

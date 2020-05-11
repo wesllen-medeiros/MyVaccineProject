@@ -5,7 +5,19 @@ import Vaccine from '../models/vaccine';
 class CampaignController {
   async store(req , res) {
 
-    const {descricao,fx_etaria, dt_ini,dt_fim,state,municipio,estab_id,vaccine_id} = req.body; /*retorna para o front */
+    const {
+      descricao, 
+      dt_ini, 
+      dt_fim, 
+      state, 
+      municipio, 
+      estab_id, 
+      vaccine_id, 
+      audience, 
+      min_age, 
+      max_age, 
+      unity_age, 
+      dose} = req.body; /*retorna para o front */
     
     const estab = await Estab.findByPk(estab_id);
     const vaccine = await Vaccine.findByPk(vaccine_id);
@@ -23,11 +35,45 @@ class CampaignController {
     if (campaignExist) {
       return res.status(400).json({error: 'Campanha ja cadastrado!'});
     }
+
+    if (audience != "CRIANCA" && audience != "ADULTO" && audience != "ADOLESCENTE" && audience != "GESTANTE") {
+      return res.status(400).json({error: 'Público Alvo deve ser cadastrado para apenas um destes tipos : CRIANCA, ADULTO, ADOLESCENTE, GESTANTE'});
+    }
+
+    if (unity_age != "CRIANCA" && unity_age != "ADULTO" && unity_age != "ADOLESCENTE") {
+      return res.status(400).json({error: 'Únidade da Idade deve ser cadastrado para apenas um destes tipos : AO_NASCER , MESES, ANOS'});
+    }
+
+    if (min_age == null){
+      return res.status(400).json({error: 'Deve ser informado pelo menos 0 na idade mínima'});
+    }
+
+    if (max_age == null){
+      return res.status(400).json({error: 'Deve ser informado pelo menos 0 na idade máxima'});
+    }
    
     const campaign = await Campaign.create({
-      descricao,fx_etaria,dt_ini,dt_fim,state,municipio,estab_id,vaccine_id,
+      descricao,
+      dt_ini,
+      dt_fim,
+      state,
+      municipio,
+      estab_id,
+      vaccine_id, 
+      audience, 
+      min_age, 
+      max_age, 
+      unity_age, 
+      dose
     });
     
+    return res.json(campaign);
+  }
+
+  async index(req , res) { 
+
+    const campaign = await Campaign.findAll();    
+
     return res.json(campaign);
   }
 }

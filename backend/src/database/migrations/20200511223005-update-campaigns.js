@@ -48,6 +48,15 @@ module.exports = {
           defaultValue: "teste"
         }
       ),
+      queryInterface.addColumn(
+        'campaigns',
+        'active',
+        {
+          type: Sequelize.STRING,
+          allowNull: false,
+          defaultValue: "ATIVA"
+        }
+      ),
       queryInterface.removeColumn('campaigns', 'fx_etaria')
     ]);
   },

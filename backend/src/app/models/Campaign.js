@@ -5,11 +5,15 @@ class Campaign extends Model {
     super.init(
       {
         descricao: Sequelize.STRING,  
-        fx_etaria: Sequelize.INTEGER,  
         dt_ini: Sequelize.DATE,  
         dt_fim: Sequelize.DATE,  
         state: Sequelize.STRING,  
-        municipio: Sequelize.STRING,  
+        municipio: Sequelize.STRING,
+        audience: Sequelize.STRING,
+        min_age: Sequelize.INTEGER,
+        max_age: Sequelize.INTEGER,
+        unity_age: Sequelize.STRING,
+        dose: Sequelize.STRING
       },
       {
         sequelize,
