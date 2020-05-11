@@ -15,3 +15,8 @@ informar o enum em maiúsculo
 AO_NASCER = Ao Nascer
 MESES = Meses 
 ANOS = Anos 
+
+coluna > active
+informar o enum em maiúsculo
+ATIVA = Ativa
+ENCERRADA = Encerrada
