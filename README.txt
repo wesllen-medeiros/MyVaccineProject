@@ -12,6 +12,6 @@ GESTANTE = gestante
 
 coluna > unity_age
 informar o enum em maiúsculo
-AO_BASCER = Ao Nascer
+AO_NASCER = Ao Nascer
 MESES = Meses 
 ANOS = Anos 
