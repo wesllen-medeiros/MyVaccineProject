@@ -17,10 +17,15 @@ class CampaignController {
       min_age, 
       max_age, 
       unity_age, 
-      dose} = req.body; /*retorna para o front */
+      dose, 
+      active} = req.body; /*retorna para o front */
     
     const estab = await Estab.findByPk(estab_id);
     const vaccine = await Vaccine.findByPk(vaccine_id);
+
+    if (active == null){
+      active = "ATIVA";
+    }
 
     if (!estab) {
       return res.status(400).json({error: 'Estabelecimento incorreto'});
@@ -64,7 +69,8 @@ class CampaignController {
       min_age, 
       max_age, 
       unity_age, 
-      dose
+      dose,
+      active
     });
     
     return res.json(campaign);

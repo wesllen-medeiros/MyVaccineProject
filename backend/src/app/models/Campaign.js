@@ -13,7 +13,8 @@ class Campaign extends Model {
         min_age: Sequelize.INTEGER,
         max_age: Sequelize.INTEGER,
         unity_age: Sequelize.STRING,
-        dose: Sequelize.STRING
+        dose: Sequelize.STRING,
+        active: Sequelize.STRING
       },
       {
         sequelize,
