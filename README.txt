@@ -8,6 +8,7 @@ CRIANCA = criança
 ADULTO = adulto 
 ADOLESCENTE = adolescente 
 GESTANTE = gestante
+IDOSO = Idoso
 
 
 coluna > unity_age
@@ -31,6 +32,7 @@ CRIANCA = criança
 ADULTO = adulto 
 ADOLESCENTE = adolescente 
 GESTANTE = gestante
+IDOSO = Idoso
 
 
 coluna > unity_age
