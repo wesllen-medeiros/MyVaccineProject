@@ -4,15 +4,20 @@ class Vaccine extends Model {
   static init(sequelize) {
     super.init(
       {
-        descricao: Sequelize.STRING,  
-        idade: Sequelize.STRING,
-        dose_number: Sequelize.INTEGER  
+        descricao: Sequelize.STRING
       },
       {
         sequelize,
       }
     );
     return this;
+  }
+
+  static associate(models) {
+    this.hasMany(models.PublicVaccination, {
+      foreignKey: 'vaccine_id',
+      as: 'public'
+    });
   }
 }
 

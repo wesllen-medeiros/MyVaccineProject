@@ -30,6 +30,7 @@ routes.get('/allergy', AllergyController.index);
 routes.get('/userAllergy/:userId', AllergyController.indexUserAllergy);
 /* Vaccine */
 routes.post('/vaccine', VaccineController.store);
+routes.get('/vaccine', VaccineController.index);
 
 /* Estab */
 routes.post('/estab', EstabController.store);
