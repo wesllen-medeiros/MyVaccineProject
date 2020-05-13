@@ -1,29 +1,87 @@
 import User from '../models/User';
-import Allergy from '../models/Allergy';
+
+import fs from 'fs'; //import sistema de arquivos dos modulos do nodejs
+import path from 'path';
 
 class UserController {
   async store(req , res) {
 
-    const { name,email,cpf,sexo,dt_nascimento,cidade,municipio,password,allergy_id} = req.body; /*retorna para o front */
-    
-    const allergy = await Allergy.findByPk(allergy_id);
+    const { name,email,cpf,sexo,dt_nascimento,state,municipio,password} = req.body; /*retorna para o front */
 
-    if (!allergy) {
-      return res.status(400).json({error: 'alergia incorreta'});
+    const userEmailExist = await User.findOne({ where: {email: req.body.email}});
+
+    if (userEmailExist) {
+      return res.status(400).json({error: 'Usuário ja cadastrado com este e-mail!'});
     }
 
-    const userExist = await User.findOne({ where: {email: req.body.email}});
+    const userCpfExist = await User.findOne({ where: {cpf: req.body.cpf}});
 
-    if (userExist) {
-      return res.status(400).json({error: 'Usuário ja cadastrado!'});
+    if (userCpfExist) {
+      return res.status(400).json({error: 'Usuário ja cadastrado com este CPF!'});
     }
    
     const user = await User.create({
-      name,email,cpf,sexo,dt_nascimento,cidade,municipio,password,allergy_id,
+      name,email,cpf,sexo,dt_nascimento,state,municipio,password
     });
     
     return res.json(user);
   }
+
+  //Criado por Marco Antonio
+  //Método de busca dados do usuário
+  async index(req, res) {
+    
+    let pathImage = 'e:/test/';
+    
+    const user = await User.findOne({ where: {id: req.params.id}});
+
+    if (!user){
+      return res.status(400).json({error: 'Usuário não existe' });
+    }
+
+    return res.json({id: user.id,
+                     name: user.name,
+                     email: user.email,
+                     cpf: user.cpf,
+                     sexo: user.sexo,
+                     dt_nascimento: user.dt_nascimento,
+                     state: user.state,
+                     municipio: user.municipio,
+                     photo_profile: new Buffer(fs.readFileSync(path.join(pathImage, user.photo_profile))).toString('base64'),
+                     tipo_sanguineo: user.tipo_sanguineo,
+                     password_hash: user.password_hash,
+                     allergy_id: user.allergy_id,
+                     updatedAt: user.updatedAt,
+                     createdAt: user.createdAt
+                     });
+  }
+
+  async updateUser(req , res) {
+
+    const { id, name, email, cpf, sexo, dt_nascimento, state, municipio, password_hash, photo_profile, tipo_sanguineo} = req.body; /*retorna para o front */
+
+    const userExist = await User.findByPk(id);
+
+    if (!userExist) {
+      return res.status(400).json({error: 'Não existe usuário cadastrado com esse código'});    
+    }
+
+    let photoUpdate = cpf+id+'.png';  
+    
+    let pathImage = path.join('e:/test/',photoUpdate);
+
+    let base64Image = photo_profile.split(';base64,').pop();
+
+    fs.writeFile(pathImage, base64Image, {encoding: 'base64'}, function(err) {
+      console.log('File created');
+    });
+
+    const user = await User.update({name, email, cpf, sexo, dt_nascimento, state, municipio, password_hash, photo_profile: photoUpdate, tipo_sanguineo
+    }, {returning: true, where: {id: id} });
+    
+    return res.json(user);
+  }
+
 }
 
 export default new UserController();

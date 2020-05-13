@@ -8,8 +8,8 @@ class Estab extends Model {
       {
         nm_fantasia: Sequelize.STRING,  
         email: Sequelize.STRING,  
-        cnpj: Sequelize.DOUBLE,  
-        cidade: Sequelize.STRING,  
+        cnpj: Sequelize.STRING,  
+        state: Sequelize.STRING,  
         municipio: Sequelize.STRING,  
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
