@@ -34,6 +34,35 @@ class ApplicationController {
     
     return res.json(application);
   }
+
+  async index(req , res) {
+
+    if (!req.query.userId){
+      return res.status(400).json({error: 'Usuário não informado'});
+    }
+    
+    const application = await Application.findAll({
+                        where: {user_id: req.query.userId},
+                        include: [{
+                          model: Vaccine,
+                          as: 'vaccine'
+                        },
+                        {
+                          model: User,
+                          as: 'user'
+                        },
+                        {
+                          model: Estab,
+                          as: 'estab'
+                        }],
+                        order: [
+                          ['dt_aplicacao', 'DESC']
+                        ]
+                      });
+
+    return res.json(application);
+
+  }
 }
 
 export default new ApplicationController();

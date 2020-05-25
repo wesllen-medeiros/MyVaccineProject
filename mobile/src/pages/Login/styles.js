@@ -71,3 +71,10 @@ export const ButtonText = styled.Text`
   color: #fff;
   font-weight: bold;
 `;
+
+export default StyleSheet.create({
+  logo: {
+    width: 270,
+    height: 77,
+  }
+});

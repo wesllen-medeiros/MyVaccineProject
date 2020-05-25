@@ -11,6 +11,14 @@ export default function Tabs({translateY}) {
     navigation.navigate('Allergy');
   }
 
+  function navigateToApplied(){
+    navigation.navigate('Applied');
+  }
+
+  function navigateToHealthUnities(){
+    navigation.navigate('HealthUnities');
+  }
+
   return (
     <Container
       style={{
@@ -35,20 +43,16 @@ export default function Tabs({translateY}) {
           <TabText>Agendar</TabText>
         </TabItem>
         <TabItem>
-          <Icon name="healing" size={35} color="#FFF" />
+          <Icon onPress={() => {navigateToApplied()}} name="healing" size={35} color="#FFF" />
           <TabText>Administradas</TabText>
-        </TabItem>
-        <TabItem>
-          <Icon name="warning" size={35} color="#FFF" />
-          <TabText>Pendentes</TabText>
-        </TabItem>
-        <TabItem>
-          <Icon name="layers" size={35} color="#FFF" />
-          <TabText>Unidades</TabText>
         </TabItem>
         <TabItem>
           <Icon onPress={() => {navigateToAllergy()}} name="report" size={35} color="#FFF" />
           <TabText>Alergias</TabText>
+        </TabItem>
+        <TabItem>
+          <Icon onPress={() => {navigateToHealthUnities()}}  name="layers" size={35} color="#FFF" />
+          <TabText>Unidades</TabText>
         </TabItem>
       </TabsContainer>
     </Container>

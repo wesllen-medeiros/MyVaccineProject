@@ -4,6 +4,7 @@ import {PanGestureHandler, State} from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
 import * as SecureStore from 'expo-secure-store';
 import { TextInputMask } from 'react-native-masked-text';
+import dateFormat from 'dateformat';
 
 import { Avatar } from 'react-native-paper';
 
@@ -40,6 +41,7 @@ export default function Main() {
   const [ name , setName ] = useState('');
   const [ photoProfile , setPhotoProfile ] = useState('');
   const [ bloodType , setBloodType ] = useState('');
+  const [ applieds , setApplieds ] = useState('');
 
   async function getUser(){
 
@@ -70,6 +72,25 @@ export default function Main() {
 
   //Inicia a variavel da photo
   setPhotoProfile('data:image/png;base64,' + userData.photo_profile);
+
+  const responseApplied = await api.get(`application`, {
+    params: {
+      userId: userId
+    }
+  });
+
+  let dataApplied = responseApplied.data;
+
+  const retornoMap = dataApplied.map((applied) => {
+
+    return {
+        dt_aplicacao: dateFormat(applied.dt_aplicacao, 'dd/mm/yyyy'),
+        descricao: applied.vaccine.descricao.toUpperCase()
+    }
+  });
+
+  setApplieds(retornoMap[0]);
+
   } 
   
   const navigation = useNavigation(); 
@@ -127,7 +148,7 @@ export default function Main() {
     <Container>
         <Header />
         <Content>
-         <Menu translateY={translateY} />
+         <Menu translateY={translateY} user={user} />
         <PanGestureHandler
             onGestureEvent={animatedEvent}
             onHandlerStateChange={onHandlerStateChanged}>
@@ -186,9 +207,9 @@ export default function Main() {
               <Bottom>
                 <CardItem>                  
                   <TitleCardItem>Última aplicação</TitleCardItem>
-                  <DescriptionCardItem>20/01/1900</DescriptionCardItem>
+                  <DescriptionCardItem>{applieds.dt_aplicacao}</DescriptionCardItem>
                   <TitleCardItem>Última vacina</TitleCardItem>
-                  <DescriptionCardItem>Xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</DescriptionCardItem>
+                  <DescriptionCardItem>{applieds.descricao}</DescriptionCardItem>
                 </CardItem>
               </Bottom>                
             </CardContent>

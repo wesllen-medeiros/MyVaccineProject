@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, FlatList } from 'react-native';
+import { Alert, FlatList, Image } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -8,12 +8,11 @@ import api from '../../services/api';
 
 import styles from './styles';
 
+import logoImg from '../../assets/icone.png'
+
 import {
     Container,
-    CardTop,
-    CardHeader,
     Header,
-    Title,
     Content,
     CardAddAllergy,
     CardItemAdd,
@@ -46,7 +45,8 @@ export default function Allergy() {
 
     let dataAllergy = responseAllergy.data;
 
-    return dataAllergy
+    return dataAllergy;
+    
     }
 
     function navigateToMain(){
@@ -64,7 +64,6 @@ export default function Allergy() {
         //busca Alergias do usuario pelo Id
         await api.get(`userAllergy/${user}`).then(function(data){
             dataAllergies = data.data;
-            console.log(dataAllergies);
         }).catch(function(error){
             console.log(JSON.stringify(error.response.data.error))
         });
@@ -92,15 +91,12 @@ export default function Allergy() {
     return(
         <Container>
             <Header>
-                <Title>My Vaccine Logo</Title>
+                <Icon style={{paddingTop: 9}} onPress={() => {navigateToMain()}} name="close" size={30} color="#333" />                        
+                <Image style={styles.logo}
+                source={logoImg} />
+                <Icon style={{paddingTop: 9}} name="refresh" onPress={() => {getUserAllergy().then(userAllergy => setUserAllergies(userAllergy))}} size={30} color="#333" />
             </Header>
-            <Content> 
-                <CardTop>
-                    <CardHeader>
-                        <Icon onPress={() => {navigateToMain()}} name="close" size={30} color="#333" />
-                        <Icon name="refresh" onPress={() => {getUserAllergy().then(userAllergy => setUserAllergies(userAllergy))}} size={30} color="#333" />
-                    </CardHeader>
-                </CardTop>
+            <Content>
                 <FlatList style={styles.flatList}
                 data={userAllergies}
                 keyExtractor={allergy => String(allergy.id)}

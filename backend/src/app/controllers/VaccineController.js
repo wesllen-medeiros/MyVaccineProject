@@ -4,7 +4,7 @@ import PublicVaccination from '../models/PublicVaccination';
 class VaccineController {
   async store(req , res) {
 
-    let vaccine = [];
+    let vaccine = null;
 
     let erro_mensagem_publico = "";
 
@@ -59,8 +59,8 @@ class VaccineController {
         erro_mensagem_publico
       });
     } else {
-
-      const vaccine = await Vaccine.findAll({where: {id: VaccineExist ? VaccineExist.id : vaccine.id },
+      
+      vaccine = await Vaccine.findAll({where: {id: VaccineExist ? VaccineExist.id : vaccine.id },
         include: [{
           model: PublicVaccination,
           as: 'public'

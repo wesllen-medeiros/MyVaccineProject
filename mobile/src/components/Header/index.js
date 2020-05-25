@@ -1,16 +1,19 @@
 import React from 'react';
-import {Animated} from 'react-native';
+import {Animated, Image} from 'react-native';
 
 import {Container, Top, Title} from './styles';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import styles from './styles';
+
+import logoImg from '../../assets/icone.png'
 
 export default function Header({translateY}) {
 
   return (
     <Container>
       <Top>
-        <Title>My Vaccine Logo</Title>
+        <Image style={styles.logo}
+            source={logoImg} />
       </Top>
     </Container>
   );

@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native'
 import * as SecureStore from 'expo-secure-store';
+import { Image } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import api from '../../services/api';
+
+import logoImg from '../../assets/logoFull.png'
+
+import styles from './styles';
 
 import {
     Container,
@@ -12,7 +17,6 @@ import {
     Button,
     ButtonText,
     Header,
-    Title,
     FormGroup,
     Form,
     FormInput
@@ -50,7 +54,8 @@ export default function Login() {
     return(
         <Container>
             <Header>
-                <Title>My Vaccine Logo</Title>
+            <Image style={styles.logo}
+            source={logoImg} />
             </Header>
             <FormGroup>
                 <Form>

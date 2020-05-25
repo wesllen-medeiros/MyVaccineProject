@@ -4,25 +4,26 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TextInputMask } from 'react-native-masked-text';
 import * as ImagePicker from 'expo-image-picker';
 
+import {Image} from 'react-native';
+
 import { Avatar } from 'react-native-paper';
 
 import styles from './styles';
+
+import logoImg from '../../assets/icone.png'
 
 import api from '../../services/api';
 
 import {
     Container,
     Header,
-    Title,
     Card,
-    CardTop,
     CardImage,
     CardItem,
     CardItemItem,
     CardTextInput,
     TextInput,
     Content,
-    CardHeader,
     CardItemText,
     InputSelect,
     InputSelectState
@@ -126,15 +127,12 @@ export default function Profile(user) {
     return(
         <Container>
             <Header>
-                <Title>My Vaccine Logo</Title>
+                <Icon style={{paddingTop: 9}} onPress={() => {navigateToMain()}} name="close" size={30} color="#333" />
+                <Image style={styles.logo}
+                source={logoImg} />
+                <Icon style={{paddingTop: 9}} name="check" onPress={() => {saveChangesProfile()}} size={30} color="#333" />
             </Header>
             <Content>
-                <CardTop>
-                    <CardHeader>
-                        <Icon onPress={() => {navigateToMain()}} name="close" size={30} color="#333" />
-                        <Icon name="check" onPress={() => {saveChangesProfile()}} size={30} color="#333" />
-                    </CardHeader>
-                </CardTop>
                 <Card>
                     <CardImage>
                         <Avatar.Image   size={100}

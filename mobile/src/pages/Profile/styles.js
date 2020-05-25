@@ -8,35 +8,17 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
-  align-items: center;
-  padding: 40px 0 30px;
+flex-direction: row;
+justify-content: space-between;
+padding: 50px 20px 20px 20px;
 `;
 
 export const Logo = styled.Image``;
-
-export const Title = styled.Text`
-  font-size: 18px;
-  color: #fff;
-  font-weight: bold;
-  margin-left: 8px;
-`;
 
 export const Content = styled.View`
   flex: 1;
   flex-direction: column;
   z-index: 5;
-`;
-
-export const CardTop = styled.View`
-  flex: 1;
-  background: #fff;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  margin: 0 20px;
-  max-height: 30px;
-  left: 0;
-  right: 0;
-  top: 0;
 `;
 
 export const Card = styled.ScrollView.attrs({
@@ -49,10 +31,6 @@ export const Card = styled.ScrollView.attrs({
   max-height: 93%;
 `;
 
-export const CardHeader = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-`;
 export const CardImage = styled.View`
   align-items: center;
   margin: 10px 0;
@@ -85,6 +63,10 @@ export default StyleSheet.create({
 
     fontSize: 18,
     fontWeight: "bold"
+  },
+  logo: {
+    width: 50,
+    height: 50,
   }
 });
 

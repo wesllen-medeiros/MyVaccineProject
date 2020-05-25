@@ -14,7 +14,7 @@ import {
   SignOutButtonText,
 } from './styles';
 
-export default function Menu({translateY}) {
+export default function Menu({translateY, user}) {
   const navigation = useNavigation(); 
 
   function navigateToLogin(){
@@ -22,7 +22,7 @@ export default function Menu({translateY}) {
   }
 
   function navigateToProfile(){
-    navigation.navigate('Profile');
+    navigation.navigate('Profile', user);
   }
 
   return (

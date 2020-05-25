@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -19,3 +20,10 @@ export const Title = styled.Text`
   font-weight: bold;
   margin-left: 8px;
 `;
+
+export default StyleSheet.create({
+  logo: {
+    width: 50,
+    height: 50,
+  }
+});
