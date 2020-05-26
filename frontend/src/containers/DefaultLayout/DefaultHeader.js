@@ -3,7 +3,10 @@ import { NavLink } from 'react-router-dom';
 import { Badge, UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-import { AppSidebarToggler } from '@coreui/react';
+import { AppSidebarToggler,AppNavbarBrand } from '@coreui/react';
+import LogoMyVaccine from '../../assets/img/brand/LogoMyVaccine.svg'
+import sygnet from '../../assets/img/brand/sygnet.svg'
+
 
 const propTypes = {
   children: PropTypes.node,
@@ -19,6 +22,11 @@ class DefaultHeader extends Component {
 
     return (
       <React.Fragment>
+        <AppSidebarToggler className="d-lg-none" display="md" mobile />
+        <AppNavbarBrand
+          full={{ src: LogoMyVaccine, width: 89, height: 25, alt: 'CoreUI Logo' }}
+          minimized={{ src: sygnet, width: 30, height: 30, alt: 'LogoMyVaccine' }}
+        />
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
         <Nav className="ml-auto" navbar>
@@ -36,12 +44,7 @@ class DefaultHeader extends Component {
               <img src={'../../assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
-              <DropdownItem><i className="fa fa-bell-o"></i> Updates<Badge color="info">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-envelope-o"></i> Messages<Badge color="success">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-tasks"></i> Tasks<Badge color="danger">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-comments"></i> Comments<Badge color="warning">42</Badge></DropdownItem>
-              <DropdownItem header tag="div" className="text-center"><strong>Settings</strong></DropdownItem>
+              <DropdownItem className="text-center"><strong>Minha Conta</strong></DropdownItem>
               <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Sair</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>

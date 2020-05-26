@@ -9,7 +9,7 @@ function Register(){
   const [nm_fantasia, setNm_fantasia] = useState('');
   const [email , setEmail] = useState('');
   const [cnpj, setCnpj] = useState('');
-  const [cidade , setCidade] = useState('');
+  const [state , setstate] = useState('');
   const [municipio , setMunicio] = useState('');
   const [password , setPassword] = useState('');
 
@@ -22,7 +22,7 @@ function Register(){
       nm_fantasia,
       email,
       cnpj,
-      cidade,
+      state,
       municipio,
       password
     }
@@ -31,7 +31,7 @@ function Register(){
 
       const res = await api.post('estab', data)
       alert(`Cadastro Eferuado com Sucesso!${res.data.nm_fantasia}`)
-      history.push('/Login')
+      history.push('/')
 
     } catch (err) {
       alert('Erro no cadastro! Tente novamente.')
@@ -69,7 +69,7 @@ function Register(){
                         <InputGroupText>@</InputGroupText>
                       </InputGroupAddon>
                       <Input 
-                      type="text" 
+                      type="email" 
                       placeholder="Email"
                       autoComplete="email"
                       value={email}
@@ -100,9 +100,9 @@ function Register(){
                       <Input 
                       type="text"
                       placeholder="Cidade"
-                      autoComplete="cidade"
-                      value={cidade}
-                      onChange={e => setCidade(e.target.value)}
+                      autoComplete="state"
+                      value={state}
+                      onChange={e => setstate(e.target.value)}
                       required
                       />
                     </InputGroup>
@@ -128,8 +128,8 @@ function Register(){
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input 
-                      type="text"
-                      placeholder="password"
+                      type="password"
+                      placeholder="Senha"
                       autoComplete="password"
                       value={password}
                       onChange={e => setPassword(e.target.value)}

@@ -1,9 +1,28 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useState} from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import api from  '../../../services/index';
 
-class Login extends Component {
-  render() {
+function Login(){
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const history = useHistory() 
+
+  async function handleLogin(e) {
+    e.preventDefault()
+
+    try {
+      const res = await api.post('Adminsessions', { email, password })
+
+      localStorage.setItem('email', email)
+      localStorage.setItem('password', res.data.password)
+
+      history.push('/home')
+    } catch (err) {
+      alert('Falha no login! Tente novamente')
+    }
+  }
+
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -12,7 +31,7 @@ class Login extends Component {
               <CardGroup>
                 <Card className="p-4">
                   <CardBody>
-                    <Form>
+                    <Form onSubmit={handleLogin}>
                       <h1>Cadastre-se</h1>
                       <p className="text-muted">Crie um novo Cadastro!</p>
                       <InputGroup className="mb-3">
@@ -21,7 +40,12 @@ class Login extends Component {
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="Username" autoComplete="username" />
+                        <Input type="text" 
+                        placeholder="Email"
+                        autoComplete="username"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        />
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -29,7 +53,12 @@ class Login extends Component {
                             <i className="icon-lock"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="password" placeholder="Password" autoComplete="current-password" />
+                        <Input type="password"
+                         placeholder="Senha"
+                         autoComplete="current-password"
+                         value={password}
+                         onChange={e => setPassword(e.target.value)}
+                         />
                       </InputGroup>
                       <Row>
                         <Col xs="6">
@@ -60,6 +89,6 @@ class Login extends Component {
       </div>
     );
   }
-}
+
 
 export default Login;

@@ -5,8 +5,9 @@ class Vaccine extends Model {
     super.init(
       {
         descricao: Sequelize.STRING,  
-        idade: Sequelize.STRING,
-        dose_number: Sequelize.INTEGER  
+        fornec: Sequelize.STRING,
+        obs: Sequelize.STRING,
+        und_medida: Sequelize.STRING,  
       },
       {
         sequelize,

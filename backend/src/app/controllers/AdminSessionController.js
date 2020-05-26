@@ -16,7 +16,7 @@ class EstabSessionController {
       });
     }
 
-    if(!(await user.checkPassword(password))){
+    if(!(await estab.checkPassword(password))){
       return res.status(401).json({error: 'Senha não autorizada!'})
     }
 

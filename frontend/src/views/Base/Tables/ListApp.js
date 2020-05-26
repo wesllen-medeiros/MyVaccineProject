@@ -1,8 +1,11 @@
-import React from 'react';
+import React,{Component} from 'react';
 import {Button, Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
+import {Link} from 'react-router-dom';
 
-function ListApp() {
+class ListApp extends Component {
 
+
+  render(){
     return (
       <div className="animated fadeIn">
         <Row>
@@ -13,60 +16,29 @@ function ListApp() {
               </CardHeader>
               <CardBody>
                 <Table responsive>
-                  <thead>
-                  <tr>
-                    <th>Username</th>
-                    <th>Date registered</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td>Samppa Nori</td>
-                    <td>2012/01/01</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge color="success">Active</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Estavan Lykos</td>
-                    <td>2012/02/01</td>
-                    <td>Staff</td>
-                    <td>
-                      <Badge color="danger">Banned</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Chetan Mohamed</td>
-                    <td>2012/02/01</td>
-                    <td>Admin</td>
-                    <td>
-                      <Badge color="secondary">Inactive</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Derick Maximinus</td>
-                    <td>2012/03/01</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge color="warning">Pending</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Friderik Dávid</td>
-                    <td>2012/01/21</td>
-                    <td>Staff</td>
-                    <td>
-                      <Badge color="success">Active</Badge>
-                    </td>
-                  </tr>
-                  </tbody>
+                      <thead>
+                      <tr>
+                        <th>Usuário</th>
+                        <th>teste</th>
+                        <th>teste</th>
+                        <th>teste</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <td>teste</td>
+                        <td>2012/01/01</td>
+                        <td>teste</td>
+                        <td>
+                          <Badge color="success">Active</Badge>
+                       </td>
+                      </tr>
+                      </tbody>
                 </Table>
-                <Button color="primary" block>Adicionar</Button>
-                <Button color="danger" block>Excluir</Button>
-                <div class="row justify-content-center">
+                <Link to="../Forms/addAplicacao">
+                <Button color="primary" className="mt-3" active tabIndex={-1}>Adicionar</Button>
+                </Link>
+             <div class="row justify-content-center">
                <div class="col-0">
                 <Pagination>
                   <PaginationItem>
@@ -98,6 +70,7 @@ function ListApp() {
 
     );
   }
+};
 
   export default ListApp;
 

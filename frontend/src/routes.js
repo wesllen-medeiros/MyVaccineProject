@@ -1,11 +1,14 @@
 import React from 'react';
 
 const Breadcrumbs = React.lazy(() => import('./views/Base/Breadcrumbs'));
-const Cards = React.lazy(() => import('./views/Base/Cards'));
+/*const Cards = React.lazy(() => import('./views/Base/Cards'));*/
+const CardCampanha = React.lazy(() => import('./views/Base/Cards/CardCampanha'));
 const Carousels = React.lazy(() => import('./views/Base/Carousels'));
 const Collapses = React.lazy(() => import('./views/Base/Collapses'));
 const Dropdowns = React.lazy(() => import('./views/Base/Dropdowns'));
-const Forms = React.lazy(() => import('./views/Base/Forms'));
+/*const Forms = React.lazy(() => import('./views/Base/Forms'));*/
+const addVacina = React.lazy(() => import('./views/Base/Forms/addVacina'));
+const addAplicacao = React.lazy(() => import('./views/Base/Forms/addAplicacao'));
 const Jumbotrons = React.lazy(() => import('./views/Base/Jumbotrons'));
 const ListGroups = React.lazy(() => import('./views/Base/ListGroups'));
 const Navbars = React.lazy(() => import('./views/Base/Navbars'));
@@ -39,15 +42,18 @@ const User = React.lazy(() => import('./views/Users/User'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  { path: '/', exact: true, name: '/login' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/theme', exact: true, name: 'Theme', component: Colors },
   { path: '/theme/colors', name: 'Colors', component: Colors },
   { path: '/theme/typography', name: 'Typography', component: Typography },
-  { path: '/base', exact: true, name: 'Base', component: Cards },
-  { path: '/base/cards', name: 'Cards', component: Cards },
-  { path: '/base/forms', name: 'Forms', component: Forms },
+  /*{ path: '/base', exact: true, name: 'Base', component: Cards },*/
+  /*{ path: '/base/cards', name: 'Cards', component: Cards },*/
+  { path: '/base/cards/CardCampanha', name: 'CardCampanha', component: CardCampanha },
+  /*{ path: '/base/forms', name: 'Forms', component: Forms },*/
   { path: '/base/switches', name: 'Switches', component: Switches },
+  { path: '/base/forms/addAplicacao', name: 'addAplicacao', component:addAplicacao },
+  { path: '/base/forms/addVacina', name: 'addVacina', component:addVacina },
   { path: '/base/tables/ListApp', name: 'ListApp', component: ListApp },
   { path: '/base/tables/ListVacinas', name: 'ListVacina', component: ListVacina},
   { path: '/base/tabs', name: 'Tabs', component: Tabs },

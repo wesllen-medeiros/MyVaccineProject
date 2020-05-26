@@ -1,29 +1,55 @@
 export default {
   items: [
     {
-      name: 'Menu',
-      url: '/',
-      icon: 'Flags',
+      title: true,
+      name: 'INICIO',
+      wrapper: {            // optional wrapper object
+        element: '',        // required valid HTML5 element tag
+        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
+      },
+      class: ''             // optional class names space delimited list for title item ex: "text-center"
+    },
+    {
+      name: 'Dashboard',
+      url: '/dashboard',
+      icon: 'icon-speedometer',
       badge: {
         variant: 'info',
-        text: 'NEW',
       },
+    },
+    {
+      title: true,
+      name: 'MENU',
+      wrapper: {            // optional wrapper object
+        element: '',        // required valid HTML5 element tag
+        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
+      },
+      class: ''             // optional class names space delimited list for title item ex: "text-center"
     },
     {
       name: 'Aplicações',
       url: '/base/tables/ListApp',
-      icon: 'icon-drop',
+      icon: '',
     },
     {
       name: 'Vacinas',
       url: '/base/tables/ListVacinas',
-      icon: 'icon-pencil',
+      icon: '',
     },
     {
       name: 'Campanhas',
-      url: '/',
-      icon: 'icon-pencil',
+      url: '/base/cards/CardCampanha',
     },
+
+    {
+      name: 'Divulgações',
+      url: 'http://www.saude.gov.br/campanhas',
+      icon: 'icon-cloud-download',
+      class: 'mt-auto',
+      variant: 'success',
+      attributes: { target: '_blank', rel: "noopener" },
+    },
+  
     /*{
       title: true,
       name: 'Components',

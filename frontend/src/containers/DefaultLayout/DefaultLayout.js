@@ -25,11 +25,11 @@ const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 class DefaultLayout extends Component {
 
-  loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
+  loading = () => <div className="animated fadeIn pt-1 text-center">Aguarde...</div>
 
   signOut(e) {
     e.preventDefault()
-    this.props.history.push('/login')
+    this.props.history.push('/')
   }
 
   render() {
@@ -66,7 +66,7 @@ class DefaultLayout extends Component {
                         )} />
                     ) : (null);
                   })}
-                  <Redirect from="/" to="/Home" />
+                  <Redirect from="/Home" to="/Home" />
                 </Switch>
               </Suspense>
             </Container>
