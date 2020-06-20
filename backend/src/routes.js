@@ -41,6 +41,10 @@ routes.get('/campaign', CampaignController.index);
 
 /* Application */
 routes.post('/application', ApplicationController.store);
+routes.get('/application', ApplicationController.index);
+
+/* Scheduling */
+routes.post('/schedule', ScheduleController.store);
 
 /* Scheduling */
 routes.post('/schedule', ScheduleController.store);

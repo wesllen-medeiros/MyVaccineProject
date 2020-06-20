@@ -10,7 +10,7 @@ export default {
       class: ''             // optional class names space delimited list for title item ex: "text-center"
     },
     {
-      name: 'Dashboard',
+      name: 'DASHBOARD',
       url: '/dashboard',
       icon: 'icon-speedometer',
       badge: {
@@ -27,22 +27,23 @@ export default {
       class: ''             // optional class names space delimited list for title item ex: "text-center"
     },
     {
-      name: 'Aplicações',
+      name: 'APLICAÇÕES',
       url: '/base/tables/ListApp',
-      icon: '',
+      icon: 'fa fa-users',
     },
     {
-      name: 'Vacinas',
+      name: 'VACINAS',
       url: '/base/tables/ListVacinas',
-      icon: '',
+      icon: 'fa fa-address-card-o',
     },
     {
-      name: 'Campanhas',
+      name: 'CAMPANHAS',
       url: '/base/cards/CardCampanha',
+      icon: 'fa fa-heartbeat'
     },
 
     {
-      name: 'Divulgações',
+      name: 'DIVULGAÇÕES',
       url: 'http://www.saude.gov.br/campanhas',
       icon: 'icon-cloud-download',
       class: 'mt-auto',
