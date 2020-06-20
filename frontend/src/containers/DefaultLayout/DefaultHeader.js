@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { AppSidebarToggler,AppNavbarBrand } from '@coreui/react';
 import LogoMyVaccine from '../../assets/img/brand/LogoMyVaccine.svg'
-//import sygnet from '../../assets/img/brand/sygnet.svg'
+import sygnet from '../../assets/img/brand/sygnet.svg'
 
 
 const propTypes = {
@@ -25,13 +25,13 @@ class DefaultHeader extends Component {
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppNavbarBrand
           full={{ src: LogoMyVaccine, width: 89, height: 25, alt: 'CoreUI Logo' }}
-          //minimized={{ src: sygnet, width: 30, height: 30, alt: 'LogoMyVaccine' }}
+          minimized={{ src: sygnet, width: 30, height: 30, alt: 'LogoMyVaccine' }}
         />
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
         <Nav className="ml-auto" navbar>
           <NavItem className="d-md-down-none">
-            <NavLink to="#" className="nav-link"><i className="icon-bell"></i><Badge pill color="primary">100</Badge></NavLink>
+            <NavLink to="#" className="nav-link"><i className="icon-bell"></i><Badge pill color="danger">5</Badge></NavLink>
           </NavItem>
           <NavItem className="d-md-down-none">
             <NavLink to="#" className="nav-link"><i className="icon-list"></i></NavLink>

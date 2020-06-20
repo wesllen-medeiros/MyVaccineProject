@@ -20,6 +20,13 @@ class EstabController {
       password,
     });
   }
+
+  async index(req , res) {
+
+    const estab = await Estab.findAll(); /*retorna para o front */
+
+    return res.json(estab);
+  }
 }
 
 export default new EstabController();

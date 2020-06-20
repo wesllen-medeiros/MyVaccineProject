@@ -63,6 +63,27 @@ class ApplicationController {
     return res.json(application);
 
   }
+
+  
+
+  async index(req , res) { 
+
+    const application = await Application.findAll({
+      include: [{
+        model:Vaccine,
+        as: 'vaccine'
+      }],
+      include: [{
+        model:Estab,
+        as: 'estab'
+      }],
+      include: [{
+        model:User,
+        as: 'user'
+      }]
+    }); 
+    return res.json(application);
+}
 }
 
 export default new ApplicationController();

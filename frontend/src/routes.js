@@ -9,6 +9,7 @@ const Dropdowns = React.lazy(() => import('./views/Base/Dropdowns'));
 /*const Forms = React.lazy(() => import('./views/Base/Forms'));*/
 const addVacina = React.lazy(() => import('./views/Base/Forms/addVacina'));
 const addAplicacao = React.lazy(() => import('./views/Base/Forms/addAplicacao'));
+const addCampanha = React.lazy(() => import('./views/Base/Forms/addCampanha'));
 const Jumbotrons = React.lazy(() => import('./views/Base/Jumbotrons'));
 const ListGroups = React.lazy(() => import('./views/Base/ListGroups'));
 const Navbars = React.lazy(() => import('./views/Base/Navbars'));
@@ -54,6 +55,7 @@ const routes = [
   { path: '/base/switches', name: 'Switches', component: Switches },
   { path: '/base/forms/addAplicacao', name: 'addAplicacao', component:addAplicacao },
   { path: '/base/forms/addVacina', name: 'addVacina', component:addVacina },
+  { path: '/base/forms/addCampanha', name: 'addCampanha', component:addCampanha },
   { path: '/base/tables/ListApp', name: 'ListApp', component: ListApp },
   { path: '/base/tables/ListVacinas', name: 'ListVacina', component: ListVacina},
   { path: '/base/tabs', name: 'Tabs', component: Tabs },

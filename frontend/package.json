@@ -21,6 +21,7 @@
     "chart.js": "^2.8.0",
     "classnames": "^2.2.6",
     "core-js": "^3.1.4",
+    "dateformat": "^3.0.3",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "flag-icon-css": "^3.3.0",
@@ -33,6 +34,7 @@
     "react-dom": "^16.8.6",
     "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.1",
+    "react-select": "^3.1.0",
     "react-test-renderer": "^16.8.6",
     "reactstrap": "^8.0.0",
     "simple-line-icons": "^2.4.1"

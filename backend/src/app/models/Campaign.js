@@ -14,7 +14,6 @@ class Campaign extends Model {
         max_age: Sequelize.INTEGER,
         unity_age: Sequelize.STRING,
         dose: Sequelize.STRING,
-        active: Sequelize.STRING
       },
       {
         sequelize,
@@ -28,10 +27,10 @@ class Campaign extends Model {
       foreignKey: 'estab_id',
       as: 'Estab'
     });
-
+    
     this.belongsTo(models.Vaccine, {
       foreignKey: 'vaccine_id',
-      as: 'vaccine'
+      as: 'vaccine',
     });
   }
 

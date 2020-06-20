@@ -34,17 +34,17 @@ routes.get('/vaccine', VaccineController.index);
 
 /* Estab */
 routes.post('/estab', EstabController.store);
+routes.get('/estab', EstabController.index);
 
 /* Campaign */
 routes.post('/campaign', CampaignController.store);
 routes.get('/campaign', CampaignController.index);
+routes.get('/campaign/:id', CampaignController.show);
+
 
 /* Application */
 routes.post('/application', ApplicationController.store);
 routes.get('/application', ApplicationController.index);
-
-/* Scheduling */
-routes.post('/schedule', ScheduleController.store);
 
 /* Scheduling */
 routes.post('/schedule', ScheduleController.store);

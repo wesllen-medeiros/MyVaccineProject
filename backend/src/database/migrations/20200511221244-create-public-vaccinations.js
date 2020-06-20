@@ -9,10 +9,6 @@ module.exports = {
           autoIncrement: true,
           primaryKey: true,
         },
-        prevention: {
-          type: Sequelize.STRING,
-          allowNull: false,
-        },
         audience: {
           type: Sequelize.STRING,
           allowNull: false,
@@ -29,15 +25,11 @@ module.exports = {
           type:Sequelize.STRING,
           allowNull: false,
         },
-        dose: {
-          type:Sequelize.STRING,
-          allowNull: false,
-        },
         vaccine_id: {
           type:Sequelize.INTEGER,
           allowNull: false,
           references: {
-            model: 'allergies',
+            model: 'vaccines',
             key: 'id',
           },
           onUpdate: 'CASCADE',

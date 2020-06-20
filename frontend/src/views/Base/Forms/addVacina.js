@@ -7,8 +7,8 @@ import {
   FormGroup,
   Input,
   Label,
-  Button,
   Form,
+  Button,
 } from 'reactstrap';
 
 
@@ -16,94 +16,107 @@ import api from '../../../services/index';
 
 
 class addVacina extends Component {
-  state = {
-    descricao: '',
-    fornec: '',
-    obs: '',
-    und_medida: '',
+  constructor(props) {
+    super(props);
+    this.state = {
+      large: false,
+    };
+
+    this.toggleLarge = this.toggleLarge.bind(this);
+
+    this.state = {
+      name: '',
+      prevention: '',
+      dose:'',
+    }
+
   }
+
 
   handleSubmit = async e => {
     e.preventDefault();
 
-    const { descricao, fornec, obs, und_medida } = this.state;
+    const { name,prevention,dose } = this.state;
 
-    await api.post('vaccine', { descricao, fornec, obs, und_medida });
+    await api.post('vaccine', { name,prevention,dose });
 
     this.props.history.push('../tables/ListVacinas');
     //this.props.history.push('ListVacina')
   }
 
+
+  toggleLarge() {
+    this.setState({
+      large: !this.state.large,
+    });
+  }
+
+
   render() {
-    const {
-      descricao,
-      fornec,
-      obs,
-      und_medida,
+
+    const{
+      name,
+      prevention,
+      dose,
     } = this.state;
 
     return (
       <div className="animated fadeIn">
-        <Col xs="12" sm="12">
-          <Card>
-            <CardHeader>
-              <strong>Cadastro de Vacinas</strong>
-            </CardHeader>
-            <CardBody>
-              <Form onSubmit={e => this.handleSubmit(e)}>
-                <FormGroup>
-                  <Label htmlFor="company">Descrição</Label>
-                  <Input
-                    type="text"
-                    name="descricao"
-                    placeholder="Descrição da Vacina"
-                    onChange={(e) => this.setState({ descricao: e.target.value })}
-                    value={descricao}
-                  />
-                </FormGroup >
-                <FormGroup>
-                  <Label htmlFor="vat">Fornecedor</Label>
-                  <Input
-                    type="text"
-                    name="fornec"
-                    placeholder="Fornecedor"
-                    onChange={(e) => this.setState({ fornec: e.target.value })}
-                    value={fornec}
-                  />
-                </FormGroup>
-                <FormGroup row className="my-0">
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="city">Observação</Label>
-                      <Input
-                        type="text"
-                        name="obs"
-                        placeholder="Observação"
-                        onChange={(e) => this.setState({ obs: e.target.value })}
-                        value={obs}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col xs="4">
-                    <FormGroup>
-                      <Label htmlFor="postal-code">Und. Medida</Label>
-                      <Input
-                        type="text"
-                        name="und_medida"
-                        placeholder="Unidade de Medida"
-                        onChange={(e) => this.setState({ und_medida: e.target.value })}
-                        value={und_medida}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col xs="5">
-                    <Button type="submit" color="primary" className="mt-4" active tabIndex={-1}>Salvar</Button>
-                  </Col>
-                </FormGroup>
-              </Form>
-            </CardBody>
-          </Card>
-        </Col>
+          <Col xs="12" sm="6">
+            <Card>
+              <CardHeader>
+                <strong>Cadastro de Vacinas</strong>
+              </CardHeader>
+              <CardBody>
+                <Form onSubmit={e => this.handleSubmit(e)}>
+                  <FormGroup>
+                    <Label htmlFor="company">Nome Vacina</Label>
+                    <Input
+                      type="text"
+                      name="descricao"
+                      placeholder="Descrição da Vacina"
+                      onChange={(e) => this.setState({ name: e.target.value })}
+                      value={name}
+                    />
+                  </FormGroup>
+
+                  <FormGroup row>
+                    <Col md="3">
+                      <Label htmlFor="text-input">Prevenção</Label>
+                        </Col>
+                          <Col xs="12" md="9">
+                            <Input type="textarea"
+                              id="text-input"
+                              name="text-input"
+                              onChange={(e) => this.setState({ prevention: e.target.value })}
+                              value={prevention}
+                          />
+                    </Col>
+                  </FormGroup>
+
+                  
+                  <FormGroup row>
+                      <Col md="3">
+                         <Label htmlFor="select">Dose</Label>
+                      </Col>
+                        <Col xs="12" md="9">
+                         <Input type="select" name="select" id="select" value={dose} onChange={(e) => this.setState({ dose: e.target.value })}>
+                            <option value="UNICA">Unica</option>
+                            <option value="1 DOSE">1 Dose</option>
+                            <option value="2 DOSE">2 Doses</option>
+                            <option value="3 DOSE">3 Doses</option>
+                           <option value="4 DOSE">4 Doses</option>
+                          </Input>
+                          </Col>
+                        </FormGroup>
+                        <Col  md="3">
+                            <Button type="submit" color="success" className="mt-3" active tabIndex={-1}>Salvar</Button>
+                        </Col>
+                </Form>
+      
+              </CardBody>
+            </Card>
+          </Col>
       </div>
     );
   }

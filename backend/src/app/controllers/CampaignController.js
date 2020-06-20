@@ -18,14 +18,11 @@ class CampaignController {
       max_age, 
       unity_age, 
       dose, 
-      active} = req.body; /*retorna para o front */
+    } = req.body; /*retorna para o front */
     
     const estab = await Estab.findByPk(estab_id);
     const vaccine = await Vaccine.findByPk(vaccine_id);
 
-    if (active == null){
-      active = "ATIVA";
-    }
 
     if (!estab) {
       return res.status(400).json({error: 'Estabelecimento incorreto'});
@@ -45,7 +42,7 @@ class CampaignController {
       return res.status(400).json({error: 'Público Alvo deve ser cadastrado para apenas um destes tipos : CRIANCA, ADULTO, ADOLESCENTE, GESTANTE'});
     }
 
-    if (unity_age != "CRIANCA" && unity_age != "ADULTO" && unity_age != "ADOLESCENTE") {
+    if (unity_age != "AO_NASCER" && unity_age != "MESES" && unity_age != "ANOS") {
       return res.status(400).json({error: 'Únidade da Idade deve ser cadastrado para apenas um destes tipos : AO_NASCER , MESES, ANOS'});
     }
 
@@ -70,7 +67,6 @@ class CampaignController {
       max_age, 
       unity_age, 
       dose,
-      active
     });
     
     return res.json(campaign);
@@ -78,9 +74,30 @@ class CampaignController {
 
   async index(req , res) { 
 
-    const campaign = await Campaign.findAll();    
+    const campaign = await Campaign.findAll({
+      include: [{
+        model:Estab,
+        as: 'Estab',
+      },
+      {
+        model:Vaccine,
+        as: 'vaccine',
+      }]
+    });    
 
     return res.json(campaign);
+  }
+
+  async show(req, res) {
+    const { id } = req.params;
+
+    const vaccine = await Vaccine.findByPk(id, {
+      attributes: ['id', 'name'],
+    });
+
+    if (!vaccine) return res.status(400).json({ error: 'ID not found' });
+
+    return res.json(vaccine);
   }
 }
 

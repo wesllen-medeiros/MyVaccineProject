@@ -48,15 +48,6 @@ module.exports = {
           defaultValue: "teste"
         }
       ),
-      queryInterface.addColumn(
-        'campaigns',
-        'active',
-        {
-          type: Sequelize.STRING,
-          allowNull: false,
-          defaultValue: "ATIVA"
-        }
-      ),
       queryInterface.removeColumn('campaigns', 'fx_etaria')
     ]);
   },
@@ -74,7 +65,7 @@ module.exports = {
     queryInterface.removeColumn('campaigns', 'min_age'),
     queryInterface.removeColumn('campaigns', 'max_age'),
     queryInterface.removeColumn('campaigns', 'unity_age'),
-    queryInterface.removeColumn('campaigns', 'dose')
+    queryInterface.removeColumn('campaigns', 'dose'),
     ]);
   }
 };

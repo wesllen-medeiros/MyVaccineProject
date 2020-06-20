@@ -1,6 +1,7 @@
 import Schedule from '../models/Schedule';
 import Vaccine from '../models/vaccine';
 import User from '../models/User';
+import Estab from '../models/Estab';
 
 class ScheduleController {
     async store(req , res) {
@@ -28,6 +29,7 @@ class ScheduleController {
  
         return res.json(schedule);
     }
+   
 }
 
 export default new ScheduleController();

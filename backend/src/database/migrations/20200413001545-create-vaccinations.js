@@ -9,12 +9,20 @@ module.exports = {
           autoIncrement: true,
           primaryKey: true,
         },
-        descricao: {
+        name: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        prevention: {
           type: Sequelize.STRING,
           allowNull: false,
         },
         idade: {
           type:Sequelize.INTEGER,
+          allowNull: false,
+        },
+        dose: {
+          type:Sequelize.STRING,
           allowNull: false,
         },
         created_at: {
@@ -26,6 +34,7 @@ module.exports = {
           type: Sequelize.DATE,
           allowNull: false,
         },
+
       });
   },
 

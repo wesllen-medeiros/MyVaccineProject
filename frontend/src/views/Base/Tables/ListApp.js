@@ -1,13 +1,46 @@
 import React,{Component} from 'react';
 import {Button, Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
 import {Link} from 'react-router-dom';
+import dateformat from 'dateformat'
+
+import api from '../../../services/index';
 
 class ListApp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      large: false,
+    };
 
+    this.toggleLarge = this.toggleLarge.bind(this);
+
+    this.state = {
+      aplic: [],
+    }
+
+  }
+
+  toggleLarge() {
+    this.setState({
+      large: !this.state.large,
+    });
+  }
+
+  async componentDidMount() {
+    try {
+      const res = await api.get('application');
+
+
+      this.setState({ aplic: res.data });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   render(){
+  
     return (
-      <div className="animated fadeIn">
+      <div className="animated fadeIn"><br></br>
         <Row>
           <Col>
             <Card>
@@ -18,25 +51,33 @@ class ListApp extends Component {
                 <Table responsive>
                       <thead>
                       <tr>
-                        <th>Usuário</th>
-                        <th>teste</th>
-                        <th>teste</th>
-                        <th>teste</th>
+                        <th>Paciente</th>
+                        <th>Dt. Aplicação</th>
+                        <th>Vacina</th>
+                        <th>Dose</th>
+                        <th>Situação</th>
+                        <th>Detalhe</th>
                       </tr>
                       </thead>
                       <tbody>
-                      <tr>
-                        <td>teste</td>
-                        <td>2012/01/01</td>
-                        <td>teste</td>
-                        <td>
-                          <Badge color="success">Active</Badge>
-                       </td>
-                      </tr>
-                      </tbody>
+                      {this.state.aplic.map(post => (
+                        <tr  key={post.id}>
+                          <td>{post.user.name}</td>
+                          <td>{dateformat(new Date(post.dt_aplicacao).setDate(new Date(post.dt_aplicacao).getDate() + 1), 'dd/mm/yyyy')}</td>
+                          <td>{post.vaccine_id}</td>
+                          <td>{post.dose}</td>
+                          <td>
+                            <Badge color="success">Concluída</Badge>
+                          </td>
+                          <td>
+                             <Button color="primary" className="mt-3" active tabIndex={-1}><i class="fa fa-list-alt" aria-hidden="true"></i></Button>
+                          </td>
+                        </tr>
+                    ))}
+                  </tbody>
                 </Table>
                 <Link to="../Forms/addAplicacao">
-                <Button color="primary" className="mt-3" active tabIndex={-1}>Adicionar</Button>
+                  <Button color="primary" className="mt-3" active tabIndex={-1}>Adicionar</Button>
                 </Link>
              <div class="row justify-content-center">
                <div class="col-0">
