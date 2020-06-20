@@ -12,7 +12,7 @@ class App {
     this.routes();
   }
   middlewares() {
-    this.server.use(express.json({limit: '50mb'}));
+    this.server.use(express.json());
   }
 
   routes() {
