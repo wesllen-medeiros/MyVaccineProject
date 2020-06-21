@@ -16,7 +16,7 @@ class ListVacinas extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      large: false,
+      large: false
     };
 
     this.toggleLarge = this.toggleLarge.bind(this);
@@ -25,18 +25,19 @@ class ListVacinas extends Component {
       aplication: [],
       audience: '',
       min_age: '',
-      max_age: '', 
+      max_age: '',
       unity_age: '',
+      name_vaccine: ''
     }
 
   }
 
-  toggleLarge() {
+  toggleLarge(name_vaccine = '') {
     this.setState({
       large: !this.state.large,
-
+      name_vaccine: name_vaccine
     });
-    
+
   }
 
   async componentDidMount() {
@@ -50,22 +51,29 @@ class ListVacinas extends Component {
     }
   }
 
-  
+
   handleSubmit = async (e) => {
     e.preventDefault();
 
     const { audience,
       min_age,
-      max_age, 
+      max_age,
       unity_age,
+      name_vaccine,
     } = this.state;
 
-    console.log(this.state)
+    await api.post('vaccine', { name: name_vaccine, public: [{audience,min_age,max_age,unity_age}] }).then(
+      function(data){
+        alert(`Público alvo cadastrado com sucesso!`);
+      }
+    ).catch(
+      function(err){
+        let erro =  err.response.data.erro_mensagem_publico;
+        alert(`Algo inesperado aconteceu!\n ${erro}`);
+      }
+    )
 
-    await api.post('vaccine', { audience,min_age,max_age,unity_age });
-
-    this.props.history.push('../tables/ListVacinas');
-    //this.props.history.push('ListVacina')
+    this.toggleLarge();
   }
 
   render() {
@@ -73,7 +81,7 @@ class ListVacinas extends Component {
     const{
       audience,
       min_age,
-      max_age, 
+      max_age,
       unity_age,
     } = this.state;
 
@@ -107,7 +115,7 @@ class ListVacinas extends Component {
                             <Badge color="success">Disponível</Badge>
                           </td>
                           <td>
-                             <Button color="success" onClick={this.toggleLarge} className="mt-3" active tabIndex={-1}><i class="fa fa-plus" aria-hidden="true"></i></Button>
+                             <Button color="success" onClick={()=> this.toggleLarge(post.name)} className="mt-3" active tabIndex={-1}><i class="fa fa-plus" aria-hidden="true"></i></Button>
                              <Button color="primary" className="mt-3" active tabIndex={-1}><i class="fa fa-list-alt" aria-hidden="true"></i></Button>
                           </td>
                         </tr>
@@ -167,9 +175,11 @@ class ListVacinas extends Component {
                           </Col>
                           <Col xs="12" md="9">
                             <Input type="select" name="select" id="select" value={audience} onChange={(e) => this.setState({ audience: e.target.value })}>
-                              <option value="0">CRIANÇA</option>
-                              <option value="1">ADULTO</option>
-                              <option value="2">ADOLECENTE</option>
+                              <option value="CRIANCA">Criança</option>
+                              <option value="ADULTO">Adulto</option>
+                              <option value="ADOLESCENTE">Adolescente</option>
+                              <option value="IDOSO">Idoso</option>
+                              <option value="GESTANTE">Gestante</option>
                             </Input>
                           </Col>
                         </FormGroup>

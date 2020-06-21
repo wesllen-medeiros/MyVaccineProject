@@ -38,8 +38,8 @@ class CampaignController {
       return res.status(400).json({error: 'Campanha ja cadastrado!'});
     }
 
-    if (audience != "CRIANCA" && audience != "ADULTO" && audience != "ADOLESCENTE" && audience != "GESTANTE") {
-      return res.status(400).json({error: 'Público Alvo deve ser cadastrado para apenas um destes tipos : CRIANCA, ADULTO, ADOLESCENTE, GESTANTE'});
+    if (audience != "CRIANCA" && audience != "ADULTO" && audience != "ADOLESCENTE" && audience != "GESTANTE" && audience != "IDOSO") {
+      return res.status(400).json({error: 'Público Alvo deve ser cadastrado para apenas um destes tipos : CRIANCA, ADULTO, ADOLESCENTE, GESTANTE, IDOSO'});
     }
 
     if (unity_age != "AO_NASCER" && unity_age != "MESES" && unity_age != "ANOS") {

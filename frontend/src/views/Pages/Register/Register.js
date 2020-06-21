@@ -38,7 +38,7 @@ function Register(){
     }
 
   }
-  
+
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -55,7 +55,7 @@ function Register(){
                           <i className="icon-user"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input 
+                      <Input
                       type="text"
                       placeholder="Nome Fantasia"
                       autoComplete="nm_fantasia"
@@ -68,8 +68,8 @@ function Register(){
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>@</InputGroupText>
                       </InputGroupAddon>
-                      <Input 
-                      type="email" 
+                      <Input
+                      type="email"
                       placeholder="Email"
                       autoComplete="email"
                       value={email}
@@ -83,7 +83,7 @@ function Register(){
                           <i className="icon-user"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input 
+                      <Input
                       type="text"
                       placeholder="CNPJ"
                       value={cnpj}
@@ -97,9 +97,9 @@ function Register(){
                           <i className="icon-user"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input 
+                      <Input
                       type="text"
-                      placeholder="Cidade"
+                      placeholder="Estado"
                       autoComplete="state"
                       value={state}
                       onChange={e => setstate(e.target.value)}
@@ -112,7 +112,7 @@ function Register(){
                           <i className="icon-user"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input 
+                      <Input
                       type="text"
                       placeholder="Municipio"
                       autoComplete="municipio"
@@ -127,7 +127,7 @@ function Register(){
                           <i className="icon-lock"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input 
+                      <Input
                       type="password"
                       placeholder="Senha"
                       autoComplete="password"

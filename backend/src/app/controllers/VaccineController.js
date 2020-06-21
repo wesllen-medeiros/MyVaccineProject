@@ -53,7 +53,7 @@ class VaccineController {
   }
 
     if ((erro_mensagem_publico != "" && count_erros == data.public.length ) && erro_mensagem_vacina != ""){
-      return res.json({
+      return res.status(400).json({
         erro_mensagem_vacina,
         erro_mensagem_publico
       });
