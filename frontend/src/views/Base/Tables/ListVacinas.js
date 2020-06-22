@@ -182,7 +182,7 @@ class ListVacinas extends Component {
           </Col>
         </Row>
 
-        <Modal isOpen={this.state.list} toggle={this.toggleList}
+        <Modal isOpen={this.state.list && public_vaccine.length > 0} toggle={this.toggleList}
             className={'modal-lg ' + this.props.className}>
             <ModalHeader toggle={this.toggleList}>Público-Alvo</ModalHeader>
             <ModalBody>

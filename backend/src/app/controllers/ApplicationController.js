@@ -68,18 +68,19 @@ class ApplicationController {
 
     const application = await Application.findAll({
       include: [{
-        model:Vaccine,
-        as: 'vaccine'
-      }],
-      include: [{
         model:Estab,
-        as: 'estab'
-      }],
-      include: [{
+        as: 'estab',
+      },
+      {
+        model:Vaccine,
+        as: 'vaccine',
+      },
+      {
         model:User,
         as: 'user'
       }]
-    }); 
+    });
+
     return res.json(application);
 }
 }

@@ -1,5 +1,11 @@
 import React,{Component} from 'react';
-import {Button, Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
+import {Button, Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table,
+  Collapse,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Label,
+  CardText } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import dateformat from 'dateformat'
 
@@ -9,27 +15,35 @@ class ListApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      large: false,
+      list: false
     };
 
-    this.toggleLarge = this.toggleLarge.bind(this);
+    this.toggleList = this.toggleList.bind(this);
 
     this.state = {
       aplic: [],
+      application: [],
+      user: [],
+      estab: []
     }
 
   }
 
-  toggleLarge() {
+  toggleList(application = []) {
     this.setState({
-      large: !this.state.large,
+      list: !this.state.list,
+      application: application,
+      user: application.user,
+      estab: application.estab
     });
+
   }
 
   async componentDidMount() {
     try {
       const res = await api.get('application');
 
+      console.log(res.data);
 
       this.setState({ aplic: res.data });
     } catch (err) {
@@ -38,6 +52,13 @@ class ListApp extends Component {
   }
 
   render(){
+
+    const{
+      application,
+      user,
+      estab
+    } = this.state;
+
 
     return (
       <div className="animated fadeIn"><br></br>
@@ -70,7 +91,7 @@ class ListApp extends Component {
                             <Badge color="success">Concluída</Badge>
                           </td>
                           <td>
-                             <Button color="primary" className="mt-3" active tabIndex={-1}><i className="fa fa-list-alt" aria-hidden="true"></i></Button>
+                             <Button color="primary" className="mt-3" onClick={()=> this.toggleList(post)} active tabIndex={-1}><i className="fa fa-list-alt" aria-hidden="true"></i></Button>
                           </td>
                         </tr>
                     ))}
@@ -107,6 +128,51 @@ class ListApp extends Component {
             </Card>
           </Col>
         </Row>
+
+        <Modal isOpen={this.state.list} toggle={this.toggleList}
+            className={'modal-lg ' + this.props.className} unmountOnClose={true}>
+            <ModalHeader toggle={this.toggleList}>Detalhe</ModalHeader>
+            <ModalBody>
+            <Row>
+              <Col xs="12"  md="12">
+                <Card key={application.id} >
+                  <CardHeader className="text-white bg-info">
+                  {user === undefined ? 'teste' : user.name}
+                  </CardHeader>
+                  <Collapse isOpen={true} id="collapseCard">
+                  <CardBody>
+                  <Col>
+
+                  <div className="container">
+                    <div className="row">
+                      <div className="col">
+                      <Label><h6>Aplicada por</h6></Label>
+                      <CardText>{application.nm_agente}</CardText>
+                      </div>
+                      <div className="col">
+                      <Label><h6>Estabelecimento</h6></Label>
+                      <CardText>{estab === undefined ? 'teste' : estab.nm_fantasia}</CardText>
+                      </div>
+                    </div>
+                  </div> <br></br>
+                  <div className="container">
+                    <div className="row">
+                      <div className="col">
+                      <Label><h6>Reações</h6></Label>
+                      <CardText>{application.reacao}</CardText>
+                      </div>
+                    </div>
+                    </div><br></br>
+
+                  </Col>
+                  </CardBody>
+                </Collapse>
+                </Card>
+              </Col>
+            </Row>
+            </ModalBody>
+        </Modal>
+
       </div>
 
     );
