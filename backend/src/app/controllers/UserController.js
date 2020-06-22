@@ -6,7 +6,18 @@ import path from 'path';
 class UserController {
   async store(req , res) {
 
-    const { name,email,cpf,sexo,dt_nascimento,state,municipio,password} = req.body; /*retorna para o front */
+																											 
+
+    const { 
+      name, 
+      email, 
+      cpf, 
+      sexo, 
+      dt_nascimento, 
+      state, 
+      municipio, 
+      password, 
+      tipo_sanguineo } = req.body; /*retorna para o front */
 
     const userEmailExist = await User.findOne({ where: {email: req.body.email}});
 
@@ -21,7 +32,15 @@ class UserController {
     }
    
     const user = await User.create({
-      name,email,cpf,sexo,dt_nascimento,state,municipio,password
+      name, 
+      email, 
+      cpf, 
+      sexo, 
+      dt_nascimento, 
+      state, 
+      municipio, 
+      password, 
+      tipo_sanguineo
     });
     
     return res.json(user);
@@ -47,7 +66,7 @@ class UserController {
                      dt_nascimento: user.dt_nascimento,
                      state: user.state,
                      municipio: user.municipio,
-                     photo_profile: new Buffer(fs.readFileSync(path.join(pathImage, user.photo_profile))).toString('base64'),
+                     photo_profile: user.photo_profile ? new Buffer(fs.readFileSync(path.join(pathImage, user.photo_profile))).toString('base64') : null,
                      tipo_sanguineo: user.tipo_sanguineo,
                      password_hash: user.password_hash,
                      allergy_id: user.allergy_id,
@@ -70,13 +89,15 @@ class UserController {
     
     let pathImage = path.join('e:/test/',photoUpdate);
 
-    let base64Image = photo_profile.split(';base64,').pop();
+    let base64Image = photo_profile ? photo_profile.split(';base64,').pop() : null;
 
+    base64Image ?
     fs.writeFile(pathImage, base64Image, {encoding: 'base64'}, function(err) {
       console.log('File created');
-    });
+    }) 
+    : null;
 
-    const user = await User.update({name, email, cpf, sexo, dt_nascimento, state, municipio, password_hash, photo_profile: photoUpdate, tipo_sanguineo
+    const user = await User.update({name, email, cpf, sexo, dt_nascimento, state, municipio, password_hash, photo_profile: base64Image ? photoUpdate : null, tipo_sanguineo
     }, {returning: true, where: {id: id} });
     
     return res.json(user);

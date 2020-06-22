@@ -47,7 +47,7 @@ class AllergyController {
       return res.status(400).json({error: 'Já existe uma alergia cadastrada para este usuário com esta descrição!'});
     }
 
-    console.log(descricao, AllergyExist.id, UserExist.id);
+														  
 
     const { allergy_id, user_id} = await UserAllergies.create({allergy_id: AllergyExist.id, user_id: UserExist.id}); /*retorna para o front */
 

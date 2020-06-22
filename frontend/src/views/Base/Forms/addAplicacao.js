@@ -37,7 +37,7 @@ class addaplicacao extends Component {
       estab_id:'',
       user_id:''
     }
-  
+
     this.stateAgendamento = {
       dose:'',
       scheduling_date: '',
@@ -55,7 +55,7 @@ class addaplicacao extends Component {
     });
   }
 
-  
+
 
   handleSubmit = async e => {
     e.preventDefault();
@@ -113,7 +113,7 @@ class addaplicacao extends Component {
                   />
                 </FormGroup >
               <FormGroup row className="my-0">
-               
+
                <Col xs="4">
                 <FormGroup>
                   <Label htmlFor="date-input">Data Aplicação</Label>
@@ -126,7 +126,7 @@ class addaplicacao extends Component {
                   />
                 </FormGroup>
                 </Col>
-           
+
                   <Col xs="4">
                     <FormGroup>
                     <Label htmlFor="select">Dose</Label>
@@ -138,7 +138,7 @@ class addaplicacao extends Component {
                         </Input>
                     </FormGroup>
                   </Col>
-                  
+
                   <Col xs="4">
                   <Label htmlFor="select">Vacina</Label>
                      <Input type="select" name="select" id="select" value={vaccine_id} onChange={(e) => this.setState({ vaccine_id: e.target.value })}>
@@ -204,7 +204,7 @@ class addaplicacao extends Component {
                   <Card>
                     <CardBody>
                       <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
-                 
+
                           <FormGroup row>
                             <Col md="3">
                               <Label htmlFor="select">Dose</Label>
@@ -250,8 +250,8 @@ class addaplicacao extends Component {
                           </FormGroup>
                       </Form>
                       <Col md="12">
-                         <Button onClick={(e) => this.handleSubmitAgenamento(e)} size="sm" color="success"><i class="fa fa-check-square-o" aria-hidden="true"></i>Finalizar</Button>
-                    </Col> 
+                         <Button onClick={(e) => this.handleSubmitAgenamento(e)} size="sm" color="success"><i className="fa fa-check-square-o" aria-hidden="true"></i>Finalizar</Button>
+                    </Col>
                     </CardBody>
                   </Card>
                 </Col>

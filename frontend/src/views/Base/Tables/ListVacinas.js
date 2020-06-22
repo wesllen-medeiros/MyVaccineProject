@@ -115,8 +115,8 @@ class ListVacinas extends Component {
                             <Badge color="success">Disponível</Badge>
                           </td>
                           <td>
-                             <Button color="success" onClick={()=> this.toggleLarge(post.name)} className="mt-3" active tabIndex={-1}><i class="fa fa-plus" aria-hidden="true"></i></Button>
-                             <Button color="primary" className="mt-3" active tabIndex={-1}><i class="fa fa-list-alt" aria-hidden="true"></i></Button>
+                             <Button color="success" onClick={()=> this.toggleLarge(post.name)} className="mt-3" active tabIndex={-1}><i className="fa fa-plus" aria-hidden="true"></i></Button>
+                             <Button color="primary" className="mt-3" active tabIndex={-1}><i className="fa fa-list-alt" aria-hidden="true"></i></Button>
                           </td>
                         </tr>
                     ))}

@@ -39,12 +39,13 @@ routes.get('/estab', EstabController.index);
 /* Campaign */
 routes.post('/campaign', CampaignController.store);
 routes.get('/campaign', CampaignController.index);
-routes.get('/campaign/:id', CampaignController.show);
+routes.delete('/campaign/:id', CampaignController.delete);
 
 
 /* Application */
 routes.post('/application', ApplicationController.store);
-routes.get('/application', ApplicationController.index);
+routes.get('/application', ApplicationController.indexWeb);
+routes.get('/applicationMobile', ApplicationController.indexMobile);
 
 /* Scheduling */
 routes.post('/schedule', ScheduleController.store);

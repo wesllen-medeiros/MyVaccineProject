@@ -12,12 +12,12 @@ class SessionController {
 
     if(!user){
       return res.status(401).json({
-        error: 'Usuário não autorizado!'
+        error: 'Usuário inexistente!'
       });
     }
 
     if(!(await user.checkPassword(password))){
-      return res.status(401).json({error: 'Senha não autorizada!'})
+      return res.status(401).json({error: 'Senha incorreta!'})
     }
 
     const { id, name} = user;

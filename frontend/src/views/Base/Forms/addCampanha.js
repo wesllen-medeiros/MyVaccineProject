@@ -21,29 +21,37 @@ class addCampanha extends Component {
 
   state = {
     descricao: '',
-    dt_ini: '', 
-    dt_fim:'',   
-    state: '', 
-    municipio:'', 
+    dt_ini: '',
+    dt_fim:'',
+    state: '',
+    municipio:'',
     audience: '',
     min_age: '',
     max_age: '',
     unity_age: '',
     dose: '',
     selected_estab: '',
-    estabelecimentos: [], 
+    estabelecimentos: [],
     selected_vaccine:'',
     vaccines: [],
   }
 
 
-  
+
 handleSubmit = async e => {
   e.preventDefault();
 
   const {  descricao,dt_ini,dt_fim,state,municipio,audience,min_age,max_age,unity_age,dose,selected_estab, selected_vaccine } = this.state;
 
-  await api.post('campaign', {descricao,dt_ini,dt_fim,state,municipio,audience,min_age,max_age,unity_age,dose,estab_id: selected_estab.id, vaccine_id: selected_vaccine.id });
+  await api.post('campaign', {descricao,dt_ini,dt_fim,state,municipio,audience,min_age,max_age,unity_age,dose,estab_id: selected_estab.id, vaccine_id: selected_vaccine.id }).then(
+    function(){
+      alert('Campanha cadastrada com sucesso!')
+    }
+  ).catch(
+    function(err){
+      console.log(err);
+    }
+  );
 
   this.props.history.push('../cards/CardCampanha');
   //this.props.history.push('ListVacina')
@@ -97,7 +105,7 @@ async componentDidMount() {
                               <Label htmlFor="date-input">Inicio</Label>
                             </Col>
                             <Col xs="12" md="9">
-                              <Input type="date" 
+                              <Input type="date"
                               id="date-input"
                               name="date-input"
                               placeholder="date"
@@ -125,7 +133,7 @@ async componentDidMount() {
                               <Label htmlFor="text-input">Estado</Label>
                             </Col>
                             <Col xs="12" md="9">
-                              <Input type="text" 
+                              <Input type="text"
                               id="text-input"
                               name="text-input"
                               onChange={(e) => this.setState({ state: e.target.value })}
@@ -139,7 +147,7 @@ async componentDidMount() {
                             </Col>
                             <Col xs="12" md="9">
                               <Input type="text"
-                               id="text-input" 
+                               id="text-input"
                                name="text-input"
                                onChange={(e) => this.setState({ municipio: e.target.value })}
                                value={municipio}
@@ -148,41 +156,41 @@ async componentDidMount() {
                           </FormGroup>
                           <FormGroup row>
                             <Col md="3">
-                              <Label htmlFor="select">Alvos</Label>
+                              <Label htmlFor="select">Público</Label>
                             </Col>
                             <Col xs="12" md="9">
                               <Input type="select" name="select" id="select" value={audience} onChange={(e) => this.setState({ audience: e.target.value })}>
-                              <option value="CRIANCA">CRIANÇA</option>
-                                <option value="ADULTO">ADULTO</option>
-                                <option value="ADOLECENTE">ADOLECENTE</option>
-                                <option value="GESTANTE">GESTANTE</option>
-                                <option value="GESTANTE">IDOSO</option>
+                              <option value="CRIANCA">Criança</option>
+                                <option value="ADULTO">Adulto</option>
+                                <option value="ADOLESCENTE">Adolescente</option>
+                                <option value="Idoso">Idoso</option>
+                                <option value="GESTANTE">Gestante</option>
                               </Input>
                             </Col>
                           </FormGroup>
                           <FormGroup row>
                             <Col md="3">
-                              <Label htmlFor="text-input">Idade Minima</Label>
+                              <Label htmlFor="text-input">Idade Mínima</Label>
                             </Col>
                             <Col xs="12" md="9">
-                              <Input type="text" 
-                              id="text-input" 
+                              <Input type="text"
+                              id="text-input"
                               name="text-input"
-                              onChange={(e) => this.setState({ max_age: e.target.value })}
-                              value={max_age}
+                              onChange={(e) => this.setState({ min_age: e.target.value })}
+                              value={min_age}
                               />
                             </Col>
                           </FormGroup>
                           <FormGroup row>
                             <Col md="3">
-                              <Label htmlFor="text-input">Idade Maxima</Label>
+                              <Label htmlFor="text-input">Idade Máxima</Label>
                             </Col>
                             <Col xs="12" md="9">
-                              <Input type="text" 
-                              id="text-input" 
+                              <Input type="text"
+                              id="text-input"
                               name="text-input"
-                              onChange={(e) => this.setState({ min_age: e.target.value })}
-                              value={min_age}
+                              onChange={(e) => this.setState({ max_age: e.target.value })}
+                              value={max_age}
                               />
                             </Col>
                           </FormGroup>
@@ -199,7 +207,7 @@ async componentDidMount() {
                               </Input>
                             </Col>
                           </FormGroup>
-              
+
                           <FormGroup row>
                             <Col md="3">
                               <Label htmlFor="select">Dose</Label>

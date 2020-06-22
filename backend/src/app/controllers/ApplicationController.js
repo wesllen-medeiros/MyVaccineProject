@@ -35,7 +35,7 @@ class ApplicationController {
     return res.json(application);
   }
 
-  async index(req , res) {
+  async indexMobile(req , res) {
 
     if (!req.query.userId){
       return res.status(400).json({error: 'Usuário não informado'});
@@ -62,11 +62,9 @@ class ApplicationController {
 
     return res.json(application);
 
-  }
+  } 
 
-  
-
-  async index(req , res) { 
+  async indexWeb(req , res) { 
 
     const application = await Application.findAll({
       include: [{

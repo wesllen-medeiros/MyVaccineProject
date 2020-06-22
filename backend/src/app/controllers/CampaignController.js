@@ -1,6 +1,9 @@
 import Campaign from '../models/Campaign';
 import Estab from '../models/Estab';
 import Vaccine from '../models/vaccine';
+import PushNotifications from '../models/PushNotifications';
+import UserNotifications from '../models/UserNotifications';
+import User from '../models/User';
 
 class CampaignController {
   async store(req , res) {
@@ -17,7 +20,8 @@ class CampaignController {
       min_age, 
       max_age, 
       unity_age, 
-      dose, 
+      dose,
+      active 
     } = req.body; /*retorna para o front */
     
     const estab = await Estab.findByPk(estab_id);
@@ -35,7 +39,7 @@ class CampaignController {
     const campaignExist = await Campaign.findOne({ where: {descricao: req.body.descricao}});
 
     if (campaignExist) {
-      return res.status(400).json({error: 'Campanha ja cadastrado!'});
+      return res.status(400).json({error: 'Campanha ja cadastrada!'});
     }
 
     if (audience != "CRIANCA" && audience != "ADULTO" && audience != "ADOLESCENTE" && audience != "GESTANTE" && audience != "IDOSO") {
@@ -67,7 +71,41 @@ class CampaignController {
       max_age, 
       unity_age, 
       dose,
+      active: active == null ? 'ATIVA' : active
     });
+
+    let publico = campaign.audience == 'CRIANCA' && campaign.unity_age == 'AO_NASCER' ? 'recém nascidos' :  
+                  campaign.audience == 'CRIANCA' && campaign.unity_age == 'MESES' ? 'bebês' : 
+                  campaign.audience == 'CRIANCA' && campaign.unity_age == 'ANOS' ? 'crianças' :
+                  campaign.audience == 'ADOLECESCENTE' ? 'adolescentes' :
+                  campaign.audience == 'ADULTO' ? 'adultos' :
+                  campaign.audience == 'IDOSO' ? 'idosos' :
+                  campaign.audience == 'GESTANTE' ? 'gestantes' : null;
+
+    let unidadeIdade = campaign.unity_age == 'AO_NASCER' ? 'meses' : 
+                       campaign.unity_age == 'MESES' ? 'meses' :
+                       campaign.unity_age == 'ANOS' ? 'anos' : null;
+
+    const pushNotification = await PushNotifications.create({
+    message: campaign.descricao + ' destinada a ' + publico + ' de ' + campaign.min_age + ' até ' + campaign.max_age + ' ' +  unidadeIdade,
+    title: 'Campanha de prevenção para ' + vaccine.descricao,
+    campaign_id: campaign.id
+  });
+
+  const usersExistentes = await User.findAll();
+
+  console.log("Tamanho:", usersExistentes.length);
+
+  for (let index = 0; index < usersExistentes.length; index++) {
+    const userId = usersExistentes[index].id;
+    console.log('UserId: ' + userId);   
+
+    const userNotification = await UserNotifications.create({
+      user_id: userId,
+      push_notification_id: pushNotification.id,
+      status: 'PENDENTE'
+    });
+  };                   
     
     return res.json(campaign);
   }
@@ -88,16 +126,25 @@ class CampaignController {
     return res.json(campaign);
   }
 
-  async show(req, res) {
+  async delete(req, res) {
     const { id } = req.params;
 
-    const vaccine = await Vaccine.findByPk(id, {
-      attributes: ['id', 'name'],
-    });
+    const campaign = await Campaign.findByPk(id);
 
-    if (!vaccine) return res.status(400).json({ error: 'ID not found' });
+    if (!campaign) return res.status(400).json({ error: 'Campanha não existe' });
 
-    return res.json(vaccine);
+    await campaign.destroy().then(
+      function(){
+        return res.json('Campanha excluída com sucesso');
+      }
+    ).catch(
+      function(err){
+        console.log(err);
+        return res.status(400).json({ error: 'Houve um erro ao excluir a campanha' });
+      }
+    )
+
+    
   }
 }
 

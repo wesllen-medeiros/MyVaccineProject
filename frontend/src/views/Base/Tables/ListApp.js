@@ -38,7 +38,7 @@ class ListApp extends Component {
   }
 
   render(){
-  
+
     return (
       <div className="animated fadeIn"><br></br>
         <Row>
@@ -70,7 +70,7 @@ class ListApp extends Component {
                             <Badge color="success">Concluída</Badge>
                           </td>
                           <td>
-                             <Button color="primary" className="mt-3" active tabIndex={-1}><i class="fa fa-list-alt" aria-hidden="true"></i></Button>
+                             <Button color="primary" className="mt-3" active tabIndex={-1}><i className="fa fa-list-alt" aria-hidden="true"></i></Button>
                           </td>
                         </tr>
                     ))}
@@ -79,8 +79,8 @@ class ListApp extends Component {
                 <Link to="../Forms/addAplicacao">
                   <Button color="primary" className="mt-3" active tabIndex={-1}>Adicionar</Button>
                 </Link>
-             <div class="row justify-content-center">
-               <div class="col-0">
+             <div className="row justify-content-center">
+               <div className="col-0">
                 <Pagination>
                   <PaginationItem>
                     <PaginationLink previous tag="button"></PaginationLink>
