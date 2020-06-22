@@ -93,7 +93,7 @@ class CardCampanha extends Component {
                 <div className="row">
                   <div className="col">
                   <Label><h6>Público-alvo</h6></Label>
-                  <CardText>{post.audience}</CardText>
+                  <CardText>{post.audience === 'CRIANCA' ?  'CRIANÇA' : post.audience}</CardText>
                   </div>
                   <div className="col">
                   <Label><h6>Dose</h6></Label>
@@ -142,7 +142,7 @@ class CardCampanha extends Component {
                   </div>
                   <div className="col">
                   <Label><h6>Tipo</h6></Label>
-                  <CardText>{post.unity_age}</CardText>
+                  <CardText>{post.unity_age === 'ANOS' ? 'Anos' : post.unity_age === 'MESES' ? 'Meses' : 'AO_NASCER'}</CardText>
                   </div>
                 </div>
               </div> <br></br>

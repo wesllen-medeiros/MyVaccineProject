@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table,
+import { Button, Badge, Card, CardBody, CardHeader, CardText, Col, Pagination, PaginationItem, PaginationLink, Row, Table,
   FormGroup,
   Input,
   Label,
@@ -9,6 +9,7 @@ import { Button, Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationI
   ModalBody,
   ModalHeader,
   CardFooter,
+  Collapse,
 } from 'reactstrap';
 import api from '../../../services/index';
 
@@ -16,10 +17,13 @@ class ListVacinas extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      large: false
+      large: false,
+      list: false,
+      collapse: null,
     };
 
-    this.toggleLarge = this.toggleLarge.bind(this);
+    this.toggleAdd = this.toggleAdd.bind(this);
+    this.toggleList = this.toggleList.bind(this);
 
     this.state = {
       aplication: [],
@@ -27,15 +31,34 @@ class ListVacinas extends Component {
       min_age: '',
       max_age: '',
       unity_age: '',
-      name_vaccine: ''
+      name_vaccine: '',
+      public_vaccine: []
     }
 
   }
 
-  toggleLarge(name_vaccine = '') {
+  toggleAdd(name_vaccine = '') {
     this.setState({
       large: !this.state.large,
       name_vaccine: name_vaccine
+    });
+
+  }
+
+  toggleCollapse(id) {
+    if (!this.state.collapse || id !== this.state.collapse) {
+      this.setState({
+        collapse: id
+      });
+    } else if (this.state.collapse === id) {
+        this.setState({ collapse: false })
+    }
+  }
+
+  toggleList(public_vaccine = []) {
+    this.setState({
+      list: !this.state.list,
+      public_vaccine: Array.from(public_vaccine)
     });
 
   }
@@ -73,7 +96,7 @@ class ListVacinas extends Component {
       }
     )
 
-    this.toggleLarge();
+    this.toggleAdd();
   }
 
   render() {
@@ -83,6 +106,7 @@ class ListVacinas extends Component {
       min_age,
       max_age,
       unity_age,
+      public_vaccine
     } = this.state;
 
     return (
@@ -115,8 +139,8 @@ class ListVacinas extends Component {
                             <Badge color="success">Disponível</Badge>
                           </td>
                           <td>
-                             <Button color="success" onClick={()=> this.toggleLarge(post.name)} className="mt-3" active tabIndex={-1}><i className="fa fa-plus" aria-hidden="true"></i></Button>
-                             <Button color="primary" className="mt-3" active tabIndex={-1}><i className="fa fa-list-alt" aria-hidden="true"></i></Button>
+                             <Button color="success" onClick={()=> this.toggleAdd(post.name)} className="mt-3" active tabIndex={-1}><i className="fa fa-plus" aria-hidden="true"></i></Button>
+                             <Button color="primary" onClick={()=> this.toggleList(post.public)} className="mt-3" active tabIndex={-1}><i className="fa fa-list-alt" aria-hidden="true"></i></Button>
                           </td>
                         </tr>
                     ))}
@@ -158,9 +182,55 @@ class ListVacinas extends Component {
           </Col>
         </Row>
 
-        <Modal isOpen={this.state.large} toggle={this.toggleLarge}
+        <Modal isOpen={this.state.list} toggle={this.toggleList}
             className={'modal-lg ' + this.props.className}>
-            <ModalHeader toggle={this.toggleLarge}>Público-Alvo</ModalHeader>
+            <ModalHeader toggle={this.toggleList}>Público-Alvo</ModalHeader>
+            <ModalBody>
+            <Row>
+          <Col xs="12"  md="12">
+          {public_vaccine.map((item, index) => (
+            <Card key={index} >
+              <CardHeader className="text-white bg-info">
+               {item.audience === 'CRIANCA' ?  'CRIANÇA' : item.audience}
+                  <div className="card-header-actions">
+                    {/*eslint-disable-next-line*/}
+                    <a className="card-header-action btn btn-minimize" data-target="#collapseCard" onClick={() => this.toggleCollapse(item.id)}><i className="icon-arrow-up"></i></a>
+                  </div>
+              </CardHeader>
+              <Collapse isOpen={this.state.collapse === item.id} id="collapseCard">
+              <CardBody>
+              <Col>
+
+              <div className="container">
+                <div className="row">
+                  <div className="col">
+                  <Label><h6>Idade Inicial</h6></Label>
+                  <CardText>{item.min_age}</CardText>
+                  </div>
+                  <div className="col">
+                  <Label><h6>Idade Limite</h6></Label>
+                  <CardText>{item.max_age}</CardText>
+                  </div>
+                  <div className="col">
+                  <Label><h6>Tipo</h6></Label>
+                  <CardText>{item.unity_age === 'ANOS' ? 'Anos' : item.unity_age === 'MESES' ? 'Meses' : 'AO_NASCER'}</CardText>
+                  </div>
+                </div>
+              </div> <br></br>
+
+              </Col>
+              </CardBody>
+            </Collapse>
+            </Card>
+            ))}
+          </Col>
+        </Row>
+            </ModalBody>
+          </Modal>
+
+          <Modal isOpen={this.state.large} toggle={this.toggleAdd}
+            className={'modal-lg ' + this.props.className}>
+            <ModalHeader toggle={this.toggleAdd}>Público-Alvo</ModalHeader>
             <ModalBody>
             <Form onSubmit={e => this.handleSubmit(e)} >
               <Row>
