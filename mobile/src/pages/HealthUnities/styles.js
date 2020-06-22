@@ -14,6 +14,8 @@ export const Content = styled.View`
 
 export const View = styled.View``;
 
+export const ViewTest = styled.View``;
+
 export const Header = styled.View`
   flex-direction: row;
   justify-content: space-between;

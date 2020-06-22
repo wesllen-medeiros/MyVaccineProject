@@ -12,6 +12,8 @@ import {
   NavText,
   SignOutButton,
   SignOutButtonText,
+  Text,
+  TextView
 } from './styles';
 
 export default function Menu({translateY, user}) {
@@ -35,13 +37,15 @@ export default function Menu({translateY, user}) {
       }}>
       <Code>
         <QRCode
-          value="https://rocketseat.com.br"
+          value={user.id}
           size={150}
           fgColor="#FFF"
           bgColor="#34b7f1"
         />
-      </Code>
-
+      </Code>        
+        <TextView>
+          <Text>Código: {user.id}</Text>
+        </TextView>
       <Nav>
         <NavItem onPress={() => {navigateToProfile()}}>
           <Icon name="person-outline" size={20} color="#FFF" />

@@ -36,7 +36,7 @@ export default function Applied() {
 
         setUser(userIdSession);
 
-        const responseApplied = await api.get(`application`, {
+        const responseApplied = await api.get(`applicationMobile`, {
             params: {
               userId: userIdSession
             }
@@ -54,7 +54,7 @@ export default function Applied() {
                 reacao: applied.reacao,
                 vaccine: {
                     id: applied.vaccine.id,
-                    descricao: applied.vaccine.descricao.toUpperCase()
+                    name: applied.vaccine.name.toUpperCase()
                 },
                 user: {
                     id: applied.user.id,
@@ -86,7 +86,7 @@ export default function Applied() {
     return(
         <Container>
             <Header>
-                <Icon style={{paddingTop: 9}} onPress={() => {navigateToMain()}} name="close" size={30} color="#333" />
+                <Icon style={{paddingTop: 9}} onPress={() => {navigateToMain()}} name="close" size={30} color="#FFF" />
                 <Image style={styles.logo}
                 source={logoImg} />
                 <Icon style={{paddingTop: 9}} name="check" size={30} color="#34b7f1" />
@@ -99,7 +99,7 @@ export default function Applied() {
                 renderItem={({item: applied }) => (
                     <Card>
                         <CardHeader>                            
-                            <CardHeaderItem>{applied.vaccine.descricao}</CardHeaderItem>
+                            <CardHeaderItem>{applied.vaccine.name}</CardHeaderItem>
                             <CardHeaderItem>{applied.dt_aplicacao}</CardHeaderItem>
                         </CardHeader>
                         <Item>Dose: {applied.dose}</Item>

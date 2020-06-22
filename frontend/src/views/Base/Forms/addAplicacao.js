@@ -14,6 +14,8 @@ import {
   ModalHeader,
   Row,
 } from 'reactstrap';
+import Select from "react-select";
+import dateformat from 'dateformat'
 
 
 import api from '../../../services/index';
@@ -35,7 +37,11 @@ class addaplicacao extends Component {
       reacao: '',
       vaccine_id:'',
       estab_id:'',
-      user_id:''
+      user_id:'',
+      selected_estab: '',
+      estabelecimentos: [],
+      selected_vaccine: '',
+      vaccines: [],
     }
 
     this.stateAgendamento = {
@@ -60,9 +66,9 @@ class addaplicacao extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
-    const { nm_agente,dt_aplicacao,dose,reacao,vaccine_id,estab_id,user_id } = this.state;
+    const { nm_agente,dt_aplicacao,dose,reacao,selected_estab, selected_vaccine,user_id } = this.state;
 
-    await api.post('application', { nm_agente,dt_aplicacao,dose,reacao,vaccine_id,estab_id,user_id });
+    await api.post('application', { nm_agente,dt_aplicacao: dateformat(new Date(dt_aplicacao).setDate(new Date(dt_aplicacao).getDate() + 1)),dose,reacao,estab_id: selected_estab.id, vaccine_id: selected_vaccine.id ,user_id });
 
     //this.props.history.push('../tables/ListApp');
     //this.props.history.push('ListVacina'
@@ -71,12 +77,26 @@ class addaplicacao extends Component {
   handleSubmitAgenamento = async e => {
     e.preventDefault();
 
-    const {dose,scheduling_date,vaccine_id,user_id } = this.state;
+    const {dose,scheduling_date,selected_estab, selected_vaccine,user_id } = this.state;
 
-    await api.post('schedule', { dose,scheduling_date,vaccine_id,user_id });
+    await api.post('schedule', { dose, scheduling_date: dateformat(new Date(scheduling_date).setDate(new Date(scheduling_date).getDate() + 1)) ,estab_id: selected_estab.id, vaccine_id: selected_vaccine.id,user_id });
 
     this.props.history.push('../tables/ListApp');
     //this.props.history.push('ListVacina'
+  }
+
+  async componentDidMount() {
+    try {
+      const resEstabs = await api.get('estab');
+
+      this.setState({ estabelecimentos: resEstabs.data });
+
+      const resVaccines = await api.get('vaccine');
+
+      this.setState({ vaccines: resVaccines.data });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
 
@@ -86,10 +106,12 @@ class addaplicacao extends Component {
       dt_aplicacao,
       dose,
       reacao,
-      vaccine_id,
-      estab_id,
       user_id,
       scheduling_date,
+      selected_vaccine,
+      vaccines,
+      selected_estab,
+      estabelecimentos
     } = this.state;
 
     return (
@@ -141,22 +163,35 @@ class addaplicacao extends Component {
 
                   <Col xs="4">
                   <Label htmlFor="select">Vacina</Label>
-                     <Input type="select" name="select" id="select" value={vaccine_id} onChange={(e) => this.setState({ vaccine_id: e.target.value })}>
-                      <option value="3">poliomielite</option>
-                      <option value="4">poliomielite</option>
-                      <option value="5">poliomielite</option>
-                      <option value="6">Três</option>
-                      <option value="7">Quatro</option>
-                     </Input>
+                  <Select
+                    isClearable={true}
+                    isSearchable={true}
+                    options={vaccines}
+                    value={selected_vaccine}
+                    getOptionLabel={(vaccine) => vaccine.name}
+                    getOptionValue={(vaccine) => vaccine.id}
+                    onChange={(vaccine) =>
+                      this.setState({ selected_vaccine: vaccine })
+                    }
+                    placeholder="Selecione a vacina"
+                    />
                   </Col>
 
                   <Col xs="4">
                     <FormGroup>
                     <Label htmlFor="select">Estabelecimento</Label>
-                     <Input type="select" name="select" id="select" value={estab_id} onChange={(e) => this.setState({ estab_id: e.target.value })}>
-                      <option value="1">teste</option>
-                      <option value="2">teste2</option>
-                     </Input>
+                    <Select
+                            isClearable={true}
+                            isSearchable={true}
+                            options={estabelecimentos}
+                            value={selected_estab}
+                            getOptionLabel={(estab) => estab.nm_fantasia}
+                            getOptionValue={(estab) => estab.id}
+                            onChange={(estab) =>
+                              this.setState({ selected_estab: estab })
+                            }
+                            placeholder="Selecione o estabelecimento"
+                            />
                     </FormGroup>
                   </Col>
 
@@ -210,12 +245,12 @@ class addaplicacao extends Component {
                               <Label htmlFor="select">Dose</Label>
                             </Col>
                             <Col xs="12" md="9">
-                              <Input type="select" name="select" id="select" value={dose} onChange={(e) => this.setState({ dose: e.target.value })}>
+                            <Input type="select" name="select" id="select" value={dose} onChange={(e) => this.setState({ dose: e.target.value })}>
                               <option value="1">1º Dose</option>
-                                <option value="2" >2º Dose</option>
-                                <option value="2">3º Dose</option>
-                                <option value="4">4º Dose</option>
-                              </Input>
+                              <option value="2" >2º Dose</option>
+                              <option value="2">3º Dose</option>
+                              <option value="4">4º Dose</option>
+                            </Input>
                             </Col>
                           </FormGroup>
 
@@ -239,13 +274,18 @@ class addaplicacao extends Component {
                               <Label htmlFor="select">Vacina</Label>
                             </Col>
                             <Col xs="12" md="9">
-                              <Input type="select" name="select" id="select" value={vaccine_id} onChange={(e) => this.setState({ vaccine_id: e.target.value })}>
-                              <option value="3">poliomielite</option>
-                                <option value="4">poliomielite</option>
-                                <option value="5">poliomielite</option>
-                                <option value="6">Três</option>
-                                <option value="7">Quatro</option>
-                              </Input>
+                              <Select
+                              isClearable={true}
+                              isSearchable={true}
+                              options={vaccines}
+                              value={selected_vaccine}
+                              getOptionLabel={(vaccine) => vaccine.name}
+                              getOptionValue={(vaccine) => vaccine.id}
+                              onChange={(vaccine) =>
+                                this.setState({ selected_vaccine: vaccine })
+                              }
+                              placeholder="Selecione a vacina"
+                              />
                             </Col>
                           </FormGroup>
                       </Form>

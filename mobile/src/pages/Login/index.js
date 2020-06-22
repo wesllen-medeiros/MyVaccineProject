@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native'
 import * as SecureStore from 'expo-secure-store';
 import { Image } from 'react-native';
@@ -23,7 +23,7 @@ import {
   } from './styles';
 
 
-export default function Login() {
+export default function Login() {    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -36,7 +36,7 @@ export default function Login() {
         };
 
         try {
-            const response = await api.post('usersessions', data);
+            const response = await api.post('usersessions', data)
 
             await SecureStore.setItemAsync('userSession',JSON.stringify(response.data.user.id));
 
@@ -60,7 +60,7 @@ export default function Login() {
             <FormGroup>
                 <Form>
                     <Icon style={{padding:4}} name="face" size={35} color="#FFF" />
-                    <FormInput placeholder="E-mail" type="text"
+                    <FormInput placeholder="E-mail" type="text" autoCapitalize="none"
                     onChangeText={(inputVal) => setEmail(inputVal)}></FormInput>
                 </Form>
                 <Form>

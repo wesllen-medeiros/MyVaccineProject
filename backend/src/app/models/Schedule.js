@@ -24,6 +24,11 @@ class Schedule extends Model {
       foreignKey: 'user_id',
       as: 'user',
     });
+    
+    this.belongsTo(models.Estab, {
+      foreignKey: 'estab_id',
+      as: 'estab',
+    });
   }
 }
 export default Schedule;

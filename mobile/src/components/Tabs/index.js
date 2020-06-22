@@ -19,6 +19,10 @@ export default function Tabs({translateY}) {
     navigation.navigate('HealthUnities');
   }
 
+  function navigateToSchedule(){
+    navigation.navigate('Schedule');
+  }
+
   return (
     <Container
       style={{
@@ -39,7 +43,7 @@ export default function Tabs({translateY}) {
       }}>
       <TabsContainer>
         <TabItem>
-          <Icon name="event" size={35} color="#FFF" />
+          <Icon onPress={() => {navigateToSchedule()}} name="event" size={35} color="#FFF" />
           <TabText>Agendar</TabText>
         </TabItem>
         <TabItem>

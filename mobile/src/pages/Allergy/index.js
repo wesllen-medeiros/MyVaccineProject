@@ -45,6 +45,8 @@ export default function Allergy() {
 
     let dataAllergy = responseAllergy.data;
 
+    getUserAllergy(userIdSession).then(data => setUserAllergies(data));
+
     return dataAllergy;
     
     }
@@ -53,19 +55,15 @@ export default function Allergy() {
         navigation.navigate('Main');
     }
 
-    async function getUserAllergy(){ 
-
-        let userIdSession = await SecureStore.getItemAsync('userSession'); 
-        
-        setUser(userIdSession);
+    async function getUserAllergy(userId = null){
 
         let dataAllergies = '';
 
         //busca Alergias do usuario pelo Id
-        await api.get(`userAllergy/${user}`).then(function(data){
+        await api.get(`userAllergy/${userId}`).then(function(data){
             dataAllergies = data.data;
         }).catch(function(error){
-            console.log(JSON.stringify(error.response.data.error))
+            console.log(JSON.stringify(error.response.data))
         });
 
         return dataAllergies
@@ -91,10 +89,10 @@ export default function Allergy() {
     return(
         <Container>
             <Header>
-                <Icon style={{paddingTop: 9}} onPress={() => {navigateToMain()}} name="close" size={30} color="#333" />                        
+                <Icon style={{paddingTop: 9}} onPress={() => {navigateToMain()}} name="close" size={30} color="#FFF" />                        
                 <Image style={styles.logo}
                 source={logoImg} />
-                <Icon style={{paddingTop: 9}} name="refresh" onPress={() => {getUserAllergy().then(userAllergy => setUserAllergies(userAllergy))}} size={30} color="#333" />
+                <Icon style={{paddingTop: 9}} name="refresh" onPress={() => {getUserAllergy(user).then(userAllergy => setUserAllergies(userAllergy))}} size={30} color="#FFF" />
             </Header>
             <Content>
                 <FlatList style={styles.flatList}

@@ -63,7 +63,7 @@ class ListApp extends Component {
                       {this.state.aplic.map(post => (
                         <tr  key={post.id}>
                           <td>{post.user.name}</td>
-                          <td>{dateformat(new Date(post.dt_aplicacao).setDate(new Date(post.dt_aplicacao).getDate() + 1), 'dd/mm/yyyy')}</td>
+                          <td>{dateformat(post.dt_aplicacao, 'dd/mm/yyyy')}</td>
                           <td>{post.vaccine_id}</td>
                           <td>{post.dose}</td>
                           <td>

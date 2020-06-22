@@ -88,7 +88,7 @@ class CampaignController {
 
     const pushNotification = await PushNotifications.create({
     message: campaign.descricao + ' destinada a ' + publico + ' de ' + campaign.min_age + ' até ' + campaign.max_age + ' ' +  unidadeIdade,
-    title: 'Campanha de prevenção para ' + vaccine.descricao,
+    title: 'Campanha de prevenção para ' + vaccine.name,
     campaign_id: campaign.id
   });
 

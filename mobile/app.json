@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "MyVaccine",
-    "slug": "myvaccube",
+    "slug": "myvaccine",
     "platforms": [
       "ios",
       "android",
@@ -9,11 +9,15 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "",
+    "icon": "./src/assets/icones.png",
     "splash": {
-      "image": "",
+      "image": "./src/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#34b7f1"
+    },
+    "notification": {
+      "icon": "./src/assets/android_icone.png",
+      "androidMode": "default"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

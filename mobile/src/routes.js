@@ -12,6 +12,7 @@ import Register from './pages/Register';
 import Allergy from './pages/Allergy';
 import Applied from './pages/Applied';
 import HealthUnities from './pages/HealthUnities';
+import Schedule from './pages/Schedule';
 
 
 
@@ -26,6 +27,7 @@ export default function Routes() {
                 <AppStack.Screen name="Allergy" component={ Allergy } />
                 <AppStack.Screen name="Applied" component={ Applied } />
                 <AppStack.Screen name="HealthUnities" component={ HealthUnities } />
+                <AppStack.Screen name="Schedule" component={ Schedule } />
             </AppStack.Navigator>
         </NavigationContainer>
 

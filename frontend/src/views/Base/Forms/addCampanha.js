@@ -14,6 +14,7 @@ import {
 import Select from "react-select";
 
 import api from '../../../services/index';
+import dateformat from 'dateformat'
 
 
 
@@ -43,7 +44,18 @@ handleSubmit = async e => {
 
   const {  descricao,dt_ini,dt_fim,state,municipio,audience,min_age,max_age,unity_age,dose,selected_estab, selected_vaccine } = this.state;
 
-  await api.post('campaign', {descricao,dt_ini,dt_fim,state,municipio,audience,min_age,max_age,unity_age,dose,estab_id: selected_estab.id, vaccine_id: selected_vaccine.id }).then(
+  await api.post('campaign', {descricao,
+    dt_ini: dateformat(new Date(dt_ini).setDate(new Date(dt_ini).getDate() + 1)),
+    dt_fim: dateformat(new Date(dt_fim).setDate(new Date(dt_fim).getDate() + 1)),
+    state,
+    municipio,
+    audience,
+    min_age,
+    max_age,
+    unity_age,
+    dose,
+    estab_id: selected_estab.id,
+    vaccine_id: selected_vaccine.id }).then(
     function(){
       alert('Campanha cadastrada com sucesso!')
     }

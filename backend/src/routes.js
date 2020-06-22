@@ -9,6 +9,7 @@ import EstabController from './app/controllers/EstabController';
 import CampaignController from './app/controllers/CampaignController';
 import ApplicationController from './app/controllers/ApplicationController';
 import ScheduleController from './app/controllers/ScheduleController';
+import PushNotificationController from './app/controllers/PushNotificationController';
 
 const routes = new Router();
 
@@ -49,6 +50,10 @@ routes.get('/applicationMobile', ApplicationController.indexMobile);
 
 /* Scheduling */
 routes.post('/schedule', ScheduleController.store);
+routes.get('/schedule', ScheduleController.index);
+
+routes.get('/pushNotifications', PushNotificationController.index);
+routes.put('/pushNotifications', PushNotificationController.updateNotification);
 
 
 export default routes;

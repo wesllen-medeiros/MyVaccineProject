@@ -25,7 +25,18 @@ export const NavItem = styled.TouchableOpacity`
   border-bottom-color: rgba(255, 255, 255, 0.8);
 `;
 
+export const TextView = styled.View`  
+  margin-right: 25px;
+  align-items: center;
+`;
+
 export const NavText = styled.Text`
+  font-size: 15px;
+  color: #fff;
+  margin-left: 20px;
+`;
+
+export const Text = styled.Text`
   font-size: 15px;
   color: #fff;
   margin-left: 20px;

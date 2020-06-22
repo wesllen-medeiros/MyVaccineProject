@@ -3,8 +3,9 @@ import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TextInputMask } from 'react-native-masked-text';
 import * as ImagePicker from 'expo-image-picker';
+import moment from 'moment';
 
-import {Image} from 'react-native';
+import { Alert, Image} from 'react-native';
 
 import { Avatar } from 'react-native-paper';
 
@@ -92,12 +93,27 @@ export default function Profile(user) {
         }
     }
 
-    async function saveChangesProfile(){
+    function saveChangesProfile(){
+
+        Alert.alert("Confirma as alterações?", '', 
+            [
+                {
+                    text: 'Não',
+                    style: "cancel"
+                },
+                {
+                    text: 'Sim',
+                    onPress: () => save()
+                }
+            ]);    
+    }
+
+    async function save(){
 
         //converte data para enviar ao backend
-        var dateParts = birthday.split("/");
-
-        var dtNascimento = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]).toISOString();
+        let day = birthday.substring(0,2);
+        let month = birthday.substring(3,5);
+        let year = birthday.substring(6,10);
 
         const data = {
             id: id,
@@ -105,12 +121,12 @@ export default function Profile(user) {
             email: email,
             cpf: cpf,
             sexo: sexo,
-            dt_nascimento: dtNascimento.toString(),
+            dt_nascimento: moment(year + '-' + month + '-' + day).toISOString(),
             state: state,
             municipio: city,
             password_hash: passwordHash,
             photo_profile: photoProfile,
-            tipo_sanguineo: bloodType
+            tipo_sanguineo: bloodType ? bloodType : "O-"
         };
 
         try {   
@@ -118,6 +134,9 @@ export default function Profile(user) {
         }catch(e){
             console.log(e);
         }
+
+        navigateToMain();
+
     }
 
     useEffect(() => {
@@ -127,17 +146,18 @@ export default function Profile(user) {
     return(
         <Container>
             <Header>
-                <Icon style={{paddingTop: 9}} onPress={() => {navigateToMain()}} name="close" size={30} color="#333" />
+                <Icon style={{paddingTop: 9}} onPress={() => {navigateToMain()}} name="close" size={30} color="#FFF" />
                 <Image style={styles.logo}
                 source={logoImg} />
-                <Icon style={{paddingTop: 9}} name="check" onPress={() => {saveChangesProfile()}} size={30} color="#333" />
+                <Icon style={{paddingTop: 9}} name="check" onPress={() => {saveChangesProfile()}} size={30} color="#FFF" />
             </Header>
             <Content>
                 <Card>
                     <CardImage>
                         <Avatar.Image   size={100}
                                         style={{backgroundColor: "#34b7f1"}} 
-                                        source={{uri: ('data:image/png;base64,' + photoProfile)}}/>
+                                        source={photoProfile ? {uri: ('data:image/png;base64,' + photoProfile)} : require('../../assets/photoProfile.png')}/>
+                                        
 
                         <Icon onPress={() => {imagePicker()}} style={{position: "relative", marginTop: -35, marginLeft: 70}} name="photo" size={40} color="#34b7f1" />
                     </CardImage>
@@ -188,9 +208,10 @@ export default function Profile(user) {
                     <InputSelect placeholder="Sexo"
                     mode="dropdown"
                     onValueChange={(inputVal) => setSexo(inputVal)}
-                    selectedValue={sexo}>
+                    selectedValue={sexo}> 
+                        <InputSelect.Item label="Selecione um sexo" value="N" />
                         <InputSelect.Item label="Feminino" value="F" />
-                        <InputSelect.Item label="Masculino" value="M" />                        
+                        <InputSelect.Item label="Masculino" value="M" />                       
                     </InputSelect>
                     <CardItem>
                         <CardItemText>Endereço (Cidade | Estado)</CardItemText>
@@ -204,9 +225,28 @@ export default function Profile(user) {
                             <InputSelectState placeholder="Estado"
                                 mode="dropdown"
                                 onValueChange={(inputVal) => setState(inputVal)}
-                                selectedValue={state}>
+                                selectedValue={state}>                                
+                                <InputSelectState.Item label="Selecione um estado" value="NN" />
+                                <InputSelectState.Item label="Acre" value="AC" />
+                                <InputSelectState.Item label="Alagoas" value="AL" />
+                                <InputSelectState.Item label="Amapá" value="AP" />
+                                <InputSelectState.Item label="Amazonas" value="AM" />
+                                <InputSelectState.Item label="Bahia" value="BA" />
+                                <InputSelectState.Item label="Ceará" value="CE" />
+                                <InputSelectState.Item label="Distrito Federal" value="DF" />
+                                <InputSelectState.Item label="Espírito Santo" value="ES" />
+                                <InputSelectState.Item label="Goiás" value="GO" />
+                                <InputSelectState.Item label="Maranhão" value="MA" />
+                                <InputSelectState.Item label="Mato Grosso" value="MT" />
+                                <InputSelectState.Item label="Mato Grosso do Sul" value="MS" />
+                                <InputSelectState.Item label="Minas Gerais" value="MG" />
+                                <InputSelectState.Item label="Pará" value="PA" />
+                                <InputSelectState.Item label="Paraíba" value="PB" />
+                                <InputSelectState.Item label="Paraná" value="PR" />
                                 <InputSelectState.Item label="Santa Catarina" value="SC" />
                                 <InputSelectState.Item label="São Paulo" value="SP" />
+                                <InputSelectState.Item label="Sergipe" value="SE" />
+                                <InputSelectState.Item label="Tocantins" value="TO" /> 
                             </InputSelectState>
                         </CardItemItem>
                     </CardItem>                    

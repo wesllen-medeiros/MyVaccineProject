@@ -120,11 +120,11 @@ class CardCampanha extends Component {
                 <div className="row">
                   <div className="col">
                   <Label><h6>Dt. Liberação</h6></Label>
-                  <CardText>{dateformat(new Date(post.dt_ini).setDate(new Date(post.dt_ini).getDate() + 1), 'dd/mm/yyyy')}</CardText>
+                  <CardText>{dateformat(post.dt_ini, 'dd/mm/yyyy')}</CardText>
                   </div>
                   <div className="col">
                   <Label><h6>Dt. Fim Liberação</h6></Label>
-                  <CardText>{dateformat(new Date(post.dt_fim).setDate(new Date(post.dt_fim).getDate() + 1), 'dd/mm/yyyy')}</CardText>
+                  <CardText>{dateformat(post.dt_fim, 'dd/mm/yyyy')}</CardText>
                   </div>
                 </div>
               </div> <br></br>
