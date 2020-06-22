@@ -163,7 +163,7 @@ async componentDidMount() {
                               <option value="CRIANCA">Criança</option>
                                 <option value="ADULTO">Adulto</option>
                                 <option value="ADOLESCENTE">Adolescente</option>
-                                <option value="Idoso">Idoso</option>
+                                <option value="IDOSO">Idoso</option>
                                 <option value="GESTANTE">Gestante</option>
                               </Input>
                             </Col>
