@@ -31,19 +31,23 @@ import {
     Card,
     CardHeader,
     CardHeaderItem,
-    Item
+    Item,
+    InputSelectEstab
   } from './styles';
 
 
 export default function Schedule() {
     const [schedules, setSchedules] = useState([]);
     const [vaccines, setVaccines] = useState([]);
+    const [estabs, setEstabs] = useState([]);
     const [vaccine, setVaccine] = useState([]);
+    const [estab, setEstab] = useState([]);
     const [scheduleDate, setSchedulingDate] = useState('');
 
     async function loadContent(){
         setSchedulingDate(dateFormat(new Date(), 'dd/mm/yyyy'))
         getVaccines().then(data => setVaccines(data));
+        getEstabs().then(data => setEstabs(data));
 
         const responseGetSchedule = await api.get(`schedule`, {
             params: {
@@ -82,6 +86,12 @@ export default function Schedule() {
         return responseVaccine.data;
     }
 
+    async function getEstabs(){
+        const responseEstab = await api.get(`estab`);
+
+        return responseEstab.data;
+    }
+
     function saveSchedule(){
 
        Alert.alert("Confirma o agendamento?", '', 
@@ -108,7 +118,8 @@ export default function Schedule() {
             dose: 1,
             scheduling_date: moment(year + '-' + month + '-' + day).toISOString(),
             vaccine_id: vaccine.id,
-            user_id: await SecureStore.getItemAsync('userSession')
+            user_id: await SecureStore.getItemAsync('userSession'),
+            estab_id: estab.id
         }).then(function(data){
             loadContent().then(data => setSchedules(data));
         }).catch(function(error){
@@ -182,6 +193,22 @@ export default function Schedule() {
                             onChangeText={(inputVal) => setSchedulingDate(inputVal)}
                             style={styles.textInputMask}>
                         </TextInputMask> 
+                        </ItemCard>
+                        <ItemCard>
+                            <LabelInput>Estabelecimento</LabelInput>
+                        </ItemCard>
+                        <ItemCard>
+                            <InputSelectEstab 
+                                placeholder="Vacinas"
+                                mode="dropdown"
+                                onValueChange={(itemValue, itemIndex) => setEstab({id: itemValue})}
+                                selectedValue={estab.id}>
+                                { estabs.map((item) =>{
+                                    return(
+                                    <InputSelectEstab.Item label={item.nm_fantasia} value={item.id} key={item.id}/>
+                                    ); })
+                                }
+                            </InputSelectEstab>
                         </ItemCard>
                         <ItemCardButton>
                             <Button onPress={() => {saveSchedule()}}>

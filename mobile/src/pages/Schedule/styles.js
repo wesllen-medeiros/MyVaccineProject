@@ -22,16 +22,16 @@ export const Content = styled.View`
 export const CardListSchedule = styled.View`
   background: transparent;
   margin: 0 20px;
-  height: 77%;
-  max-height: 77%;
+  height: 70%;
+  max-height: 70%;
 `;
 
 export const CardAddSchedule = styled.View`
   background: #fff;
   border-radius: 4px;
   margin: 0 20px;
-  height: 30%;
-  max-height: 150px;
+  height: 210px;
+  max-height: 250px;
 `;
 
 export const CardItemAdd = styled.View`
@@ -103,6 +103,13 @@ export default StyleSheet.create({
 });
 
 export const InputSelectVaccine = styled.Picker`
+  background-color: transparent;
+  color: #fff;
+  border-radius: 4px;
+  min-width: 57%;
+`;
+
+export const InputSelectEstab = styled.Picker`
   background-color: transparent;
   color: #fff;
   border-radius: 4px;

@@ -6,7 +6,9 @@ import Estab from '../models/Estab';
 class ScheduleController {
     async store(req , res) {
 
-        const { dose, scheduling_date, vaccine_id, user_id } = req.body;
+        const { dose, scheduling_date, vaccine_id, user_id, estab_id } = req.body;
+
+        console.log(req.body);
 
         const vaccine = await Vaccine.findByPk(vaccine_id);
 
@@ -31,7 +33,8 @@ class ScheduleController {
         const schedule = await Schedule.create({user_id: user_id, 
                                                 scheduling_date: scheduling_date, 
                                                 vaccine_id: vaccine_id,
-                                                dose: dose});
+                                                dose: dose, 
+                                                estab_id: estab_id == null ? null : estab_id});
  
         return res.json(schedule);
     }
