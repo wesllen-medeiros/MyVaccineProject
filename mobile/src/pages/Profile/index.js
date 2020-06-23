@@ -129,11 +129,15 @@ export default function Profile(user) {
             tipo_sanguineo: bloodType ? bloodType : "O-"
         };
 
-        try {   
-            const response = await api.put('users', data);
-        }catch(e){
-            console.log(e);
-        }
+        await api.put('users', data).then(
+            function(data){
+                Alert.alert("Sucesso", "Usuário atualizado!");
+            }
+        ).catch(
+            function(err){
+                console.log(err.response.data);
+            }
+        )
 
         navigateToMain();
 

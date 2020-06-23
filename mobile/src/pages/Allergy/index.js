@@ -74,7 +74,7 @@ export default function Allergy() {
         //Envia dados para salvar a lista de alergias do usuário
         await api.post(`userAllergy`, {descricao: alergia.descricao, user_id: user})
         .then(function(data){
-            Alert.alert("Sucesso", "Alergia adicionada com sucesso!");
+            Alert.alert("Sucesso", "Alergia cadastrada!");
             getUserAllergy().then(userAllergy => setUserAllergies(userAllergy));
         }
         ).catch(function(error){

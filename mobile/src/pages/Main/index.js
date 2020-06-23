@@ -189,7 +189,6 @@ export default function Main() {
   }
 
   function navigateToNotification(){
-    console.log('teste');
       navigation.navigate('Notification');
 
   }
