@@ -38,7 +38,17 @@ class addVacina extends Component {
 
     const { name,prevention,dose } = this.state;
 
-    await api.post('vaccine', { name,prevention,dose });
+    await api.post('vaccine', { name,prevention,dose }).then(
+      function(data){
+        console.log(data);
+        alert('Vacina cadastrada com sucesso')
+      }
+    ).catch(
+      function(err){
+        let erro =  err.response.data.erro_mensagem_vacina;
+        alert(`Algo inesperado aconteceu!\n ${erro}`);
+      }
+    );
 
     this.props.history.push('../tables/ListVacinas');
     //this.props.history.push('ListVacina')
@@ -94,7 +104,7 @@ class addVacina extends Component {
                     </Col>
                   </FormGroup>
 
-                  
+
                   <FormGroup row>
                       <Col md="3">
                          <Label htmlFor="select">Dose</Label>
@@ -113,7 +123,7 @@ class addVacina extends Component {
                             <Button type="submit" color="success" className="mt-3" active tabIndex={-1}>Salvar</Button>
                         </Col>
                 </Form>
-      
+
               </CardBody>
             </Card>
           </Col>

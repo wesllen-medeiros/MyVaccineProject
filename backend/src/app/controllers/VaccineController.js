@@ -22,7 +22,7 @@ class VaccineController {
       erro_mensagem_vacina = "Esta Vacina não foi cadastrada, pois já existe outra cadastrada com este nome";
     }
 
-    if(data.public.length > 0){
+    if(data.public !== undefined){
 
     for (let index = 0; index < data.public.length; index++) {
 
@@ -57,9 +57,15 @@ class VaccineController {
         erro_mensagem_vacina,
         erro_mensagem_publico
       });
-    } else {
-      
-      vaccine = await Vaccine.findAll({where: {id: VaccineExist ? VaccineExist.id : vaccine.id },
+    } 
+    
+    if(data.public === undefined && erro_mensagem_vacina != "") {
+      console.log('teste');
+      return res.status(400).json({
+        erro_mensagem_vacina
+      });
+    } else {      
+      vaccine = await Vaccine.findAll({
         include: [{
           model: PublicVaccination,
           as: 'public'

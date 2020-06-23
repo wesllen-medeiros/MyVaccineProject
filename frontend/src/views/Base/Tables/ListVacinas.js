@@ -64,16 +64,22 @@ class ListVacinas extends Component {
   }
 
   async componentDidMount() {
-    try {
-      const res = await api.get('vaccine');
+    let retorno = [];
+      await api.get('vaccine').then(
+        function(data){
+          retorno = Array.from(data.data);
+        }
+      ).catch(
+        function(err) {
+          console.log(err.response.data);
+          let erro =  err.response.data.error;
+          alert(`Algo inesperado aconteceu!\n ${erro}`);
+        }
+      )
 
+      this.setState({ aplication: retorno });
 
-      this.setState({ aplication: res.data });
-    } catch (err) {
-      console.log(err);
-    }
   }
-
 
   handleSubmit = async (e) => {
     e.preventDefault();
@@ -238,7 +244,6 @@ class ListVacinas extends Component {
                   <Card>
                     <CardBody>
                       <Form action="" method="post" encType="multipart/form-data" className="form-horizontal" >
-
                         <FormGroup row>
                           <Col md="3">
                             <Label htmlFor="select">Alvos</Label>

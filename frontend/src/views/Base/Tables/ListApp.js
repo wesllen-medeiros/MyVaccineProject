@@ -40,15 +40,21 @@ class ListApp extends Component {
   }
 
   async componentDidMount() {
-    try {
-      const res = await api.get('application');
 
-      console.log(res.data);
+    let retorno = [];
+      await api.get('application').then(
+        function(data){
+          retorno = Array.from(data.data);
+        }
+      ).catch(
+        function(err) {
+          console.log(err.response.data);
+          let erro =  err.response.data.error;
+          alert(`Algo inesperado aconteceu!\n ${erro}`);
+        }
+      )
 
-      this.setState({ aplic: res.data });
-    } catch (err) {
-      console.log(err);
-    }
+      this.setState({ aplic: retorno });
   }
 
   render(){
@@ -85,7 +91,7 @@ class ListApp extends Component {
                         <tr  key={post.id}>
                           <td>{post.user.name}</td>
                           <td>{dateformat(post.dt_aplicacao, 'dd/mm/yyyy')}</td>
-                          <td>{post.vaccine_id}</td>
+                          <td>{post.vaccine.name}</td>
                           <td>{post.dose}</td>
                           <td>
                             <Badge color="success">Concluída</Badge>
