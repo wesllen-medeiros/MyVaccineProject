@@ -13,6 +13,7 @@ import Allergy from './pages/Allergy';
 import Applied from './pages/Applied';
 import HealthUnities from './pages/HealthUnities';
 import Schedule from './pages/Schedule';
+import Notification from './pages/Notification';
 
 
 
@@ -28,6 +29,7 @@ export default function Routes() {
                 <AppStack.Screen name="Applied" component={ Applied } />
                 <AppStack.Screen name="HealthUnities" component={ HealthUnities } />
                 <AppStack.Screen name="Schedule" component={ Schedule } />
+                <AppStack.Screen name="Notification" component={ Notification } />
             </AppStack.Navigator>
         </NavigationContainer>
 

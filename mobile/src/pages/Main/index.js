@@ -188,6 +188,12 @@ export default function Main() {
 
   }
 
+  function navigateToNotification(){
+    console.log('teste');
+      navigation.navigate('Notification');
+
+  }
+
   let offset = 0;
   const translateY = new Animated.Value(0);
 
@@ -350,8 +356,8 @@ export default function Main() {
                 </CardItem>
               </Bottom>                
             </CardContent>
-            <CardFooter>
-                <Annotation>
+            <CardFooter onPress={() => {navigateToNotification()}}>
+                <Annotation onPress={() => {navigateToNotification()}}>
                   {recentNotification}
                 </Annotation>
             </CardFooter>

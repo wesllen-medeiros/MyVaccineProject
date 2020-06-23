@@ -8,8 +8,6 @@ class PushNotification {
 
   async updateNotification(req , res) { 
 
-    console.log('Params Update Id: ' + JSON.stringify(req.body));
-
     const user = await User.findOne({ where: {id: req.body.userId}});
 
     if (!user){
@@ -42,18 +40,42 @@ class PushNotification {
       return res.status(400).json({error: 'Usuário não existe' });
     }
 
-    const pushNotifications = await PushNotifications.findAll({
-      include:[
-        {
-          model: UserNotifications,
-          as: 'UserNotifications',
-          where: { user_id: user.id,
-                   status: req.query.status !== undefined ? req.query.status : {
-                    [Op.ne]: null
-                }}
-        }
-      ]
-    });    
+    let pushNotifications = [];
+
+    console.log(req.query);
+
+    if (req.query.orderBy !== 'desc'){
+
+      pushNotifications = await PushNotifications.findAll({
+        include:[
+          {
+            model: UserNotifications,
+            as: 'UserNotifications',
+            where: { user_id: user.id,
+                     status: req.query.status !== undefined ? req.query.status : {
+                      [Op.ne]: null
+                  }}
+          }
+        ]
+      }); 
+    } else {
+      pushNotifications = await PushNotifications.findAll({
+        include:[
+          {
+            model: UserNotifications,
+            as: 'UserNotifications',
+            where: { user_id: user.id,
+                     status: req.query.status !== undefined ? req.query.status : {
+                      [Op.ne]: null
+                  }}
+          }
+        ],
+        order: [
+          ['id', 'DESC']
+        ]
+      }); 
+    }
+       
 
     return res.json(pushNotifications);
   }
