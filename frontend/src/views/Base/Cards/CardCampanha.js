@@ -73,12 +73,15 @@ class CardCampanha extends Component {
     return (
       <div className="animated fadeIn"><br></br>
         <Row>
-          <Col xs="12"  md="4">
+          <Col xs="4"  md="4">
             {this.state.campanhas.map((post, index) => (
             <Fade key={index} timeout={this.state.timeout} in={this.state[post.id] === undefined || this.state[post.id] === null ? true : this.state[post.id]} unmountOnExit={this.state.unmountOnExit}>
             <Card key={index} >
               <CardHeader className="text-white bg-info">
-               {post.descricao}
+               {post.descricao} para {post.audience === 'CRIANCA' ?  'Crianças' :
+                                      post.audience === 'ADULTO' ? 'Adultos' :
+                                      post.audience === 'ADOLESCENTE' ? 'Adolescentes' :
+                                      post.audience === 'IDOSO' ? 'Idosos' : 'Gestatens'}
                   <div className="card-header-actions">
                     {/*eslint-disable-next-line*/}
                     <a className="card-header-action btn btn-minimize" data-target="#collapseExample" onClick={() => this.toggle(post.id)}><i className="icon-arrow-up"></i></a>
@@ -142,7 +145,7 @@ class CardCampanha extends Component {
                   </div>
                   <div className="col">
                   <Label><h6>Tipo</h6></Label>
-                  <CardText>{post.unity_age === 'ANOS' ? 'Anos' : post.unity_age === 'MESES' ? 'Meses' : 'AO_NASCER'}</CardText>
+                  <CardText>{post.unity_age === 'ANOS' ? 'Anos' : post.unity_age === 'MESES' ? 'Meses' : 'AO NASCER'}</CardText>
                   </div>
                 </div>
               </div> <br></br>

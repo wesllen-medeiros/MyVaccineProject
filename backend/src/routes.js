@@ -10,6 +10,7 @@ import CampaignController from './app/controllers/CampaignController';
 import ApplicationController from './app/controllers/ApplicationController';
 import ScheduleController from './app/controllers/ScheduleController';
 import PushNotificationController from './app/controllers/PushNotificationController';
+import DashboardController from './app/controllers/DashboardController';
 
 const routes = new Router();
 
@@ -54,6 +55,9 @@ routes.get('/schedule', ScheduleController.index);
 
 routes.get('/pushNotifications', PushNotificationController.index);
 routes.put('/pushNotifications', PushNotificationController.updateNotification);
+
+
+routes.get('/appliedVaccines', DashboardController.indexAppliedVaccines);
 
 
 export default routes;

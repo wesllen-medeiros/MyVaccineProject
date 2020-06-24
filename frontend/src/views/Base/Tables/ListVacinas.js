@@ -9,9 +9,11 @@ import { Button, Badge, Card, CardBody, CardHeader, CardText, Col, Pagination, P
   ModalBody,
   ModalHeader,
   CardFooter,
-  Collapse,
+  Collapse
 } from 'reactstrap';
 import api from '../../../services/index';
+
+import Select from "react-select";
 
 class ListVacinas extends Component {
   constructor(props) {
@@ -27,12 +29,50 @@ class ListVacinas extends Component {
 
     this.state = {
       aplication: [],
-      audience: '',
       min_age: '',
       max_age: '',
-      unity_age: '',
       name_vaccine: '',
-      public_vaccine: []
+      public_vaccine: [],
+      audience: {
+                value: 'CRIANCA',
+                label: 'Criança'
+                },
+      audiences: [{
+                value: 'CRIANCA',
+                label: 'Criança'
+              },
+              {
+                value: 'ADULTO',
+                label: 'Adulto'
+              },
+              {
+                value: 'ADOLESCENTE',
+                label: 'Adolescente'
+              },
+              {
+                value: 'IDOSO',
+                label: 'Idoso'
+              },
+              {
+                value: 'GESTANTE',
+                label: 'Gestante'
+              }],
+      unity_age: {
+                value: 'MESES',
+                label: 'Meses'
+                },
+      unity_ages: [{
+                value: 'MESES',
+                label: 'Meses'
+              },
+              {
+                value: 'ANOS',
+                label: 'Anos'
+              },
+              {
+                value: 'AO_NASCER',
+                label: 'Ao Nascer'
+              }]
     }
 
   }
@@ -77,6 +117,8 @@ class ListVacinas extends Component {
         }
       )
 
+      console.log(retorno);
+
       this.setState({ aplication: retorno });
 
   }
@@ -91,7 +133,7 @@ class ListVacinas extends Component {
       name_vaccine,
     } = this.state;
 
-    await api.post('vaccine', { name: name_vaccine, public: [{audience,min_age,max_age,unity_age}] }).then(
+    await api.post('vaccine', { name: name_vaccine, public: [{audience: audience.value, min_age, max_age, unity_age: unity_age.value}] }).then(
       function(data){
         alert(`Público alvo cadastrado com sucesso!`);
       }
@@ -109,6 +151,8 @@ class ListVacinas extends Component {
 
     const{
       audience,
+      audiences,
+      unity_ages,
       min_age,
       max_age,
       unity_age,
@@ -249,13 +293,18 @@ class ListVacinas extends Component {
                             <Label htmlFor="select">Alvos</Label>
                           </Col>
                           <Col xs="12" md="9">
-                            <Input type="select" name="select" id="select" value={audience} onChange={(e) => this.setState({ audience: e.target.value })}>
-                              <option value="CRIANCA">Criança</option>
-                              <option value="ADULTO">Adulto</option>
-                              <option value="ADOLESCENTE">Adolescente</option>
-                              <option value="IDOSO">Idoso</option>
-                              <option value="GESTANTE">Gestante</option>
-                            </Input>
+                          <Select
+                              isClearable={true}
+                              isSearchable={true}
+                              options={audiences}
+                              value={audience}
+                              getOptionLabel={(audiencel) => audiencel.label}
+                              getOptionValue={(audiencel) => audiencel.value}
+                              onChange={(audiencel) =>
+                                this.setState({ audience: audiencel })
+                              }
+                              placeholder="Selecione um público"
+                            />
                           </Col>
                         </FormGroup>
 
@@ -292,11 +341,18 @@ class ListVacinas extends Component {
                             <Label htmlFor="select">Tipo idade</Label>
                           </Col>
                           <Col xs="12" md="9">
-                            <Input type="select" name="select" id="select" value={unity_age} onChange={(e) => this.setState({ unity_age: e.target.value })}>
-                              <option value="MESES">Meses</option>
-                              <option value="ANOS">Anos</option>
-                              <option value="AO_NASCER">Ao Nascer</option>
-                            </Input>
+                            <Select
+                                isClearable={true}
+                                isSearchable={true}
+                                options={unity_ages}
+                                value={unity_age}
+                                getOptionLabel={(unity_agel) => unity_agel.label}
+                                getOptionValue={(unity_agel) => unity_agel.value}
+                                onChange={(unity_agel) =>
+                                  this.setState({ unity_age: unity_agel })
+                                }
+                                placeholder="Selecione um tipo de unidade para idade"
+                              />
                           </Col>
                         </FormGroup>
 

@@ -82,7 +82,11 @@ class VaccineController {
                                   include: [{
                                     model: PublicVaccination,
                                     as: 'public'
-                                  }]
+                                  }],
+                                  order: [
+                                    ['name', 'ASC'],
+                                    [ 'public', 'audience', 'ASC']
+                                  ]
                                 })
 
     return res.json(vaccine);

@@ -42,9 +42,7 @@ class PushNotification {
 
     let pushNotifications = [];
 
-    console.log(req.query);
-
-    if (req.query.orderBy !== 'desc'){
+    if (req.query.orderBy !== 'DESC'){
 
       pushNotifications = await PushNotifications.findAll({
         include:[

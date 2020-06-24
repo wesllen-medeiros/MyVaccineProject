@@ -78,7 +78,10 @@ class ApplicationController {
       {
         model:User,
         as: 'user'
-      }]
+      }],
+      order: [
+        ['dt_aplicacao', 'DESC']
+      ]
     });
 
     return res.json(application);

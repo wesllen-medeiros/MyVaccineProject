@@ -36,10 +36,20 @@ class CampaignController {
       return res.status(400).json({error: 'Vacina incorreta'});
     }
 
-    const campaignExist = await Campaign.findOne({ where: {descricao: req.body.descricao}});
+    const campaignExist = await Campaign.findOne({ where: {
+      dt_ini, 
+      dt_fim, 
+      state, 
+      municipio, 
+      estab_id, 
+      vaccine_id, 
+      audience, 
+      min_age, 
+      max_age,  
+      dose }});
 
     if (campaignExist) {
-      return res.status(400).json({error: 'Campanha ja cadastrada!'});
+      return res.status(400).json({error: 'Já existe uma campanha cadastrada com estas definições!'});
     }
 
     if (audience != "CRIANCA" && audience != "ADULTO" && audience != "ADOLESCENTE" && audience != "GESTANTE" && audience != "IDOSO") {

@@ -24,36 +24,104 @@ class addCampanha extends Component {
     descricao: '',
     dt_ini: '',
     dt_fim:'',
-    state: '',
     municipio:'',
-    audience: '',
     min_age: '',
     max_age: '',
-    unity_age: '',
-    dose: '',
     selected_estab: '',
     estabelecimentos: [],
     selected_vaccine:'',
     vaccines: [],
-  }
+    dose: {
+          nm_dose: '1 Dose',
+          descricao: 'Uma'
+          },
+    doses: [{
+            nm_dose: '1 Dose',
+            descricao: 'Uma'
+            },
+            {
+              nm_dose: '2 Doses',
+              descricao: 'Duas'
+            },
+            {
+              nm_dose: '3 Doses',
+              descricao: 'Três'
+            },
+            {
+              nm_dose: '4 Doses',
+              descricao: 'Quatro'
+            }],
+    audience: {
+              value: 'CRIANCA',
+              label: 'Criança'
+              },
+    audiences: [{
+              value: 'CRIANCA',
+              label: 'Criança'
+            },
+            {
+              value: 'ADOLESCENTE',
+              label: 'Adolescente'
+            },
+            {
+              value: 'ADULTO',
+              label: 'Adulto'
+            },
+            {
+              value: 'IDOSO',
+              label: 'Idoso'
+            },
+            {
+              value: 'GESTANTE',
+              label: 'Gestante'
+            }],
+    unity_age: {
+              value: 'MESES',
+              label: 'Meses'
+              },
+    unity_ages: [{
+                  value: 'MESES',
+                  label: 'Meses'
+                },
+                {
+                  value: 'ANOS',
+                  label: 'Anos'
+                },
+                {
+                  value: 'AO_NASCER',
+                  label: 'Ao Nascer'
+                }],
+    state: {
+      nm_state: "Acre"
+    },
+    states:[
+      { nm_state: "Acre"  }, { nm_state: "Alagoas" }, { nm_state: "Amapá" }, { nm_state: "Amazonas" },
+      { nm_state: "Bahia" }, { nm_state: "Ceará" }, { nm_state: "Distrito Federal" }, { nm_state: "Espírito Santo" },
+      { nm_state: "Goiás" }, { nm_state: "Maranhão" }, { nm_state: "Mato Grosso" }, { nm_state: "Mato Grosso do Sul" },
+      { nm_state: "Minas Gerais" }, { nm_state: "Pará" }, { nm_state: "Paraíba" }, { nm_state: "Paraná" },
+      { nm_state: "Santa Catarina" }, { nm_state: "São Paulo" }, { nm_state: "Sergipe" }, { nm_state: "Tocantins" }
+    ]
+          }
 
 
 
 handleSubmit = async e => {
   e.preventDefault();
 
-  const {  descricao,dt_ini,dt_fim,state,municipio,audience,min_age,max_age,unity_age,dose,selected_estab, selected_vaccine } = this.state;
+  const {  descricao, dt_ini, dt_fim, state,
+           municipio, audience, min_age, max_age,
+           unity_age, dose, selected_estab, selected_vaccine } = this.state;
 
   await api.post('campaign', {descricao,
     dt_ini: dateformat(new Date(dt_ini).setDate(new Date(dt_ini).getDate() + 1)),
     dt_fim: dateformat(new Date(dt_fim).setDate(new Date(dt_fim).getDate() + 1)),
-    state,
+    state: state.nm_state,
     municipio,
-    audience,
+    audience: audience.value,
     min_age,
     max_age,
-    unity_age,
-    dose,
+    unity_age: unity_age.value,
+    dose: dose.nm_dose,
     estab_id: selected_estab.id,
     vaccine_id: selected_vaccine.id }).then(
     function(){
@@ -61,7 +129,8 @@ handleSubmit = async e => {
     }
   ).catch(
     function(err){
-      console.log(err);
+      console.log(err.response.data.error);
+      alert(`Não foi possível concluir a operação!\n${err.response.data.error}`)
     }
   );
 
@@ -87,7 +156,11 @@ async componentDidMount() {
 
   render() {
 
-    const {  descricao,dt_ini,dt_fim,state,municipio,audience,min_age,max_age,unity_age,dose, selected_estab, estabelecimentos, selected_vaccine, vaccines} = this.state;
+    const {  descricao, dt_ini, dt_fim,
+             state, states, municipio, audience,
+             audiences, min_age, max_age,
+             unity_age, unity_ages, dose, doses, selected_estab,
+             estabelecimentos, selected_vaccine, vaccines} = this.state;
 
     return (
       <div className="animated fadeIn">
@@ -145,11 +218,17 @@ async componentDidMount() {
                               <Label htmlFor="text-input">Estado</Label>
                             </Col>
                             <Col xs="12" md="9">
-                              <Input type="text"
-                              id="text-input"
-                              name="text-input"
-                              onChange={(e) => this.setState({ state: e.target.value })}
-                              value={state}
+                              <Select
+                                isClearable={true}
+                                isSearchable={true}
+                                options={states}
+                                value={state}
+                                getOptionLabel={(statel) => statel.nm_state}
+                                getOptionValue={(statel) => statel.nm_state}
+                                onChange={(statel) =>
+                                  this.setState({ state: statel })
+                                }
+                                placeholder="Selecione um público"
                               />
                             </Col>
                           </FormGroup>
@@ -171,13 +250,18 @@ async componentDidMount() {
                               <Label htmlFor="select">Público</Label>
                             </Col>
                             <Col xs="12" md="9">
-                              <Input type="select" name="select" id="select" value={audience} onChange={(e) => this.setState({ audience: e.target.value })}>
-                              <option value="CRIANCA">Criança</option>
-                                <option value="ADULTO">Adulto</option>
-                                <option value="ADOLESCENTE">Adolescente</option>
-                                <option value="IDOSO">Idoso</option>
-                                <option value="GESTANTE">Gestante</option>
-                              </Input>
+                            <Select
+                              isClearable={true}
+                              isSearchable={true}
+                              options={audiences}
+                              value={audience}
+                              getOptionLabel={(audiencel) => audiencel.label}
+                              getOptionValue={(audiencel) => audiencel.value}
+                              onChange={(audiencel) =>
+                                this.setState({ audience: audiencel })
+                              }
+                              placeholder="Selecione um público"
+                            />
                             </Col>
                           </FormGroup>
                           <FormGroup row>
@@ -212,11 +296,18 @@ async componentDidMount() {
                               <Label htmlFor="select">Tipo</Label>
                             </Col>
                             <Col xs="12" md="9">
-                              <Input type="select" name="select" id="select" value={unity_age} onChange={(e) => this.setState({ unity_age: e.target.value })}>
-                                <option value="MESES">Meses</option>
-                                <option value="ANOS">Anos</option>
-                                <option value="AO_NASCER">Ao Nascer</option>
-                              </Input>
+                            <Select
+                                isClearable={true}
+                                isSearchable={true}
+                                options={unity_ages}
+                                value={unity_age}
+                                getOptionLabel={(unity_agel) => unity_agel.label}
+                                getOptionValue={(unity_agel) => unity_agel.value}
+                                onChange={(unity_agel) =>
+                                  this.setState({ unity_age: unity_agel })
+                                }
+                                placeholder="Selecione um tipo de unidade para idade"
+                              />
                             </Col>
                           </FormGroup>
 
@@ -225,13 +316,18 @@ async componentDidMount() {
                               <Label htmlFor="select">Dose</Label>
                             </Col>
                             <Col xs="12" md="9">
-                              <Input type="select" name="select" id="select" value={dose} onChange={(e) => this.setState({ dose: e.target.value })}>
-                                <option value="UNICA">Unica</option>
-                                <option value="1 Dose">Uma</option>
-                                <option value="2 Dose">Duas</option>
-                                <option value="3 Dose">Três</option>
-                                <option value="4 Dose">Quatro</option>
-                              </Input>
+                            <Select
+                              isClearable={true}
+                              isSearchable={true}
+                              options={doses}
+                              value={dose}
+                              getOptionLabel={(dosel) => dosel.descricao}
+                              getOptionValue={(dosel) => dosel.nm_dose}
+                              onChange={(dosel) =>
+                                this.setState({ dose: dosel })
+                              }
+                              placeholder="Selecione uma dose"
+                              />
                             </Col>
                           </FormGroup>
 

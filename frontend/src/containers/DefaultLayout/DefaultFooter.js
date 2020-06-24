@@ -16,7 +16,6 @@ class DefaultFooter extends Component {
     return (
       <React.Fragment>
         <span><a href="https://localhost:3000">My Vaccine</a> &copy; 2020.</span>
-        <span className="ml-auto"><a href="https://localhost:3000">Criado para você!</a></span>
       </React.Fragment>
     );
   }

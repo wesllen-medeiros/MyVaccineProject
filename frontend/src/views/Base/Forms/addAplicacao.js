@@ -33,23 +33,33 @@ class addaplicacao extends Component {
     this.state = {
       nm_agente: '',
       dt_aplicacao: '',
-      dose:'',
       reacao: '',
-      vaccine_id:'',
-      estab_id:'',
       user_id:'',
-      selected_estab: '',
+      selected_estab: [],
       estabelecimentos: [],
-      selected_vaccine: '',
+      selected_vaccine: [],
       vaccines: [],
+      dose: {
+        nm_dose: '1º Dose',
+        id: 1
+      },
+      doses: [{
+        nm_dose: '1º Dose',
+        id: 1
+      },
+      {
+        nm_dose: '2º Dose',
+        id: 2
+      },
+      {
+        nm_dose: '3º Dose',
+        id: 3
+      },
+      {
+        nm_dose: '4º Dose',
+        id: 4
+      }]
     }
-
-    this.stateAgendamento = {
-      dose:'',
-      scheduling_date: '',
-      vaccine_id:'',
-    }
-
   }
 
 
@@ -67,11 +77,26 @@ class addaplicacao extends Component {
     e.preventDefault();
 
     const { nm_agente,dt_aplicacao,dose,reacao,selected_estab, selected_vaccine,user_id } = this.state;
+    console.log(this.state);
+    console.log(dose);
+    console.log(dose.nm_dose);
 
-    await api.post('application', { nm_agente,dt_aplicacao: dateformat(new Date(dt_aplicacao).setDate(new Date(dt_aplicacao).getDate() + 1)),dose,reacao,estab_id: selected_estab.id, vaccine_id: selected_vaccine.id ,user_id });
+    await api.post('application', {
+      nm_agente,
+      dt_aplicacao: dateformat(new Date(dt_aplicacao).setDate(new Date(dt_aplicacao).getDate() + 1)),
+      dose: dose.nm_dose,
+      reacao,
+      estab_id: selected_estab.id,
+      vaccine_id: selected_vaccine.id ,
+      user_id }).then(
+        function(){
+        }
+      ).catch(
+        function(err){
+          console.log(err.response.data);
+        }
+      );
 
-    //this.props.history.push('../tables/ListApp');
-    //this.props.history.push('ListVacina'
   }
 
   handleSubmitAgenamento = async e => {
@@ -79,10 +104,9 @@ class addaplicacao extends Component {
 
     const {dose,scheduling_date,selected_estab, selected_vaccine,user_id } = this.state;
 
-    await api.post('schedule', { dose, scheduling_date: dateformat(new Date(scheduling_date).setDate(new Date(scheduling_date).getDate() + 1)) ,estab_id: selected_estab.id, vaccine_id: selected_vaccine.id,user_id });
+    await api.post('schedule', { dose: dose.nm_dose, scheduling_date: dateformat(new Date(scheduling_date).setDate(new Date(scheduling_date).getDate() + 1)) ,estab_id: selected_estab.id, vaccine_id: selected_vaccine.id,user_id });
 
     this.props.history.push('../tables/ListApp');
-    //this.props.history.push('ListVacina'
   }
 
   async componentDidMount() {
@@ -105,6 +129,7 @@ class addaplicacao extends Component {
       nm_agente,
       dt_aplicacao,
       dose,
+      doses,
       reacao,
       user_id,
       scheduling_date,
@@ -152,12 +177,18 @@ class addaplicacao extends Component {
                   <Col xs="4">
                     <FormGroup>
                     <Label htmlFor="select">Dose</Label>
-                        <Input type="select" name="select" id="select" value={dose} onChange={(e) => this.setState({ dose: e.target.value })}>
-                          <option value="1">1º Dose</option>
-                          <option value="2" >2º Dose</option>
-                          <option value="2">3º Dose</option>
-                          <option value="4">4º Dose</option>
-                        </Input>
+                      <Select
+                        isClearable={true}
+                        isSearchable={true}
+                        options={doses}
+                        value={dose}
+                        getOptionLabel={(dosel) => dosel.nm_dose}
+                        getOptionValue={(dosel) => dosel.id}
+                        onChange={(dosel) =>
+                          this.setState({ dose: dosel })
+                        }
+                        placeholder="Selecione uma dose"
+                        />
                     </FormGroup>
                   </Col>
 
@@ -245,12 +276,18 @@ class addaplicacao extends Component {
                               <Label htmlFor="select">Dose</Label>
                             </Col>
                             <Col xs="12" md="9">
-                            <Input type="select" name="select" id="select" value={dose} onChange={(e) => this.setState({ dose: e.target.value })}>
-                              <option value="1">1º Dose</option>
-                              <option value="2" >2º Dose</option>
-                              <option value="2">3º Dose</option>
-                              <option value="4">4º Dose</option>
-                            </Input>
+                            <Select
+                              isClearable={true}
+                              isSearchable={true}
+                              options={doses}
+                              value={dose}
+                              getOptionLabel={(dosel) => dosel.nm_dose}
+                              getOptionValue={(dosel) => dosel.id}
+                              onChange={(dosel) =>
+                                this.setState({ dose: dosel })
+                              }
+                              placeholder="Selecione uma dose"
+                              />
                             </Col>
                           </FormGroup>
 

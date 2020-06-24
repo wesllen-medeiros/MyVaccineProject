@@ -38,7 +38,7 @@ class addaplicacao extends Component {
       estab_id:'',
       user_id:''
     }
-  
+
     this.stateAgendamento = {
       doses:'',
       scheduling_date: '',
@@ -57,7 +57,7 @@ class addaplicacao extends Component {
     });
   }
 
-  
+
   handleSubmitAgenamento = async e => {
     e.preventDefault();
 
@@ -75,13 +75,12 @@ class addaplicacao extends Component {
     const {
       doses,
       scheduling_date,
-      user_id,
       vaccine_id,
     }= this.state;
-  
+
 
     return (
-      <div className="animated fadeIn">    
+      <div className="animated fadeIn">
       <Col xs="12" sm="4">
       <Modal isOpen={this.state.large} toggle={this.toggleLarge}
           className={'modal-lg ' + this.props.className}>
@@ -92,14 +91,14 @@ class addaplicacao extends Component {
                 <Card>
                   <CardBody>
                     <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
-              
+
                         <FormGroup row>
                           <Col md="3">
                             <Label htmlFor="select">Dose</Label>
                           </Col>
                           <Col xs="12" md="9">
                             <Input type="select" name="select" id="select" value={doses} onChange={(e) => this.setState({ doses: e.target.value })}>
-                            <option value="1º Dose">1º Dose</option>
+                              <option value="1º Dose">1º Dose</option>
                               <option value="2º Dose">2º Dose</option>
                               <option value="3º Dose">3º Dose</option>
                               <option value="4º Dose">4º Dose</option>
@@ -140,7 +139,7 @@ class addaplicacao extends Component {
                   </CardBody>
                   <CardFooter>
                       <Button onClick={(e) => this.handleSubmitAgenamento(e)} size="sm" color="primary"><i className="fa fa-dot-circle-o"></i>OK</Button>
-                  </CardFooter> 
+                  </CardFooter>
                 </Card>
               </Col>
             </Row>
