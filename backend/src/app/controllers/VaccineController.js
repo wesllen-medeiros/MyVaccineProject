@@ -78,7 +78,9 @@ class VaccineController {
 
   async index(req , res) {
 
-    const vaccine = await Vaccine.findAll({
+    let retornoVacinas = []
+
+    await Vaccine.findAndCountAll({
                                   include: [{
                                     model: PublicVaccination,
                                     as: 'public'
@@ -87,9 +89,11 @@ class VaccineController {
                                     ['name', 'ASC'],
                                     [ 'public', 'audience', 'ASC']
                                   ]
-                                })
+                                }).then(function (result) {
+                                  retornoVacinas = result;
+                              });
 
-    return res.json(vaccine);
+    return res.json(retornoVacinas);
   }
 }
 

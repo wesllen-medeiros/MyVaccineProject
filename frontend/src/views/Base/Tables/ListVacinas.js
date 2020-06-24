@@ -28,6 +28,7 @@ class ListVacinas extends Component {
     this.toggleList = this.toggleList.bind(this);
 
     this.state = {
+      currentPage: 0,
       aplication: [],
       min_age: '',
       max_age: '',
@@ -107,7 +108,7 @@ class ListVacinas extends Component {
     let retorno = [];
       await api.get('vaccine').then(
         function(data){
-          retorno = Array.from(data.data);
+          retorno = data.data;
         }
       ).catch(
         function(err) {
@@ -117,9 +118,11 @@ class ListVacinas extends Component {
         }
       )
 
-      console.log(retorno);
+      this.pageSize = 6;
+      this.pagesCount = Math.ceil(retorno.rows.length / this.pageSize);
 
-      this.setState({ aplication: retorno });
+
+      this.setState({ aplication: Array.from(retorno.rows) });
 
   }
 
@@ -147,6 +150,16 @@ class ListVacinas extends Component {
     this.toggleAdd();
   }
 
+  handleClick(e, index) {
+
+    e.preventDefault();
+
+    this.setState({
+      currentPage: index
+    });
+
+  }
+
   render() {
 
     const{
@@ -156,7 +169,8 @@ class ListVacinas extends Component {
       min_age,
       max_age,
       unity_age,
-      public_vaccine
+      public_vaccine,
+      currentPage
     } = this.state;
 
     return (
@@ -180,7 +194,10 @@ class ListVacinas extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.state.aplication.map(post => (
+                    {this.state.aplication.slice(
+                          currentPage * this.pageSize,
+                          (currentPage + 1) * this.pageSize
+                        ).map(post => (
                         <tr  key={post.id}>
                           <td>{post.name}</td>
                           <td>{post.prevention}</td>
@@ -206,23 +223,28 @@ class ListVacinas extends Component {
                 <div className="row justify-content-center">
                   <div className="col-0">
                     <Pagination>
+
                       <PaginationItem>
-                        <PaginationLink previous tag="button"></PaginationLink>
+                        <PaginationLink previous tag="button" disabled={currentPage === 0}
+                          onClick={e => this.handleClick(e, currentPage - 1)}
+                          href="#"></PaginationLink>
                       </PaginationItem>
-                      <PaginationItem active>
-                        <PaginationLink tag="button">1</PaginationLink>
+
+                      {[...Array(this.pagesCount)].map((page, i) =>
+                      <PaginationItem active={i === currentPage} key={i}>
+                        <PaginationLink tag="button"
+                        onClick={e => this.handleClick(e, i)}
+                        href="#">
+                          {i + 1}
+                          </PaginationLink>
                       </PaginationItem>
+                        )}
+
                       <PaginationItem>
-                        <PaginationLink tag="button">2</PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink tag="button">3</PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink tag="button">4</PaginationLink>
-                      </PaginationItem>
-                      <PaginationItem>
-                        <PaginationLink next tag="button"></PaginationLink>
+                        <PaginationLink next tag="button" disabled={currentPage + 1 === this.pagesCount}
+                        onClick={e => this.handleClick(e, currentPage + 1)}
+                        href="#">
+                        </PaginationLink>
                       </PaginationItem>
                     </Pagination>
                   </div>

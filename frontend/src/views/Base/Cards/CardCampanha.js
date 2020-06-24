@@ -27,13 +27,21 @@ class CardCampanha extends Component {
 
 
   async componentDidMount() {
-    try {
-      const res = await api.get('campaign');
 
-      this.setState({ campanhas: res.data });
-    } catch (err) {
-      console.log(err);
-    }
+    let retorno = []
+
+      await api.get('campaign').then(
+        function (data) {
+          retorno = data.data;
+        }
+      ).catch(
+        function(err){
+          console.log(err.response.data);
+        }
+      );
+
+
+      this.setState({ campanhas: retorno });
   }
 
   toggle(id) {

@@ -13,6 +13,7 @@ import {
 
 
 import api from '../../../services/index';
+import Select from "react-select";
 
 
 class addVacina extends Component {
@@ -27,7 +28,26 @@ class addVacina extends Component {
     this.state = {
       name: '',
       prevention: '',
-      dose:'',
+      dose: {
+            nm_dose: '1 Dose',
+            descricao: 'Uma'
+            },
+      doses: [{
+              nm_dose: '1 Dose',
+              descricao: 'Uma'
+              },
+              {
+                nm_dose: '2 Doses',
+                descricao: 'Duas'
+              },
+              {
+                nm_dose: '3 Doses',
+                descricao: 'Três'
+              },
+              {
+                nm_dose: '4 Doses',
+                descricao: 'Quatro'
+              }],
     }
 
   }
@@ -38,7 +58,7 @@ class addVacina extends Component {
 
     const { name,prevention,dose } = this.state;
 
-    await api.post('vaccine', { name,prevention,dose }).then(
+    await api.post('vaccine', { name,prevention,dose: dose.nm_dose }).then(
       function(data){
         console.log(data);
         alert('Vacina cadastrada com sucesso')
@@ -68,6 +88,7 @@ class addVacina extends Component {
       name,
       prevention,
       dose,
+      doses
     } = this.state;
 
     return (
@@ -110,13 +131,18 @@ class addVacina extends Component {
                          <Label htmlFor="select">Dose</Label>
                       </Col>
                         <Col xs="12" md="9">
-                         <Input type="select" name="select" id="select" value={dose} onChange={(e) => this.setState({ dose: e.target.value })}>
-                            <option value="UNICA">Unica</option>
-                            <option value="1 DOSE">1 Dose</option>
-                            <option value="2 DOSE">2 Doses</option>
-                            <option value="3 DOSE">3 Doses</option>
-                           <option value="4 DOSE">4 Doses</option>
-                          </Input>
+                        <Select
+                              isClearable={true}
+                              isSearchable={true}
+                              options={doses}
+                              value={dose}
+                              getOptionLabel={(dosel) => dosel.descricao}
+                              getOptionValue={(dosel) => dosel.nm_dose}
+                              onChange={(dosel) =>
+                                this.setState({ dose: dosel })
+                              }
+                              placeholder="Selecione uma dose"
+                              />
                           </Col>
                         </FormGroup>
                         <Col  md="3">

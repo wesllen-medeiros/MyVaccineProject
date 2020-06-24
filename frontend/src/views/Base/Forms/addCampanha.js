@@ -139,17 +139,32 @@ handleSubmit = async e => {
 }
 
 async componentDidMount() {
-  try {
-    const resEstabs = await api.get('estab');
+    let retornoEstabs = [];
+    let retornoVaccines = [];
 
-    this.setState({ estabelecimentos: resEstabs.data });
+    await api.get('estab').then(
+      function (data) {
+        retornoEstabs = data.data;
+      }
+    ).catch(
+      function(err){
+        console.log(err.response.data);
+      }
+    );
 
-    const resVaccines = await api.get('vaccine');
+    this.setState({ estabelecimentos: retornoEstabs });
 
-    this.setState({ vaccines: resVaccines.data });
-  } catch (err) {
-    console.log(err);
-  }
+    await api.get('vaccine').then(
+      function (data) {
+        retornoVaccines = data.data;
+      }
+    ).catch(
+      function(err){
+        console.log(err.response.data);
+      }
+    );
+
+    this.setState({ vaccines: retornoVaccines });
 }
 
 

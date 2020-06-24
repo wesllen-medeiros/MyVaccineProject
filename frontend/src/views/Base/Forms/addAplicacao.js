@@ -104,23 +104,51 @@ class addaplicacao extends Component {
 
     const {dose,scheduling_date,selected_estab, selected_vaccine,user_id } = this.state;
 
-    await api.post('schedule', { dose: dose.nm_dose, scheduling_date: dateformat(new Date(scheduling_date).setDate(new Date(scheduling_date).getDate() + 1)) ,estab_id: selected_estab.id, vaccine_id: selected_vaccine.id,user_id });
+    await api.post('schedule', {
+      dose: dose.nm_dose,
+      scheduling_date: dateformat(new Date(scheduling_date).setDate(new Date(scheduling_date).getDate() + 1)) ,
+      estab_id: selected_estab.id,
+      vaccine_id: selected_vaccine.id,
+      user_id }).then(
+        function(){
+
+        }
+      ).catch(
+        function(err){
+          console.log(err.response.data);
+        }
+      );;
 
     this.props.history.push('../tables/ListApp');
   }
 
   async componentDidMount() {
-    try {
-      const resEstabs = await api.get('estab');
+      let retornoEstabs = [];
+      let retornoVaccines = [];
 
-      this.setState({ estabelecimentos: resEstabs.data });
+      await api.get('estab').then(
+        function (data) {
+          retornoEstabs = data.data;
+        }
+      ).catch(
+        function(err){
+          console.log(err.response.data);
+        }
+      );
 
-      const resVaccines = await api.get('vaccine');
+      this.setState({ estabelecimentos: retornoEstabs });
 
-      this.setState({ vaccines: resVaccines.data });
-    } catch (err) {
-      console.log(err);
-    }
+      await api.get('vaccine').then(
+        function (data) {
+          retornoVaccines = data.data;
+        }
+      ).catch(
+        function(err){
+          console.log(err.response.data);
+        }
+      );
+
+      this.setState({ vaccines: retornoVaccines });
   }
 
 

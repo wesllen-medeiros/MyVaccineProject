@@ -63,7 +63,15 @@ class addaplicacao extends Component {
 
     const {doses,scheduling_date,vaccine_id,user_id } = this.state;
 
-    await api.post('schedule', { doses,scheduling_date,vaccine_id,user_id });
+    await api.post('schedule', { doses,scheduling_date,vaccine_id,user_id }).then(
+      function(){
+
+      }
+    ).catch(
+      function(err){
+        console.log(err.response.data);
+      }
+    );
 
     //this.props.history.push('../tables/ListApp');
     //this.props.history.push('ListVacina'

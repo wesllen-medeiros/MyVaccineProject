@@ -27,15 +27,17 @@ function Register(){
       password
     }
 
-    try {
+      await api.post('estab', data).then(
+        function(data){
+          alert(`Cadastro Eferuado com Sucesso!${data.data.nm_fantasia}`)
+        }
+      ).catch(
+        function(err){
+          console.log(err.response.data);
+        }
+      );
 
-      const res = await api.post('estab', data)
-      alert(`Cadastro Eferuado com Sucesso!${res.data.nm_fantasia}`)
       history.push('/')
-
-    } catch (err) {
-      alert('Erro no cadastro! Tente novamente.')
-    }
 
   }
 

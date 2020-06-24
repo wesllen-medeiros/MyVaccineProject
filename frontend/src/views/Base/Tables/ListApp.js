@@ -24,7 +24,10 @@ class ListApp extends Component {
       aplic: [],
       application: [],
       user: [],
-      estab: []
+      estab: [],
+      currentPage: 0,
+      startIndex : 0,
+      endIndex : 10
     }
 
   }
@@ -44,7 +47,7 @@ class ListApp extends Component {
     let retorno = [];
       await api.get('application').then(
         function(data){
-          retorno = Array.from(data.data);
+          retorno = data.data;
         }
       ).catch(
         function(err) {
@@ -54,7 +57,20 @@ class ListApp extends Component {
         }
       )
 
-      this.setState({ aplic: retorno });
+      this.pageSize = 7;
+      this.pagesCount = Math.ceil(retorno.rows.length / this.pageSize);
+
+      this.setState({ aplic: Array.from(retorno.rows) });
+  }
+
+  handleClick(e, index) {
+
+    e.preventDefault();
+
+    this.setState({
+      currentPage: index
+    });
+
   }
 
   render(){
@@ -62,7 +78,10 @@ class ListApp extends Component {
     const{
       application,
       user,
-      estab
+      estab,
+      currentPage,
+      startIndex,
+      endIndex
     } = this.state;
 
 
@@ -87,7 +106,10 @@ class ListApp extends Component {
                       </tr>
                       </thead>
                       <tbody>
-                      {this.state.aplic.map(post => (
+                      {this.state.aplic.slice(
+                          currentPage * this.pageSize,
+                          (currentPage + 1) * this.pageSize
+                        ).map(post => (
                         <tr  key={post.id}>
                           <td>{post.user.name}</td>
                           <td>{dateformat(post.dt_aplicacao, 'dd/mm/yyyy')}</td>
@@ -109,24 +131,28 @@ class ListApp extends Component {
              <div className="row justify-content-center">
                <div className="col-0">
                 <Pagination>
-                  <PaginationItem>
-                    <PaginationLink previous tag="button"></PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem active>
-                    <PaginationLink tag="button">1</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink tag="button">2</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink tag="button">3</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink tag="button">4</PaginationLink>
-                  </PaginationItem>
-                  <PaginationItem>
-                    <PaginationLink next tag="button"></PaginationLink>
-                  </PaginationItem>
+                <PaginationItem>
+                        <PaginationLink previous tag="button" disabled={currentPage === 0}
+                          onClick={e => this.handleClick(e, currentPage - 1)}
+                          href="#"></PaginationLink>
+                      </PaginationItem>
+
+                      {[...Array(this.pagesCount)].slice(startIndex, endIndex).map((page, i) =>
+                      <PaginationItem active={i === currentPage} key={i}>
+                        <PaginationLink tag="button"
+                        onClick={e => this.handleClick(e, i)}
+                        href="#">
+                          {i + 1}
+                          </PaginationLink>
+                      </PaginationItem>
+                        )}
+
+                      <PaginationItem>
+                        <PaginationLink next tag="button" disabled={currentPage + 1 === this.pagesCount}
+                        onClick={e => this.handleClick(e, currentPage + 1)}
+                        href="#">
+                        </PaginationLink>
+                      </PaginationItem>
                 </Pagination>
                 </div>
               </div>
@@ -185,7 +211,7 @@ class ListApp extends Component {
   }
 };
 
-  export default ListApp;
+export default ListApp;
 
 
 

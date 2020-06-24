@@ -66,7 +66,9 @@ class ApplicationController {
 
   async indexWeb(req , res) { 
 
-    const application = await Application.findAll({
+    let retornoApplication = []
+
+    await Application.findAndCountAll({
       include: [{
         model:Estab,
         as: 'estab',
@@ -82,9 +84,11 @@ class ApplicationController {
       order: [
         ['dt_aplicacao', 'DESC']
       ]
-    });
+    }).then(function (result) {
+      retornoApplication = result;
+  });
 
-    return res.json(application);
+    return res.json(retornoApplication);
 }
 }
 

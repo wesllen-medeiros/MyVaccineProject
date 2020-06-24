@@ -6,21 +6,26 @@ import api from  '../../../services/index';
 function Login(){
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const history = useHistory() 
+  const history = useHistory()
 
   async function handleLogin(e) {
     e.preventDefault()
+    let retornoAdminSessions = [];
 
-    try {
-      const res = await api.post('Adminsessions', { email, password })
+      await api.post('Adminsessions', { email, password }).then(
+        function(data){
+          retornoAdminSessions = data.data;
+        }
+      ).catch(
+        function(err){
+          console.log(err.response.data);
+        }
+      );
 
-      localStorage.setItem('email', email)
-      localStorage.setItem('password', res.data.password)
+      localStorage.setItem('email', email);
+      localStorage.setItem('password', retornoAdminSessions.password);
 
       history.push('/home')
-    } catch (err) {
-      alert('Falha no login! Tente novamente')
-    }
   }
 
     return (
@@ -40,7 +45,7 @@ function Login(){
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" 
+                        <Input type="text"
                         placeholder="Email"
                         autoComplete="username"
                         value={email}

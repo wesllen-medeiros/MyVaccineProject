@@ -58,6 +58,7 @@ routes.put('/pushNotifications', PushNotificationController.updateNotification);
 
 
 routes.get('/appliedVaccines', DashboardController.indexAppliedVaccines);
+routes.get('/campaignVaccines', DashboardController.indexCampaignVaccines);
 
 
 export default routes;
