@@ -53,39 +53,52 @@ export default function Main() {
   const navigation = useNavigation();
 
   async function getNotificationsBase(userId) {
-    const responseNotificationAll = await api.get("pushNotifications", {
-      params: {
-        userId: userId,
-      },
-    });
-
-    if (responseNotificationAll.data.length > 0) {
-      for (
-        let index = 0;
-        index < responseNotificationAll.data.length;
-        index++
-      ) {
-        if (responseNotificationAll.data.length == index + 1) {
-          setRecentNotification(responseNotificationAll.data[index].message);
-        }
-      }
-
-      const responseNotification = await api.get("pushNotifications", {
+    let responseNotificationAll = [];
+    await api
+      .get("pushNotifications", {
         params: {
           userId: userId,
-          status: "PENDENTE",
         },
+      })
+      .then(function (result) {
+        responseNotificationAll = result.data;
+      })
+      .catch(function (err) {
+        console.log(err);
       });
 
-      setNotificationsBase(responseNotification.data);
-
-      for (let index = 0; index < responseNotification.data.length; index++) {
-        if (responseNotification.data.length == index + 1) {
-          setRecentNotification(responseNotification.data[index].message);
+    if (responseNotificationAll.length > 0) {
+      for (let index = 0; index < responseNotificationAll.length; index++) {
+        if (responseNotificationAll.length == index + 1) {
+          setRecentNotification(responseNotificationAll[index].message);
         }
       }
 
-      return responseNotification.data;
+      let responseNotification = [];
+
+      await api
+        .get("pushNotifications", {
+          params: {
+            userId: userId,
+            status: "PENDENTE",
+          },
+        })
+        .then(function (result) {
+          responseNotification = result.data;
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+
+      setNotificationsBase(responseNotification);
+
+      for (let index = 0; index < responseNotification.length; index++) {
+        if (responseNotification.length == index + 1) {
+          setRecentNotification(responseNotification[index].message);
+        }
+      }
+
+      return responseNotification;
     } else {
       return [];
     }
@@ -124,12 +137,21 @@ export default function Main() {
           );
         }
 
-        const responseNotification = await api.put(`pushNotifications`, {
-          userId: notificacaoParaEnviar[index].UserNotifications[0].user_id,
-          userNotificationId:
-            notificacaoParaEnviar[index].UserNotifications[0]
-              .push_notification_id,
-        });
+        let responseNotification = [];
+
+        await api
+          .put(`pushNotifications`, {
+            userId: notificacaoParaEnviar[index].UserNotifications[0].user_id,
+            userNotificationId:
+              notificacaoParaEnviar[index].UserNotifications[0]
+                .push_notification_id,
+          })
+          .then(function (data) {
+            responseNotification = data.data;
+          })
+          .catch(function (err) {
+            console.log(err.response.data);
+          });
 
         const localNotification = {
           title: notifyTitle,
@@ -163,10 +185,19 @@ export default function Main() {
     const userId = await SecureStore.getItemAsync("userSession");
 
     //busca dados do usuario pelo Id
-    const response = await api.get(`users/${userId}`);
+    let response = [];
+
+    await api
+      .get(`users/${userId}`)
+      .then(function (result) {
+        response = result.data;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     //atribui os dados recebidos a uma variavel
-    const userData = response.data;
+    const userData = response;
 
     getApplied(userId).then((data) => setApplieds(data));
 
@@ -228,13 +259,22 @@ export default function Main() {
   }
 
   async function getApplied(userId) {
-    const responseApplied = await api.get(`applicationMobile`, {
-      params: {
-        userId: userId,
-      },
-    });
+    let responseApplied = [];
 
-    let dataApplied = responseApplied.data;
+    await api
+      .get(`applicationMobile`, {
+        params: {
+          userId: userId,
+        },
+      })
+      .then(function (result) {
+        responseApplied = result.data;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+
+    let dataApplied = responseApplied;
 
     const retornoMap = dataApplied.map((applied) => {
       return {

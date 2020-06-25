@@ -15,11 +15,19 @@ class UserController {
       municipio,
       password,
       tipo_sanguineo,
-    } = req.body; /*retorna para o front */
+    } = req.body;
 
-    const userEmailExist = await User.findOne({
+    let userEmailExist = [];
+
+    await User.findOne({
       where: { email: req.body.email },
-    });
+    })
+      .then(function (result) {
+        userEmailExist = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (userEmailExist) {
       return res
@@ -27,7 +35,15 @@ class UserController {
         .json({ error: "Usuário ja cadastrado com este e-mail!" });
     }
 
-    const userCpfExist = await User.findOne({ where: { cpf: req.body.cpf } });
+    let userCpfExist = [];
+
+    await User.findOne({ where: { cpf: req.body.cpf } })
+      .then(function (result) {
+        userCpfExist = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (userCpfExist) {
       return res
@@ -35,7 +51,8 @@ class UserController {
         .json({ error: "Usuário ja cadastrado com este CPF!" });
     }
 
-    const user = await User.create({
+    let retornoUser = [];
+    await User.create({
       name,
       email,
       cpf,
@@ -45,9 +62,15 @@ class UserController {
       municipio,
       password,
       tipo_sanguineo,
-    });
+    })
+      .then(function (result) {
+        retornoUser = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
-    return res.json(user);
+    return res.json(retornoUser);
   }
 
   //Criado por Marco Antonio
@@ -55,7 +78,14 @@ class UserController {
   async index(req, res) {
     let pathImage = "e:/test/";
 
-    const user = await User.findOne({ where: { id: req.params.id } });
+    let user = [];
+    await User.findOne({ where: { id: req.params.id } })
+      .then(function (result) {
+        user = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (!user) {
       return res.status(400).json({ error: "Usuário não existe" });
@@ -96,9 +126,16 @@ class UserController {
       password_hash,
       photo_profile,
       tipo_sanguineo,
-    } = req.body; /*retorna para o front */
+    } = req.body;
 
-    const userExist = await User.findByPk(id);
+    let userExist = [];
+    await User.findByPk(id)
+      .then(function (result) {
+        userExist = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (!userExist) {
       return res
@@ -122,7 +159,9 @@ class UserController {
         })
       : null;
 
-    const user = await User.update(
+    let retornoUpdateUser = [];
+
+    await User.update(
       {
         name,
         email,
@@ -136,9 +175,15 @@ class UserController {
         tipo_sanguineo,
       },
       { returning: true, where: { id: id } }
-    );
+    )
+      .then(function (result) {
+        retornoUpdateUser = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
-    return res.json(user);
+    return res.json(retornoUpdateUser);
   }
 }
 

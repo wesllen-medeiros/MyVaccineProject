@@ -9,42 +9,70 @@ class ScheduleController {
 
     console.log(req.body);
 
-    const vaccine = await Vaccine.findByPk(vaccine_id);
+    let vaccine = [];
+
+    await Vaccine.findByPk(vaccine_id)
+      .then(function (result) {
+        vaccine = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (!vaccine) {
       return res.status(400).json({ error: "A vacina informada não existe" });
     }
-    const user = await User.findByPk(user_id);
+    let user = [];
+    await User.findByPk(user_id)
+      .then(function (result) {
+        user = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (!user) {
       return res.status(400).json({ error: "Usuário inexistente" });
     }
 
-    const scheduleExist = await Schedule.findOne({
+    let scheduleExist = [];
+
+    await Schedule.findOne({
       where: {
         user_id: user_id,
         scheduling_date: scheduling_date,
         vaccine_id: vaccine_id,
         dose: dose,
       },
-    });
+    })
+      .then(function (result) {
+        scheduleExist = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (scheduleExist) {
-      return res
-        .status(400)
-        .json({
-          error:
-            "Já existe um agentamento cadastrado para este usuário na data informada, com esta vacina e dose",
-        });
+      return res.status(400).json({
+        error:
+          "Já existe um agentamento cadastrado para este usuário na data informada, com esta vacina e dose",
+      });
     }
 
-    const schedule = await Schedule.create({
+    let schedule = [];
+    await Schedule.create({
       user_id: user_id,
       scheduling_date: scheduling_date,
       vaccine_id: vaccine_id,
       dose: dose,
       estab_id: estab_id == null ? null : estab_id,
-    });
+    })
+      .then(function (result) {
+        schedule = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     return res.json(schedule);
   }
@@ -54,7 +82,9 @@ class ScheduleController {
       return res.status(400).json({ error: "Usuário não informado" });
     }
 
-    const schedule = await Schedule.findAll({
+    let retornoSchedule = [];
+
+    await Schedule.findAll({
       where: { user_id: req.query.userId },
       include: [
         {
@@ -71,9 +101,15 @@ class ScheduleController {
         },
       ],
       order: [["scheduling_date", "DESC"]],
-    });
+    })
+      .then(function (result) {
+        retornoSchedule = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
-    return res.json(schedule);
+    return res.json(retornoSchedule);
   }
 }
 

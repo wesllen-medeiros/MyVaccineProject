@@ -195,8 +195,6 @@ class Dashboard extends Component {
         alert(`Algo inesperado aconteceu!\n ${erro}`);
       });
 
-    console.log(retornoCampaigns);
-
     let mes = ["", "", "", "", "", ""];
     let dataAtual = new Date();
     let aplicacoes = [];
@@ -268,8 +266,6 @@ class Dashboard extends Component {
       labels: mes,
       datasets: dataset,
     };
-
-    console.log(mainChart);
 
     mainChartOpts = {
       tooltips: {

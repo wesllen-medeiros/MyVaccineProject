@@ -139,8 +139,6 @@ class addCampanha extends Component {
       selected_vaccine,
     } = this.state;
 
-    console.log(this.state);
-
     await api
       .post("campaign", {
         descricao,

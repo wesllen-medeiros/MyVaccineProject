@@ -56,15 +56,16 @@ export default function Register() {
       tipo_sanguineo: "O-",
     };
 
-    try {
-      await api.post("users", data);
+    await api
+      .post("users", data)
+      .then(function (result) {
+        alert("Usuário cadastrado com sucesso!");
 
-      alert("Usuário cadastrado com sucesso!");
-
-      navigateToLogin();
-    } catch (err) {
-      alert(err.response.data.error);
-    }
+        navigateToLogin();
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
   }
 
   return (

@@ -33,19 +33,24 @@ export default function Login() {
       email: email,
       password: password,
     };
+    let response = [];
 
-    try {
-      const response = await api.post("usersessions", data);
+    await api
+      .post("usersessions", data)
+      .then(function (result) {
+        response = result.data;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
       await SecureStore.setItemAsync(
         "userSession",
-        JSON.stringify(response.data.user.id)
+        JSON.stringify(response.user.id)
       );
 
       navigation.navigate("Main");
-    } catch (err) {
-      alert(err.response.data.error);
-    }
+
   }
 
   function navigateToRegister() {

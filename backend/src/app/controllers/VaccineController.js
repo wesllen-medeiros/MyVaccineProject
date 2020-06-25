@@ -13,14 +13,28 @@ class VaccineController {
 
     const { name, prevention, dose, ...data } = req.body;
 
-    const VaccineExist = await Vaccine.findOne({ where: { name } });
+    let VaccineExist = [];
+
+    await Vaccine.findOne({ where: { name } })
+      .then(function (result) {
+        VaccineExist = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (!VaccineExist) {
-      vaccine = await Vaccine.create({
+      await Vaccine.create({
         name,
         prevention,
         dose,
-      }); /*retorna para o front */
+      })
+        .then(function (result) {
+          vaccine = result;
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     } else {
       erro_mensagem_vacina =
         "Esta Vacina não foi cadastrada, pois já existe outra cadastrada com este nome";
@@ -73,14 +87,20 @@ class VaccineController {
         erro_mensagem_vacina,
       });
     } else {
-      vaccine = await Vaccine.findAll({
+      await Vaccine.findAll({
         include: [
           {
             model: PublicVaccination,
             as: "public",
           },
         ],
-      });
+      })
+        .then(function (result) {
+          vaccine = result;
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
 
       return res.json(vaccine);
     }
@@ -100,9 +120,13 @@ class VaccineController {
         ["name", "ASC"],
         ["public", "audience", "ASC"],
       ],
-    }).then(function (result) {
-      retornoVacinas = result;
-    });
+    })
+      .then(function (result) {
+        retornoVacinas = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     return res.json(retornoVacinas);
   }

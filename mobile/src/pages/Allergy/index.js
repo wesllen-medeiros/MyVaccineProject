@@ -38,9 +38,18 @@ export default function Allergy() {
     setUser(userIdSession);
 
     //busca dados de Alergias para montar a combo
-    const responseAllergy = await api.get(`allergy`);
+    let responseAllergy = [];
 
-    let dataAllergy = responseAllergy.data;
+    await api
+      .get(`allergy`)
+      .then(function (result) {
+        responseAllergy = result.data;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+
+    let dataAllergy = responseAllergy;
 
     getUserAllergy(userIdSession).then((data) => setUserAllergies(data));
 
@@ -52,7 +61,7 @@ export default function Allergy() {
   }
 
   async function getUserAllergy(userId = null) {
-    let dataAllergies = "";
+    let dataAllergies = [];
 
     //busca Alergias do usuario pelo Id
     await api

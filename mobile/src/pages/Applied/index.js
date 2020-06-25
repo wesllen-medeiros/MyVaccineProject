@@ -34,13 +34,22 @@ export default function Applied() {
 
     setUser(userIdSession);
 
-    const responseApplied = await api.get(`applicationMobile`, {
-      params: {
-        userId: userIdSession,
-      },
-    });
+    let responseApplied = [];
 
-    let dataApplied = responseApplied.data;
+    await api
+      .get(`applicationMobile`, {
+        params: {
+          userId: userIdSession,
+        },
+      })
+      .then(function (result) {
+        responseApplied = result.data;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+
+    let dataApplied = responseApplied;
 
     const retornoMap = dataApplied.map((applied) => {
       return {

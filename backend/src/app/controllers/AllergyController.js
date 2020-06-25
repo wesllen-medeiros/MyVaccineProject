@@ -4,26 +4,47 @@ import UserAllergies from "../models/UserAllergies";
 
 class AllergyController {
   async store(req, res) {
-    const AllergyExist = await Allergy.findOne({
+    let AllergyExist = [];
+
+    await Allergy.findOne({
       where: { descricao: req.body.descricao },
-    });
+    })
+      .then(function (result) {
+        AllergyExist = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (AllergyExist) {
       return res.status(400).json({ error: "Alergia já cadastrado!" });
     }
 
-    const { id, descricao } = await Allergy.create(
-      req.body
-    ); /*retorna para o front */
+    let allergy = [];
+
+    await Allergy.create(req.body)
+      .then(function (result) {
+        allergy = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     return res.json({
-      id,
-      descricao,
+      allergy,
     });
   }
 
   async index(req, res) {
-    const allergy = await Allergy.findAll();
+    let allergy = [];
+
+    await Allergy.findAll()
+      .then(function (result) {
+        allergy = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     return res.json(allergy);
   }
@@ -31,9 +52,17 @@ class AllergyController {
   async storeUserAllergy(req, res) {
     const { descricao, ...data } = req.body;
 
-    const AllergyExist = await Allergy.findOne({
+    let AllergyExist = [];
+
+    await Allergy.findOne({
       where: { descricao: descricao },
-    });
+    })
+      .then(function (result) {
+        AllergyExist = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (!AllergyExist) {
       return res
@@ -41,7 +70,15 @@ class AllergyController {
         .json({ error: "Não existe alergia cadastrada com esta descrição!" });
     }
 
-    const UserExist = await User.findByPk(data.user_id);
+    let UserExist = [];
+
+    await User.findByPk(data.user_id)
+      .then(function (result) {
+        UserExist = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (!UserExist) {
       return res
@@ -49,32 +86,46 @@ class AllergyController {
         .json({ error: "Não existe usuário cadastrada com este código!" });
     }
 
-    const UserAllergyExist = await UserAllergies.findOne({
+    let UserAllergyExist = [];
+
+    await UserAllergies.findOne({
       where: { allergy_id: AllergyExist.id, user_id: UserExist.id },
-    });
+    })
+      .then(function (result) {
+        UserAllergyExist = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (UserAllergyExist) {
-      return res
-        .status(400)
-        .json({
-          error:
-            "Já existe uma alergia cadastrada para este usuário com esta descrição!",
-        });
+      return res.status(400).json({
+        error:
+          "Já existe uma alergia cadastrada para este usuário com esta descrição!",
+      });
     }
 
-    const { allergy_id, user_id } = await UserAllergies.create({
+    let retornoUserAllergy = [];
+
+    await UserAllergies.create({
       allergy_id: AllergyExist.id,
       user_id: UserExist.id,
-    }); /*retorna para o front */
+    })
+      .then(function (result) {
+        retornoUserAllergy = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     return res.json({
-      allergy_id,
-      user_id,
+      retornoUserAllergy,
     });
   }
 
   async indexUserAllergy(req, res) {
-    const userAllergy = await UserAllergies.findAll({
+    let userAllergy = [];
+    await UserAllergies.findAll({
       where: { user_id: req.params.userId },
       include: [
         {
@@ -83,7 +134,13 @@ class AllergyController {
           attributes: ["descricao"],
         },
       ],
-    });
+    })
+      .then(function (result) {
+        userAllergy = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     return res.json(userAllergy);
   }

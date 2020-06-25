@@ -48,13 +48,22 @@ export default function Schedule() {
     getVaccines().then((data) => setVaccines(data));
     getEstabs().then((data) => setEstabs(data));
 
-    const responseGetSchedule = await api.get(`schedule`, {
-      params: {
-        userId: await SecureStore.getItemAsync("userSession"),
-      },
-    });
+    let responseGetSchedule = [];
 
-    const retornoMap = responseGetSchedule.data.map((schedule) => {
+    await api
+      .get(`schedule`, {
+        params: {
+          userId: await SecureStore.getItemAsync("userSession"),
+        },
+      })
+      .then(function (result) {
+        responseGetSchedule = result.data;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+
+    const retornoMap = responseGetSchedule.map((schedule) => {
       return {
         id: schedule.id,
         scheduling_date: dateFormat(schedule.scheduling_date, "dd/mm/yyyy"),
@@ -80,6 +89,7 @@ export default function Schedule() {
 
   async function getVaccines() {
     let responseVaccine = [];
+
     await api
       .get(`vaccine`)
       .then(function (data) {

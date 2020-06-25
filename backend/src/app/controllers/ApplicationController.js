@@ -13,27 +13,52 @@ class ApplicationController {
       vaccine_id,
       estab_id,
       user_id,
-    } = req.body; /*retorna para o front */
+    } = req.body;
 
-    const vaccine = await Vaccine.findByPk(vaccine_id);
+    let vaccine = [];
+
+    await Vaccine.findByPk(vaccine_id)
+      .then(function (result) {
+        vaccine = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (!vaccine) {
       return res.status(400).json({ error: "Vacina incorreta" });
     }
 
-    const estab = await Estab.findByPk(estab_id);
+    let estab = [];
+
+    await Estab.findByPk(estab_id)
+      .then(function (result) {
+        estab = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (!estab) {
       return res.status(400).json({ error: "Estabelecimento incorreto" });
     }
 
-    const user = await User.findByPk(user_id);
+    let user = [];
+
+    await User.findByPk(user_id)
+      .then(function (result) {
+        user = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (!user) {
       return res.status(400).json({ error: "Usuário incorreta" });
     }
 
-    const application = await Application.create({
+    let application = [];
+    await Application.create({
       nm_agente,
       dt_aplicacao,
       dose,
@@ -41,7 +66,13 @@ class ApplicationController {
       vaccine_id,
       estab_id,
       user_id,
-    });
+    })
+      .then(function (result) {
+        application = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     return res.json(application);
   }
@@ -51,7 +82,9 @@ class ApplicationController {
       return res.status(400).json({ error: "Usuário não informado" });
     }
 
-    const application = await Application.findAll({
+    let application = [];
+
+    await Application.findAll({
       where: { user_id: req.query.userId },
       include: [
         {
@@ -68,7 +101,13 @@ class ApplicationController {
         },
       ],
       order: [["dt_aplicacao", "DESC"]],
-    });
+    })
+      .then(function (result) {
+        application = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     return res.json(application);
   }
@@ -92,9 +131,13 @@ class ApplicationController {
         },
       ],
       order: [["dt_aplicacao", "DESC"]],
-    }).then(function (result) {
-      retornoApplication = result;
-    });
+    })
+      .then(function (result) {
+        retornoApplication = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     return res.json(retornoApplication);
   }

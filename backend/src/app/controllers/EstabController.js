@@ -2,39 +2,46 @@ import Estab from "../models/Estab";
 
 class EstabController {
   async store(req, res) {
-    const EstabExist = await Estab.findOne({
+    let EstabExist = [];
+    await Estab.findOne({
       where: { email: req.body.email },
-    });
+    })
+      .then(function (result) {
+        EstabExist = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (EstabExist) {
       return res.status(400).json({ error: "Estabelecimento já cadastrado!" });
     }
 
-    const {
-      id,
-      nm_fantasia,
-      email,
-      cnpj,
-      state,
-      municipio,
-      password,
-    } = await Estab.create(req.body); /*retorna para o front */
+    let estab = [];
 
-    return res.json({
-      id,
-      nm_fantasia,
-      email,
-      cnpj,
-      state,
-      municipio,
-      password,
-    });
+    await Estab.create(req.body)
+      .then(function (result) {
+        estab = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+
+    return res.json(estab);
   }
 
   async index(req, res) {
-    const estab = await Estab.findAll(); /*retorna para o front */
+    let retornoEstab = [];
 
-    return res.json(estab);
+    await Estab.findAll()
+      .then(function (result) {
+        retornoEstab = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+
+    return res.json(retornoEstab);
   }
 }
 

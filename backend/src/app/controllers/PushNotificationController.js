@@ -6,18 +6,32 @@ const Op = Sequelize.Op;
 
 class PushNotification {
   async updateNotification(req, res) {
-    const user = await User.findOne({ where: { id: req.body.userId } });
+    let user = [];
+    await User.findOne({ where: { id: req.body.userId } })
+      .then(function (result) {
+        user = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (!user) {
       return res.status(400).json({ error: "Usuário não existe" });
     }
 
-    const userNotification = await UserNotifications.findOne({
+    let userNotification = [];
+    await UserNotifications.findOne({
       where: {
         push_notification_id: req.body.userNotificationId,
         user_id: req.body.userId,
       },
-    });
+    })
+      .then(function (result) {
+        userNotification = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     if (!userNotification) {
       return res
@@ -25,7 +39,9 @@ class PushNotification {
         .json({ error: "Não existe notificação pendente para este usuário" });
     }
 
-    const userNotificationsUp = await UserNotifications.update(
+    let userNotificationsUp = [];
+    
+    await UserNotifications.update(
       {
         status: "ENVIADA",
       },
@@ -36,7 +52,13 @@ class PushNotification {
           user_id: req.body.userId,
         },
       }
-    );
+    )
+      .then(function (result) {
+        userNotificationsUp = result;
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
 
     return res.json(userNotificationsUp);
   }
@@ -53,7 +75,7 @@ class PushNotification {
     let pushNotifications = [];
 
     if (req.query.orderBy !== "DESC") {
-      pushNotifications = await PushNotifications.findAll({
+      await PushNotifications.findAll({
         include: [
           {
             model: UserNotifications,
@@ -69,9 +91,15 @@ class PushNotification {
             },
           },
         ],
-      });
+      })
+        .then(function (result) {
+          pushNotifications = result;
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     } else {
-      pushNotifications = await PushNotifications.findAll({
+      await PushNotifications.findAll({
         include: [
           {
             model: UserNotifications,
@@ -88,7 +116,13 @@ class PushNotification {
           },
         ],
         order: [["id", "DESC"]],
-      });
+      })
+        .then(function (result) {
+          pushNotifications = result;
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     }
 
     return res.json(pushNotifications);
