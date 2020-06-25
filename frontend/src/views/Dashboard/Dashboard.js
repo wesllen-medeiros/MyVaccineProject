@@ -380,16 +380,16 @@ class Dashboard extends Component {
                   </Col>
                   <Col sm="7" className="d-none d-sm-inline-block"></Col>
                 </Row>
-                  <div
-                    className="chart-wrapper myChartDiv"
-                    style={{ marginTop: 40 + "px" }}
-                  >
-                    <Line
-                      data={mainChartDash}
-                      options={mainChartOptsDash}
-                      height={60}
-                    />
-                  </div>
+                <div
+                  className="chart-wrapper myChartDiv"
+                  style={{ marginTop: 40 + "px" }}
+                >
+                  <Line
+                    data={mainChartDash}
+                    options={mainChartOptsDash}
+                    height={60}
+                  />
+                </div>
               </CardBody>
             </Card>
           </Col>

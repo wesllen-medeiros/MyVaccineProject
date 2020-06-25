@@ -93,8 +93,8 @@ class addaplicacao extends Component {
         vaccine_id: selected_vaccine.id,
         user_id,
       })
-      .then(function(){
-        alert('Aplicação cadastrada com sucesso!')
+      .then(function () {
+        alert("Aplicação cadastrada com sucesso!");
       })
       .catch(function (err) {
         console.log(err.response.data);
@@ -125,7 +125,7 @@ class addaplicacao extends Component {
         user_id,
       })
       .then(function (data) {
-        alert('Agendamento cadastrado com sucesso!');
+        alert("Agendamento cadastrado com sucesso!");
       })
       .catch(function (err) {
         console.log(err.response.data);

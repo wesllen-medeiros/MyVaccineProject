@@ -9,7 +9,8 @@ import {
   Fade,
   CardHeader,
   Label,
-  Collapse
+  Collapse,
+  Badge,
 } from "reactstrap";
 import dateformat from "dateformat";
 
@@ -45,6 +46,8 @@ class CardCampanha extends Component {
         console.log(err.response.data);
       });
 
+    console.log(retorno);
+
     this.setState({ campanhas: retorno });
   }
 
@@ -59,7 +62,6 @@ class CardCampanha extends Component {
   }
 
   async toggleFade(id) {
-
     let mensagem_retorno = "";
 
     this.setState((prevState) => {
@@ -88,20 +90,40 @@ class CardCampanha extends Component {
         <Row className="show-grid">
           <Col xs="10" md="10">
             {this.state.campanhas.map((post, index) => (
-              <Col xs={12} sm={12} md={6} lg={6} style={{display: "inline-block"}} key={index}>
-                <Fade
+              <Fade
+                style={{ display: "contents" }}
+                key={index}
+                timeout={this.state.timeout}
+                in={
+                  this.state[post.id] === undefined ||
+                  this.state[post.id] === null
+                    ? true
+                    : this.state[post.id]
+                }
+                unmountOnExit={this.state.unmountOnExit}
+              >
+                <Col
+                  xs={12}
+                  sm={12}
+                  md={6}
+                  lg={6}
+                  style={{ display: "inline-block" }}
                   key={index}
-                  timeout={this.state.timeout}
-                  in={
-                    this.state[post.id] === undefined ||
-                    this.state[post.id] === null
-                      ? true
-                      : this.state[post.id]
-                  }
-                  unmountOnExit={this.state.unmountOnExit}
                 >
                   <Card>
                     <CardHeader className="text-white bg-info">
+                      <Badge
+                        style={{ marginRight: "3%" }}
+                        color={
+                          new Date(post.dt_fim) < new Date()
+                            ? "danger"
+                            : "success"
+                        }
+                      >
+                        {new Date(post.dt_fim) < new Date()
+                          ? "Encerrada"
+                          : "Ativa"}
+                      </Badge>
                       {post.descricao} para{" "}
                       {post.audience === "CRIANCA"
                         ? "Crianças"
@@ -245,8 +267,8 @@ class CardCampanha extends Component {
                       </CardBody>
                     </Collapse>
                   </Card>
-                </Fade>
-              </Col>
+                </Col>
+              </Fade>
             ))}
           </Col>
           <Col xs="2">

@@ -223,6 +223,7 @@ class ListVacinas extends Component {
                             </td>
                             <td>
                               <Button
+                                style={{ marginRight: 5, width: 40 }}
                                 color="success"
                                 onClick={() => this.toggleAdd(post.name)}
                                 className="mt-3"
@@ -235,7 +236,6 @@ class ListVacinas extends Component {
                                 ></i>
                               </Button>
                               <Button
-                                style={{ marginLeft: 5 }}
                                 color="primary"
                                 onClick={() => this.toggleList(post.public)}
                                 className="mt-3"
