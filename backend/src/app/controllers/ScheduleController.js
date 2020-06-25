@@ -7,8 +7,6 @@ class ScheduleController {
   async store(req, res) {
     const { dose, scheduling_date, vaccine_id, user_id, estab_id } = req.body;
 
-    console.log(req.body);
-
     let vaccine = [];
 
     await Vaccine.findByPk(vaccine_id)

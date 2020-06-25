@@ -82,7 +82,6 @@ class VaccineController {
     }
 
     if (data.public === undefined && erro_mensagem_vacina != "") {
-      console.log("teste");
       return res.status(400).json({
         erro_mensagem_vacina,
       });

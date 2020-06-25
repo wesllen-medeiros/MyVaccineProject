@@ -40,7 +40,7 @@ class PushNotification {
     }
 
     let userNotificationsUp = [];
-    
+
     await UserNotifications.update(
       {
         status: "ENVIADA",
@@ -64,7 +64,6 @@ class PushNotification {
   }
 
   async index(req, res) {
-    console.log("Params Id: " + JSON.stringify(req.query));
 
     const user = await User.findOne({ where: { id: req.query.userId } });
 

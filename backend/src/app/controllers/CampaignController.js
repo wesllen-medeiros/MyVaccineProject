@@ -7,7 +7,6 @@ import User from "../models/User";
 
 class CampaignController {
   async store(req, res) {
-    console.log(req.body);
 
     const {
       descricao,
@@ -196,11 +195,9 @@ class CampaignController {
         console.log(err);
       });
 
-    console.log("Tamanho:", usersExistentes.length);
 
     for (let index = 0; index < usersExistentes.length; index++) {
       const userId = usersExistentes[index].id;
-      console.log("UserId: " + userId);
 
       let userNotification = [];
       await UserNotifications.create({
