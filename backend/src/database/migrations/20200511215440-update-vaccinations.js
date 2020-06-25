@@ -1,19 +1,15 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn('vaccines', 'dose_number')
+    return queryInterface.removeColumn("vaccines", "dose_number");
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.addColumn('vaccines', 
-      'dose_number', 
-      {
-
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 1 
-      }
-    )
-  }
+    return queryInterface.addColumn("vaccines", "dose_number", {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: 1,
+    });
+  },
 };

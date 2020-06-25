@@ -1,15 +1,15 @@
-import jwt from 'jsonwebtoken';
-import { promisify } from 'util';
-import auth from '../../config/auth';
+import jwt from "jsonwebtoken";
+import { promisify } from "util";
+import auth from "../../config/auth";
 
 export default async (req, res, next) => {
   const { authorization } = req.headers;
 
   console.log(authorization);
 
-  if (!authorization) return res.status(401).json('Usuário não autorizado!');
+  if (!authorization) return res.status(401).json("Usuário não autorizado!");
 
-  const [, token] = authorization.split(' ');
+  const [, token] = authorization.split(" ");
 
   try {
     const decoded = await promisify(jwt.verify)(token, auth.secret);
@@ -18,6 +18,6 @@ export default async (req, res, next) => {
 
     return next();
   } catch (error) {
-    return res.status(401).json('token Inválido!');
+    return res.status(401).json("token Inválido!");
   }
 };

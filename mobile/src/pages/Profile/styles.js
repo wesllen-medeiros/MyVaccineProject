@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import styled from 'styled-components/native';
+import { StyleSheet } from "react-native";
+import styled from "styled-components/native";
 
 export const Container = styled.View`
   flex: 1;
@@ -8,9 +8,9 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
-flex-direction: row;
-justify-content: space-between;
-padding: 50px 20px 20px 20px;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 50px 20px 20px 20px;
 `;
 
 export const Logo = styled.Image``;
@@ -23,7 +23,7 @@ export const Content = styled.View`
 
 export const Card = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
-})`  
+})`
   background: #fff;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -62,12 +62,12 @@ export default StyleSheet.create({
     margin: 5,
 
     fontSize: 18,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   logo: {
     width: 50,
     height: 50,
-  }
+  },
 });
 
 export const CardItem = styled.View`

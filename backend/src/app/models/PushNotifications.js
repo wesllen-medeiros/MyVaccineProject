@@ -1,21 +1,21 @@
-import Sequelize, { Model } from 'sequelize';
+import Sequelize, { Model } from "sequelize";
 
 class PushNotifications extends Model {
   static init(sequelize) {
     super.init(
-      { 
-        message: Sequelize.STRING,  
-        title: Sequelize.STRING
+      {
+        message: Sequelize.STRING,
+        title: Sequelize.STRING,
       },
-      {sequelize}
-    );    
+      { sequelize }
+    );
     return this;
   }
 
   static associate(models) {
     this.belongsTo(models.Campaign, {
-      foreignKey: 'campaign_id',
-      as: 'campaign',
+      foreignKey: "campaign_id",
+      as: "campaign",
     });
 
     this.hasMany(models.UserNotifications);

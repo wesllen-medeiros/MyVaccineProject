@@ -1,18 +1,11 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.renameColumn(
-      'estabs',
-      'cidade',
-      'state'
-    )
+    return queryInterface.renameColumn("estabs", "cidade", "state");
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.renameColumn(
-      'estabs', 
-      'state',
-      'cidade');
-  }
+    return queryInterface.renameColumn("estabs", "state", "cidade");
+  },
 };

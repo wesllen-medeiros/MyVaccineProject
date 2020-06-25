@@ -1,4 +1,4 @@
-import Sequelize, { Model } from 'sequelize';
+import Sequelize, { Model } from "sequelize";
 
 class PublicVaccination extends Model {
   static init(sequelize) {
@@ -18,11 +18,10 @@ class PublicVaccination extends Model {
 
   static associate(models) {
     this.belongsTo(models.Vaccine, {
-      foreignKey: 'vaccine_id',
-      as: 'public'
+      foreignKey: "vaccine_id",
+      as: "public",
     });
   }
-
 }
 
 export default PublicVaccination;

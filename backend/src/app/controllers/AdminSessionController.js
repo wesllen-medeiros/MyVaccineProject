@@ -1,39 +1,40 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
-import authConfig from '../../config/auth';
+import authConfig from "../../config/auth";
 
-import Estab from '../models/Estab';
+import Estab from "../models/Estab";
 
 class EstabSessionController {
-  async store(req,res) {
-    const {email, password }  = req.body;
+  async store(req, res) {
+    const { email, password } = req.body;
 
-    const estab = await Estab.findOne({where :{ email }}); /*verifica se ja tem o email cadastrado */
+    const estab = await Estab.findOne({
+      where: { email },
+    }); /*verifica se ja tem o email cadastrado */
 
-    if(!estab){
+    if (!estab) {
       return res.status(401).json({
-        error: 'Administrador não autorizado!'
+        error: "Administrador não autorizado!",
       });
     }
 
-    if(!(await estab.checkPassword(password))){
-      return res.status(401).json({error: 'Senha não autorizada!'})
+    if (!(await estab.checkPassword(password))) {
+      return res.status(401).json({ error: "Senha não autorizada!" });
     }
 
-    const { id, nm_fantasia} = estab;
+    const { id, nm_fantasia } = estab;
 
     return res.json({
-      estab:{
+      estab: {
         id,
         nm_fantasia,
         email,
       },
-      token: jwt.sign({id},authConfig.secret,{/*autenticação medeiros */
-        expiresIn: authConfig.expiresIn,     
+      token: jwt.sign({ id }, authConfig.secret, {
+        /*autenticação medeiros */ expiresIn: authConfig.expiresIn,
       }),
     });
   }
 }
-
 
 export default new EstabSessionController();

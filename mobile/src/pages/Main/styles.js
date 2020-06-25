@@ -1,5 +1,5 @@
-import { StyleSheet, Animated } from 'react-native';
-import styled from 'styled-components/native';
+import { StyleSheet, Animated } from "react-native";
+import styled from "styled-components/native";
 
 export const Container = styled.View`
   flex: 1;
@@ -38,8 +38,7 @@ export const CardContent = styled.TouchableOpacity`
   justify-content: space-between;
 `;
 
-export const CardItem = styled.View`
-`;
+export const CardItem = styled.View``;
 
 export const Top = styled.View`
   flex: 1;
@@ -47,8 +46,7 @@ export const Top = styled.View`
   justify-content: space-between;
 `;
 
-export const Bottom = styled.View`
-`;
+export const Bottom = styled.View``;
 
 export const TitleCardItem = styled.Text`
   font-size: 13px;
@@ -61,7 +59,7 @@ export const DescriptionCardItem = styled.Text`
 `;
 
 export const CardHeaderItem = styled.View`
-  max-height: 50px
+  max-height: 50px;
 `;
 
 export const Title = styled.Text`
@@ -89,6 +87,6 @@ export const Annotation = styled.Text`
 export default StyleSheet.create({
   textInputMask: {
     fontSize: 16,
-    color: "#333"
-  }
+    color: "#333",
+  },
 });

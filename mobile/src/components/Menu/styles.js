@@ -1,5 +1,5 @@
-import {StyleSheet, Animated} from 'react-native';
-import styled from 'styled-components/native';
+import { StyleSheet, Animated } from "react-native";
+import styled from "styled-components/native";
 
 export const Container = styled(Animated.ScrollView)`
   margin: 0 30px;
@@ -25,7 +25,7 @@ export const NavItem = styled.TouchableOpacity`
   border-bottom-color: rgba(255, 255, 255, 0.8);
 `;
 
-export const TextView = styled.View`  
+export const TextView = styled.View`
   margin-right: 25px;
   align-items: center;
 `;

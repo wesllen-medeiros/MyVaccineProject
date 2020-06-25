@@ -1,16 +1,16 @@
-import Sequelize, { Model } from 'sequelize';
+import Sequelize, { Model } from "sequelize";
 
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 
 class Estab extends Model {
   static init(sequelize) {
     super.init(
       {
-        nm_fantasia: Sequelize.STRING,  
-        email: Sequelize.STRING,  
-        cnpj: Sequelize.STRING,  
-        state: Sequelize.STRING,  
-        municipio: Sequelize.STRING,  
+        nm_fantasia: Sequelize.STRING,
+        email: Sequelize.STRING,
+        cnpj: Sequelize.STRING,
+        state: Sequelize.STRING,
+        municipio: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
       },
@@ -19,15 +19,15 @@ class Estab extends Model {
       }
     );
 
-    this.addHook('beforeSave',async estab => {
-      if(estab.password){
+    this.addHook("beforeSave", async (estab) => {
+      if (estab.password) {
         estab.password_hash = await bcrypt.hash(estab.password, 8);
       }
     });
 
     return this;
   }
-  
+
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
   }

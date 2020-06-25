@@ -1,11 +1,11 @@
-import Sequelize, { Model } from 'sequelize';
+import Sequelize, { Model } from "sequelize";
 
 class Schedule extends Model {
   static init(sequelize) {
     super.init(
       {
-        dose: Sequelize.INTEGER,  
-        scheduling_date: Sequelize.DATE
+        dose: Sequelize.INTEGER,
+        scheduling_date: Sequelize.DATE,
       },
       {
         sequelize,
@@ -16,18 +16,18 @@ class Schedule extends Model {
 
   static associate(models) {
     this.belongsTo(models.Vaccine, {
-      foreignKey: 'vaccine_id',
-      as: 'vaccine',
+      foreignKey: "vaccine_id",
+      as: "vaccine",
     });
 
     this.belongsTo(models.User, {
-      foreignKey: 'user_id',
-      as: 'user',
+      foreignKey: "user_id",
+      as: "user",
     });
-    
+
     this.belongsTo(models.Estab, {
-      foreignKey: 'estab_id',
-      as: 'estab',
+      foreignKey: "estab_id",
+      as: "estab",
     });
   }
 }

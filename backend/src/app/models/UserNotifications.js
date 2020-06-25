@@ -1,25 +1,25 @@
-import Sequelize, { Model } from 'sequelize';
+import Sequelize, { Model } from "sequelize";
 
 class UserNotifications extends Model {
   static init(sequelize) {
     super.init(
-      { 
-        status: Sequelize.STRING
+      {
+        status: Sequelize.STRING,
       },
-      {sequelize}
-    );    
+      { sequelize }
+    );
     return this;
   }
 
   static associate(models) {
     this.belongsTo(models.PushNotifications, {
-      foreignKey: 'push_notification_id',
-      as: 'notification',
+      foreignKey: "push_notification_id",
+      as: "notification",
     });
 
     this.belongsTo(models.User, {
-      foreignKey: 'user_id',
-      as: 'user',
+      foreignKey: "user_id",
+      as: "user",
     });
   }
 }

@@ -1,5 +1,5 @@
-import { StyleSheet, Animated } from 'react-native';
-import styled from 'styled-components/native';
+import { StyleSheet, Animated } from "react-native";
+import styled from "styled-components/native";
 
 export const Container = styled.View`
   flex: 1;
@@ -8,9 +8,9 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
-flex-direction: row;
-justify-content: space-between;
-padding: 50px 20px 20px 20px;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 50px 20px 20px 20px;
 `;
 
 export const Content = styled.View`
@@ -65,12 +65,12 @@ export const InputSelectAllergy = styled.Picker`
 `;
 
 export const Button = styled.TouchableOpacity`
-    border-radius: 8px;
-    background-color: rgba(0, 128, 128, 0.4);
-    align-items: center;
-    padding: 12px;
-    margin: 7px 10px;
-    min-width: 80px;
+  border-radius: 8px;
+  background-color: rgba(0, 128, 128, 0.4);
+  align-items: center;
+  padding: 12px;
+  margin: 7px 10px;
+  min-width: 80px;
 `;
 
 export const ButtonText = styled.Text`
@@ -88,16 +88,16 @@ export const AlergiesList = styled.Text`
 
 export default StyleSheet.create({
   flatList: {
-      flex: 1,
-      backgroundColor: "#fff",
-      borderRadius: 4,
-      marginVertical: 10,
-      marginHorizontal: 20
+    flex: 1,
+    backgroundColor: "#fff",
+    borderRadius: 4,
+    marginVertical: 10,
+    marginHorizontal: 20,
   },
   logo: {
     width: 50,
     height: 50,
-  }
+  },
 });
 
 export const CardTop = styled.View`

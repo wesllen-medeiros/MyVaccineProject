@@ -1,8 +1,8 @@
-import express from 'express';
-import routes from './routes';
-import cors from 'cors';
+import express from "express";
+import routes from "./routes";
+import cors from "cors";
 
-import './database';
+import "./database";
 
 class App {
   constructor() {
@@ -12,11 +12,11 @@ class App {
     this.routes();
   }
   middlewares() {
-    this.server.use(express.json({limit: '50mb'}));
+    this.server.use(express.json({ limit: "50mb" }));
   }
 
   routes() {
     this.server.use(routes);
-  }  
+  }
 }
 export default new App().server;

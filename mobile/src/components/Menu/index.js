@@ -1,8 +1,8 @@
-import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useNavigation } from '@react-navigation/native'
+import React from "react";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { useNavigation } from "@react-navigation/native";
 
-import QRCode from 'react-native-qrcode';
+import QRCode from "react-native-qrcode";
 
 import {
   Container,
@@ -13,18 +13,18 @@ import {
   SignOutButton,
   SignOutButtonText,
   Text,
-  TextView
-} from './styles';
+  TextView,
+} from "./styles";
 
-export default function Menu({translateY, user}) {
-  const navigation = useNavigation(); 
+export default function Menu({ translateY, user }) {
+  const navigation = useNavigation();
 
-  function navigateToLogin(){
-      navigation.navigate('Login');
+  function navigateToLogin() {
+    navigation.navigate("Login");
   }
 
-  function navigateToProfile(){
-    navigation.navigate('Profile', user);
+  function navigateToProfile() {
+    navigation.navigate("Profile", user);
   }
 
   return (
@@ -34,20 +34,20 @@ export default function Menu({translateY, user}) {
           inputRange: [0, 150],
           outputRange: [0, 1],
         }),
-      }}>
+      }}
+    >
       <Code>
-        <QRCode
-          value={user.id}
-          size={150}
-          fgColor="#FFF"
-          bgColor="#34b7f1"
-        />
-      </Code>        
-        <TextView>
-          <Text>Código: {user.id}</Text>
-        </TextView>
+        <QRCode value={user.id} size={150} fgColor="#FFF" bgColor="#34b7f1" />
+      </Code>
+      <TextView>
+        <Text>Código: {user.id}</Text>
+      </TextView>
       <Nav>
-        <NavItem onPress={() => {navigateToProfile()}}>
+        <NavItem
+          onPress={() => {
+            navigateToProfile();
+          }}
+        >
           <Icon name="person-outline" size={20} color="#FFF" />
           <NavText>Perfil</NavText>
         </NavItem>
@@ -57,7 +57,11 @@ export default function Menu({translateY, user}) {
         </NavItem>
       </Nav>
 
-      <SignOutButton onPress={() => {navigateToLogin()}}>
+      <SignOutButton
+        onPress={() => {
+          navigateToLogin();
+        }}
+      >
         <SignOutButtonText>SAIR DO APP</SignOutButtonText>
       </SignOutButton>
     </Container>

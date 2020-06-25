@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import styled from 'styled-components/native';
+import { StyleSheet } from "react-native";
+import styled from "styled-components/native";
 
 export const Container = styled.View`
   flex: 1;
@@ -8,9 +8,9 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
-flex-direction: row;
-justify-content: space-between;
-padding: 50px 20px 20px 20px;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 50px 20px 20px 20px;
 `;
 
 export const Content = styled.View`
@@ -23,7 +23,7 @@ export default StyleSheet.create({
   logo: {
     width: 50,
     height: 50,
-  }
+  },
 });
 
 export const Item = styled.Text`

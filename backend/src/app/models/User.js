@@ -1,7 +1,6 @@
-import Sequelize, { Model } from 'sequelize';
+import Sequelize, { Model } from "sequelize";
 
-import bcrypt from 'bcryptjs';
-
+import bcrypt from "bcryptjs";
 
 class User extends Model {
   static init(sequelize) {
@@ -17,27 +16,27 @@ class User extends Model {
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
         photo_profile: Sequelize.STRING,
-        tipo_sanguineo: Sequelize.STRING
+        tipo_sanguineo: Sequelize.STRING,
       },
       {
         sequelize,
       }
     );
 
-    this.addHook('beforeSave',async user => {
-      if(user.password){
+    this.addHook("beforeSave", async (user) => {
+      if (user.password) {
         user.password_hash = await bcrypt.hash(user.password, 8);
       }
-    });/*antes da criação executa */
+    }); /*antes da criação executa */
 
     return this;
   }
 
   static associate(models) {
     this.belongsToMany(models.Allergy, {
-      through: 'user_allergies',
-      as: 'allergies',
-      foreignKey: 'allergy_id'
+      through: "user_allergies",
+      as: "allergies",
+      foreignKey: "allergy_id",
     });
   }
 

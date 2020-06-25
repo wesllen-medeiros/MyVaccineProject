@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import styled from 'styled-components/native';
+import { StyleSheet } from "react-native";
+import styled from "styled-components/native";
 
 export const Container = styled.View`
   align-items: center;
@@ -25,5 +25,5 @@ export default StyleSheet.create({
   logo: {
     width: 50,
     height: 50,
-  }
+  },
 });
