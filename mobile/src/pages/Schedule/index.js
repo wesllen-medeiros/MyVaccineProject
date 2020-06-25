@@ -81,15 +81,34 @@ export default function Schedule() {
     }
 
     async function getVaccines(){
-        const responseVaccine = await api.get(`vaccine`);
+        let responseVaccine = [];
+        await api.get(`vaccine`).then(
+            function(data){
+                responseVaccine = data.data
+            }
+        ).catch(
+            function(err){
+                console.log(err.response.data);
+            }
+        )
 
-        return responseVaccine.data;
+        return responseVaccine.rows;
     }
 
     async function getEstabs(){
-        const responseEstab = await api.get(`estab`);
+        let responseEstab = [];
 
-        return responseEstab.data;
+        await api.get(`estab`).then(
+            function(data){
+                responseEstab = data.data;
+            }
+        ).catch(
+            function(err){
+                console.log(err.response.data);
+            }
+        )
+
+        return responseEstab;
     }
 
     function saveSchedule(){

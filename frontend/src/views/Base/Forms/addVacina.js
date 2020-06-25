@@ -119,6 +119,7 @@ class addVacina extends Component {
                             <Input type="textarea"
                               id="text-input"
                               name="text-input"
+                              placeholder="Descreva sobre a prevenção da vacina"
                               onChange={(e) => this.setState({ prevention: e.target.value })}
                               value={prevention}
                           />

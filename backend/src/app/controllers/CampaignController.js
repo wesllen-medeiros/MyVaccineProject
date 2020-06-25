@@ -8,6 +8,8 @@ import User from '../models/User';
 class CampaignController {
   async store(req , res) {
 
+    console.log(req.body);
+
     const {
       descricao, 
       dt_ini, 
@@ -67,7 +69,7 @@ class CampaignController {
     if (max_age == null){
       return res.status(400).json({error: 'Deve ser informado pelo menos 0 na idade máxima'});
     }
-   
+
     const campaign = await Campaign.create({
       descricao,
       dt_ini,
@@ -87,7 +89,7 @@ class CampaignController {
     let publico = campaign.audience == 'CRIANCA' && campaign.unity_age == 'AO_NASCER' ? 'recém nascidos' :  
                   campaign.audience == 'CRIANCA' && campaign.unity_age == 'MESES' ? 'bebês' : 
                   campaign.audience == 'CRIANCA' && campaign.unity_age == 'ANOS' ? 'crianças' :
-                  campaign.audience == 'ADOLECESCENTE' ? 'adolescentes' :
+                  campaign.audience == 'ADOLESCENTE' ? 'adolescentes' :
                   campaign.audience == 'ADULTO' ? 'adultos' :
                   campaign.audience == 'IDOSO' ? 'idosos' :
                   campaign.audience == 'GESTANTE' ? 'gestantes' : null;

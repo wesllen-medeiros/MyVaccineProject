@@ -60,13 +60,14 @@ export default function Allergy() {
         let dataAllergies = '';
 
         //busca Alergias do usuario pelo Id
-        await api.get(`userAllergy/${userId}`).then(function(data){
+        await api.get(`userAllergy/${userId}`).then(
+            function(data){
             dataAllergies = data.data;
         }).catch(function(error){
             console.log(JSON.stringify(error.response.data))
         });
 
-        return dataAllergies
+        return dataAllergies;
 
     }
 
