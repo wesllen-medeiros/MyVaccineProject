@@ -44,6 +44,9 @@ class ListVacinas extends Component {
       aplication: [],
       min_age: "",
       max_age: "",
+      disabelMinAge: false,
+      disabelMaxAge: false,
+      disabelTypeAge: false,
       name_vaccine: "",
       public_vaccine: [],
       audience: {
@@ -176,6 +179,9 @@ class ListVacinas extends Component {
     const {
       audience,
       audiences,
+      disabelMinAge,
+      disabelMaxAge,
+      disabelTypeAge,
       unity_ages,
       min_age,
       max_age,
@@ -441,121 +447,238 @@ class ListVacinas extends Component {
           >
             <ModalHeader toggle={this.toggleAdd}>Público-Alvo</ModalHeader>
             <ModalBody>
-              <Form onSubmit={(e) => this.handleSubmit(e)}>
-                <Row>
-                  <Col xs="12" sm="12">
-                    <Card>
+              <Row>
+                <Col xs="12" sm="12">
+                  <Card>
+                    <Form
+                      onSubmit={(e) => this.handleSubmit(e)}
+                      action=""
+                      method="post"
+                      encType="multipart/form-data"
+                      className="form-horizontal"
+                    >
                       <CardBody>
-                        <Form
-                          action=""
-                          method="post"
-                          encType="multipart/form-data"
-                          className="form-horizontal"
-                        >
-                          <FormGroup row>
-                            <Col md="3">
-                              <Label style={{ paddingTop: 7 }} htmlFor="select">
-                                Alvos
-                              </Label>
-                            </Col>
-                            <Col xs="12" md="9">
-                              <Select
-                                isClearable={true}
-                                isSearchable={true}
-                                options={audiences}
-                                value={audience}
-                                getOptionLabel={(audiencel) => audiencel.label}
-                                getOptionValue={(audiencel) => audiencel.value}
-                                onChange={(audiencel) =>
-                                  this.setState({ audience: audiencel })
-                                }
-                                placeholder="Selecione um público"
-                              />
-                            </Col>
-                          </FormGroup>
+                        <FormGroup row>
+                          <Col md="3">
+                            <Label style={{ paddingTop: 7 }} htmlFor="select">
+                              Alvos
+                            </Label>
+                          </Col>
+                          <Col xs="12" md="9">
+                            <Select
+                              isClearable={true}
+                              isSearchable={true}
+                              options={audiences}
+                              value={audience}
+                              getOptionLabel={(audiencel) => audiencel.label}
+                              getOptionValue={(audiencel) => audiencel.value}
+                              onChange={(audiencel) =>
+                                this.setState(
+                                  {
+                                    audience: audiencel,
+                                    disabelMinAge:
+                                      (audiencel !== null &&
+                                        audiencel.value === "GESTANTE") ||
+                                      (audiencel !== null &&
+                                        audiencel.value === "CRIANCA" &&
+                                        unity_age !== null &&
+                                        unity_age.value === "AO_NASCER")
+                                        ? true
+                                        : false,
+                                    disabelMaxAge:
+                                      (audiencel !== null &&
+                                        audiencel.value === "GESTANTE") ||
+                                      (audiencel !== null &&
+                                        audiencel.value === "CRIANCA" &&
+                                        unity_age !== null &&
+                                        unity_age.value === "AO_NASCER")
+                                        ? true
+                                        : false,
+                                    disabelTypeAge:
+                                      (audiencel !== null &&
+                                        audiencel.value === "GESTANTE") ||
+                                      (audiencel !== null &&
+                                        audiencel.value === "CRIANCA" &&
+                                        unity_age !== null &&
+                                        unity_age.value === "AO_NASCER")
+                                        ? true
+                                        : false,
+                                    min_age:
+                                      (audiencel !== null &&
+                                        audiencel.value === "GESTANTE") ||
+                                      (audiencel !== null &&
+                                        audiencel.value === "CRIANCA" &&
+                                        unity_age !== null &&
+                                        unity_age.value === "AO_NASCER")
+                                        ? 0
+                                        : false,
+                                    max_age:
+                                      (audiencel !== null &&
+                                        audiencel.value === "GESTANTE") ||
+                                      (audiencel !== null &&
+                                        audiencel.value === "CRIANCA" &&
+                                        unity_age !== null &&
+                                        unity_age.value === "AO_NASCER")
+                                        ? 0
+                                        : false,
+                                    unity_age:
+                                      audiencel !== null &&
+                                      (audiencel.value === "GESTANTE" ||
+                                        audiencel.value === "ADOLESCENTE" ||
+                                        audiencel.value === "IDOSO" ||
+                                        audiencel.value === "ADULTO")
+                                        ? {
+                                            value: "ANOS",
+                                            label: "Anos",
+                                          }
+                                        : unity_age !== null
+                                        ? unity_age
+                                        : {
+                                            value: "MESES",
+                                            label: "Meses",
+                                          },
+                                  },
+                                  function () {}
+                                )
+                              }
+                              placeholder="Selecione um público"
+                            />
+                          </Col>
+                        </FormGroup>
 
-                          <FormGroup row>
-                            <Col md="3">
-                              <Label
-                                style={{ paddingTop: 7 }}
-                                htmlFor="text-input"
-                              >
-                                Idade Minima
-                              </Label>
-                            </Col>
-                            <Col xs="12" md="9">
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                placeholder="Informe a idade mínima para aplicação da vacina"
-                                onChange={(e) =>
-                                  this.setState({ min_age: e.target.value })
-                                }
-                                value={min_age}
-                              />
-                            </Col>
-                          </FormGroup>
+                        <FormGroup row>
+                          <Col md="3">
+                            <Label style={{ paddingTop: 7 }} htmlFor="select">
+                              Tipo idade
+                            </Label>
+                          </Col>
+                          <Col xs="12" md="9">
+                            <Select
+                              isDisabled={disabelTypeAge}
+                              isClearable={true}
+                              isSearchable={true}
+                              options={unity_ages}
+                              value={unity_age}
+                              getOptionLabel={(unity_agel) => unity_agel.label}
+                              getOptionValue={(unity_agel) => unity_agel.value}
+                              onChange={(unity_agel) =>
+                                this.setState(
+                                  {
+                                    unity_age: unity_agel,
+                                    disabelMinAge:
+                                      audience !== null &&
+                                      audience.value === "CRIANCA" &&
+                                      unity_agel !== null &&
+                                      unity_agel.value === "AO_NASCER"
+                                        ? true
+                                        : false,
+                                    disabelMaxAge:
+                                      audience !== null &&
+                                      audience.value === "CRIANCA" &&
+                                      unity_agel !== null &&
+                                      unity_agel.value === "AO_NASCER"
+                                        ? true
+                                        : false,
+                                    min_age:
+                                      audience !== null &&
+                                      audience.value === "CRIANCA" &&
+                                      unity_agel !== null &&
+                                      unity_agel.value === "AO_NASCER"
+                                        ? 0
+                                        : 0,
+                                    max_age:
+                                      audience !== null &&
+                                      audience.value === "CRIANCA" &&
+                                      unity_agel !== null &&
+                                      unity_agel.value === "AO_NASCER"
+                                        ? 0
+                                        : 0,
+                                  },
+                                  function () {}
+                                )
+                              }
+                              placeholder="Selecione um tipo de unidade para idade"
+                            />
+                          </Col>
+                        </FormGroup>
 
-                          <FormGroup row>
-                            <Col md="3">
-                              <Label
-                                style={{ paddingTop: 7 }}
-                                htmlFor="text-input"
-                              >
-                                Idade Maxima
-                              </Label>
-                            </Col>
-                            <Col xs="12" md="9">
-                              <Input
-                                type="text"
-                                id="text-input"
-                                name="text-input"
-                                placeholder="Informe a idade máxima para aplicação da vacina"
-                                onChange={(e) =>
-                                  this.setState({ max_age: e.target.value })
-                                }
-                                value={max_age}
-                              />
-                            </Col>
-                          </FormGroup>
+                        <FormGroup row>
+                          <Col md="3">
+                            <Label
+                              style={{ paddingTop: 7 }}
+                              htmlFor="text-input"
+                            >
+                              Idade Minima
+                            </Label>
+                          </Col>
+                          <Col xs="12" md="9">
+                            <Input
+                              style={
+                                disabelMinAge
+                                  ? {
+                                      cursor: "not-allowed",
+                                      pointerEvents: "all !important",
+                                    }
+                                  : { cursor: "default" }
+                              }
+                              disabled={disabelMinAge}
+                              type="number"
+                              min="0"
+                              max="99"
+                              id="text-input"
+                              name="text-input"
+                              placeholder="Informe a idade mínima para aplicação da vacina"
+                              onChange={(e) =>
+                                this.setState({ min_age: e.target.value })
+                              }
+                              value={min_age}
+                            />
+                          </Col>
+                        </FormGroup>
 
-                          <FormGroup row>
-                            <Col md="3">
-                              <Label style={{ paddingTop: 7 }} htmlFor="select">
-                                Tipo idade
-                              </Label>
-                            </Col>
-                            <Col xs="12" md="9">
-                              <Select
-                                isClearable={true}
-                                isSearchable={true}
-                                options={unity_ages}
-                                value={unity_age}
-                                getOptionLabel={(unity_agel) =>
-                                  unity_agel.label
-                                }
-                                getOptionValue={(unity_agel) =>
-                                  unity_agel.value
-                                }
-                                onChange={(unity_agel) =>
-                                  this.setState({ unity_age: unity_agel })
-                                }
-                                placeholder="Selecione um tipo de unidade para idade"
-                              />
-                            </Col>
-                          </FormGroup>
-                        </Form>
+                        <FormGroup row>
+                          <Col md="3">
+                            <Label
+                              style={{ paddingTop: 7 }}
+                              htmlFor="text-input"
+                            >
+                              Idade Maxima
+                            </Label>
+                          </Col>
+                          <Col xs="12" md="9">
+                            <Input
+                              style={
+                                disabelMaxAge
+                                  ? {
+                                      cursor: "not-allowed",
+                                      pointerEvents: "all !important",
+                                    }
+                                  : { cursor: "default" }
+                              }
+                              disabled={disabelMaxAge}
+                              type="number"
+                              min="0"
+                              max="99"
+                              id="text-input"
+                              name="text-input"
+                              placeholder="Informe a idade máxima para aplicação da vacina"
+                              onChange={(e) =>
+                                this.setState({ max_age: e.target.value })
+                              }
+                              value={max_age}
+                            />
+                          </Col>
+                        </FormGroup>
                       </CardBody>
                       <CardFooter>
                         <Button type="submit" size="sm" color="primary">
                           <i className="fa fa-dot-circle-o"></i>OK
                         </Button>
                       </CardFooter>
-                    </Card>
-                  </Col>
-                </Row>
-              </Form>
+                    </Form>
+                  </Card>
+                </Col>
+              </Row>
             </ModalBody>
           </Modal>
         </Fragment>

@@ -24,6 +24,9 @@ class addCampanha extends Component {
     municipio: "",
     min_age: "",
     max_age: "",
+    disabelMinAge: false,
+    disabelMaxAge: false,
+    disabelTypeAge: false,
     selected_estab: "",
     estabelecimentos: [],
     selected_vaccine: "",
@@ -209,6 +212,9 @@ class addCampanha extends Component {
       municipio,
       audience,
       audiences,
+      disabelMinAge,
+      disabelMaxAge,
+      disabelTypeAge,
       min_age,
       max_age,
       unity_age,
@@ -340,7 +346,73 @@ class addCampanha extends Component {
                       getOptionLabel={(audiencel) => audiencel.label}
                       getOptionValue={(audiencel) => audiencel.value}
                       onChange={(audiencel) =>
-                        this.setState({ audience: audiencel })
+                        this.setState(
+                          {
+                            audience: audiencel,
+                            disabelMinAge:
+                              (audiencel !== null &&
+                                audiencel.value === "GESTANTE") ||
+                              (audiencel !== null &&
+                                audiencel.value === "CRIANCA" &&
+                                unity_age !== null &&
+                                unity_age.value === "AO_NASCER")
+                                ? true
+                                : false,
+                            disabelMaxAge:
+                              (audiencel !== null &&
+                                audiencel.value === "GESTANTE") ||
+                              (audiencel !== null &&
+                                audiencel.value === "CRIANCA" &&
+                                unity_age !== null &&
+                                unity_age.value === "AO_NASCER")
+                                ? true
+                                : false,
+                            disabelTypeAge:
+                              (audiencel !== null &&
+                                audiencel.value === "GESTANTE") ||
+                              (audiencel !== null &&
+                                audiencel.value === "CRIANCA" &&
+                                unity_age !== null &&
+                                unity_age.value === "AO_NASCER")
+                                ? true
+                                : false,
+                            min_age:
+                              (audiencel !== null &&
+                                audiencel.value === "GESTANTE") ||
+                              (audiencel !== null &&
+                                audiencel.value === "CRIANCA" &&
+                                unity_age !== null &&
+                                unity_age.value === "AO_NASCER")
+                                ? 0
+                                : false,
+                            max_age:
+                              (audiencel !== null &&
+                                audiencel.value === "GESTANTE") ||
+                              (audiencel !== null &&
+                                audiencel.value === "CRIANCA" &&
+                                unity_age !== null &&
+                                unity_age.value === "AO_NASCER")
+                                ? 0
+                                : false,
+                            unity_age:
+                              audiencel !== null &&
+                              (audiencel.value === "GESTANTE" ||
+                                audiencel.value === "ADOLESCENTE" ||
+                                audiencel.value === "IDOSO" ||
+                                audiencel.value === "ADULTO")
+                                ? {
+                                    value: "ANOS",
+                                    label: "Anos",
+                                  }
+                                : unity_age !== null
+                                ? unity_age
+                                : {
+                                    value: "MESES",
+                                    label: "Meses",
+                                  },
+                          },
+                          function () {}
+                        )
                       }
                       placeholder="Selecione um público"
                     />
@@ -350,11 +422,12 @@ class addCampanha extends Component {
                 <FormGroup row>
                   <Col md="3">
                     <Label style={{ paddingTop: 8 }} htmlFor="select">
-                      Tipo
+                      Tipo Idade
                     </Label>
                   </Col>
                   <Col xs="12" md="9">
                     <Select
+                      isDisabled={disabelTypeAge}
                       isClearable={true}
                       isSearchable={true}
                       options={unity_ages}
@@ -362,7 +435,40 @@ class addCampanha extends Component {
                       getOptionLabel={(unity_agel) => unity_agel.label}
                       getOptionValue={(unity_agel) => unity_agel.value}
                       onChange={(unity_agel) =>
-                        this.setState({ unity_age: unity_agel })
+                        this.setState(
+                          {
+                            unity_age: unity_agel,
+                            disabelMinAge:
+                              audience !== null &&
+                              audience.value === "CRIANCA" &&
+                              unity_agel !== null &&
+                              unity_agel.value === "AO_NASCER"
+                                ? true
+                                : false,
+                            disabelMaxAge:
+                              audience !== null &&
+                              audience.value === "CRIANCA" &&
+                              unity_agel !== null &&
+                              unity_agel.value === "AO_NASCER"
+                                ? true
+                                : false,
+                            min_age:
+                              audience !== null &&
+                              audience.value === "CRIANCA" &&
+                              unity_agel !== null &&
+                              unity_agel.value === "AO_NASCER"
+                                ? 0
+                                : 0,
+                            max_age:
+                              audience !== null &&
+                              audience.value === "CRIANCA" &&
+                              unity_agel !== null &&
+                              unity_agel.value === "AO_NASCER"
+                                ? 0
+                                : 0,
+                          },
+                          function () {}
+                        )
                       }
                       placeholder="Selecione um tipo de unidade para idade"
                     />
@@ -377,6 +483,15 @@ class addCampanha extends Component {
                   </Col>
                   <Col xs="12" md="9">
                     <Input
+                      style={
+                        disabelMinAge
+                          ? {
+                              cursor: "not-allowed",
+                              pointerEvents: "all !important",
+                            }
+                          : { cursor: "default" }
+                      }
+                      disabled={disabelMinAge}
                       type="number"
                       min="0"
                       max="99"
@@ -398,6 +513,15 @@ class addCampanha extends Component {
                   </Col>
                   <Col xs="12" md="9">
                     <Input
+                      style={
+                        disabelMaxAge
+                          ? {
+                              cursor: "not-allowed",
+                              pointerEvents: "all !important",
+                            }
+                          : { cursor: "default" }
+                      }
+                      disabled={disabelMaxAge}
                       type="number"
                       min="0"
                       max="99"
