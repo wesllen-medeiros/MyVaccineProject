@@ -58,6 +58,7 @@ function Login() {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
+                        required
                         type="email"
                         placeholder="Email"
                         autoComplete="username"
@@ -72,6 +73,7 @@ function Login() {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
+                        required
                         type="password"
                         placeholder="Senha"
                         autoComplete="current-password"
@@ -81,12 +83,12 @@ function Login() {
                     </InputGroup>
                     <Row>
                       <Col xs="6">
-                        <Button color="primary" className="px-4">
+                        <Button type="submit" color="primary" className="px-4">
                           Entrar
                         </Button>
                       </Col>
                       <Col xs="6" className="text-right">
-                        <Button color="link" className="px-0">
+                        <Button type="button" onClick={undefined} color="link" className="px-0">
                           Esqueceu sua Senha?
                         </Button>
                       </Col>

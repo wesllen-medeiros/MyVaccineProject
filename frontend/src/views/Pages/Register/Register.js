@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import api from "../../../services/index";
+import { cnpjMask } from "../../Base/Maks/masks";
 
 function Register() {
   const [nm_fantasia, setNm_fantasia] = useState("");
@@ -31,7 +32,7 @@ function Register() {
     const data = {
       nm_fantasia,
       email,
-      cnpj,
+      cnpj: cnpj.replace(/[./-]/g, ""),
       state,
       municipio,
       password,
@@ -95,9 +96,10 @@ function Register() {
                     </InputGroupAddon>
                     <Input
                       type="text"
+                      maxLength="18"
                       placeholder="CNPJ"
                       value={cnpj}
-                      onChange={(e) => setCnpj(e.target.value)}
+                      onChange={(e) => setCnpj(cnpjMask(e.target.value))}
                       required
                     />
                   </InputGroup>
@@ -171,9 +173,22 @@ function Register() {
                       required
                     />
                   </InputGroup>
-                  <Button color="success" block>
-                    Salvar
-                  </Button>
+                  <Row>
+                    <Col>
+                      <Button type="submit" color="success" block>
+                        Salvar
+                      </Button>
+                    </Col>
+                    <Col>
+                      <Button
+                        block
+                        color="primary"
+                        onClick={() => history.push("/")}
+                      >
+                        Voltar
+                      </Button>
+                    </Col>
+                  </Row>
                 </Form>
               </CardBody>
             </Card>
