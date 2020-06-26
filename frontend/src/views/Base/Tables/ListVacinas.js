@@ -237,6 +237,15 @@ class ListVacinas extends Component {
                               </Button>
                               <Button
                                 color="primary"
+                                style={
+                                  post.public.length === 0
+                                    ? {
+                                        cursor: "not-allowed",
+                                        pointerEvents: "all !important",
+                                      }
+                                    : { cursor: "pointer" }
+                                }
+                                disabled={post.public.length === 0}
                                 onClick={() => this.toggleList(post.public)}
                                 className="mt-3"
                                 active
@@ -273,6 +282,11 @@ class ListVacinas extends Component {
                           <PaginationLink
                             first
                             tag="button"
+                            style={
+                              currentPage === 0
+                                ? { cursor: "not-allowed" }
+                                : { cursor: "pointer" }
+                            }
                             disabled={currentPage === 0}
                             onClick={(e) => this.handleClick(e, 0)}
                             href="#"
@@ -283,6 +297,11 @@ class ListVacinas extends Component {
                           <PaginationLink
                             previous
                             tag="button"
+                            style={
+                              currentPage === 0
+                                ? { cursor: "not-allowed" }
+                                : { cursor: "pointer" }
+                            }
                             disabled={currentPage === 0}
                             onClick={(e) =>
                               this.handleClick(e, currentPage - 1)
@@ -308,6 +327,11 @@ class ListVacinas extends Component {
                             next
                             tag="button"
                             disabled={currentPage + 1 === this.pagesCount}
+                            style={
+                              currentPage + 1 === this.pagesCount
+                                ? { cursor: "not-allowed" }
+                                : { cursor: "pointer" }
+                            }
                             onClick={(e) =>
                               this.handleClick(e, currentPage + 1)
                             }
@@ -319,6 +343,11 @@ class ListVacinas extends Component {
                           <PaginationLink
                             last
                             tag="button"
+                            style={
+                              currentPage + 1 === this.pagesCount
+                                ? { cursor: "not-allowed" }
+                                : { cursor: "pointer" }
+                            }
                             disabled={currentPage + 1 === this.pagesCount}
                             onClick={(e) =>
                               this.handleClick(e, this.pagesCount - 1)

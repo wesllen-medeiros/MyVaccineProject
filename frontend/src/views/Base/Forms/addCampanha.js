@@ -346,44 +346,6 @@ class addCampanha extends Component {
                     />
                   </Col>
                 </FormGroup>
-                <FormGroup row>
-                  <Col md="3">
-                    <Label style={{ paddingTop: 8 }} htmlFor="text-input">
-                      Idade Mínima
-                    </Label>
-                  </Col>
-                  <Col xs="12" md="9">
-                    <Input
-                      type="text"
-                      id="text-input"
-                      name="text-input"
-                      placeholder="Informe a idade mínima para aplicação da vacina"
-                      onChange={(e) =>
-                        this.setState({ min_age: e.target.value })
-                      }
-                      value={min_age}
-                    />
-                  </Col>
-                </FormGroup>
-                <FormGroup row>
-                  <Col md="3">
-                    <Label style={{ paddingTop: 8 }} htmlFor="text-input">
-                      Idade Máxima
-                    </Label>
-                  </Col>
-                  <Col xs="12" md="9">
-                    <Input
-                      type="text"
-                      id="text-input"
-                      name="text-input"
-                      placeholder="Informe a idade máxima para aplicação da vacina"
-                      onChange={(e) =>
-                        this.setState({ max_age: e.target.value })
-                      }
-                      value={max_age}
-                    />
-                  </Col>
-                </FormGroup>
 
                 <FormGroup row>
                   <Col md="3">
@@ -403,6 +365,49 @@ class addCampanha extends Component {
                         this.setState({ unity_age: unity_agel })
                       }
                       placeholder="Selecione um tipo de unidade para idade"
+                    />
+                  </Col>
+                </FormGroup>
+
+                <FormGroup row>
+                  <Col md="3">
+                    <Label style={{ paddingTop: 8 }} htmlFor="text-input">
+                      Idade Mínima
+                    </Label>
+                  </Col>
+                  <Col xs="12" md="9">
+                    <Input
+                      type="number"
+                      min="0"
+                      max="99"
+                      id="text-input"
+                      name="text-input"
+                      placeholder="Informe a idade mínima para aplicação da vacina"
+                      onChange={(e) =>
+                        this.setState({ min_age: e.target.value })
+                      }
+                      value={min_age}
+                    />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Col md="3">
+                    <Label style={{ paddingTop: 8 }} htmlFor="text-input">
+                      Idade Máxima
+                    </Label>
+                  </Col>
+                  <Col xs="12" md="9">
+                    <Input
+                      type="number"
+                      min="0"
+                      max="99"
+                      id="text-input"
+                      name="text-input"
+                      placeholder="Informe a idade máxima para aplicação da vacina"
+                      onChange={(e) =>
+                        this.setState({ max_age: e.target.value })
+                      }
+                      value={max_age}
                     />
                   </Col>
                 </FormGroup>

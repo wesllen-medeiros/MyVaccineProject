@@ -46,8 +46,6 @@ class CardCampanha extends Component {
         console.log(err.response.data);
       });
 
-    console.log(retorno);
-
     this.setState({ campanhas: retorno });
   }
 
@@ -145,8 +143,24 @@ class CardCampanha extends Component {
                         </a>
                         {/*eslint-disable-next-line*/}
                         <a
-                          className="card-header-action btn btn-close"
-                          onClick={() => this.toggleFade(post.id)}
+                          style={
+                            new Date(post.dt_fim) < new Date()
+                              ? {
+                                  cursor: "not-allowed",
+                                  pointerEvents: "all !important",
+                                }
+                              : { cursor: "pointer" }
+                          }
+                          className={
+                            new Date(post.dt_fim) < new Date()
+                              ? "card-header-action btn btn-close disabled"
+                              : "card-header-action btn btn-close"
+                          }
+                          onClick={
+                            new Date(post.dt_fim) < new Date()
+                              ? undefined
+                              : () => this.toggleFade(post.id)
+                          }
                         >
                           <i className="fa fa-trash" aria-hidden="true"></i>
                         </a>

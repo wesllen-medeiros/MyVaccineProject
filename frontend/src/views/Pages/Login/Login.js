@@ -37,7 +37,7 @@ function Login() {
     localStorage.setItem("email", email);
     localStorage.setItem("password", retornoAdminSessions.password);
 
-    history.push("/home");
+    history.push("/dashboard");
   }
 
   return (
@@ -58,7 +58,7 @@ function Login() {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input
-                        type="text"
+                        type="email"
                         placeholder="Email"
                         autoComplete="username"
                         value={email}

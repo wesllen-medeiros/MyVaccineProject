@@ -159,6 +159,11 @@ class ListApp extends Component {
                         <PaginationLink
                           first
                           tag="button"
+                          style={
+                            currentPage === 0
+                              ? { cursor: "not-allowed" }
+                              : { cursor: "pointer" }
+                          }
                           disabled={currentPage === 0}
                           onClick={(e) => this.handleClick(e, 0)}
                           href="#"
@@ -169,6 +174,11 @@ class ListApp extends Component {
                         <PaginationLink
                           previous
                           tag="button"
+                          style={
+                            currentPage === 0
+                              ? { cursor: "not-allowed" }
+                              : { cursor: "pointer" }
+                          }
                           disabled={currentPage === 0}
                           onClick={(e) => this.handleClick(e, currentPage - 1)}
                           href="#"
@@ -193,6 +203,11 @@ class ListApp extends Component {
                         <PaginationLink
                           next
                           tag="button"
+                          style={
+                            currentPage + 1 === this.pagesCount
+                              ? { cursor: "not-allowed" }
+                              : { cursor: "pointer" }
+                          }
                           disabled={currentPage + 1 === this.pagesCount}
                           onClick={(e) => this.handleClick(e, currentPage + 1)}
                           href="#"
@@ -203,6 +218,11 @@ class ListApp extends Component {
                         <PaginationLink
                           last
                           tag="button"
+                          style={
+                            currentPage + 1 === this.pagesCount
+                              ? { cursor: "not-allowed" }
+                              : { cursor: "pointer" }
+                          }
                           disabled={currentPage + 1 === this.pagesCount}
                           onClick={(e) =>
                             this.handleClick(e, this.pagesCount - 1)
