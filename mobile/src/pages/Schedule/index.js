@@ -200,6 +200,7 @@ export default function Schedule() {
                   <CardHeaderItem>{schedule.vaccine.name}</CardHeaderItem>
                   <CardHeaderItem>{schedule.scheduling_date}</CardHeaderItem>
                 </CardHeader>
+                <Item>Dose: {schedule.dose}</Item>
                 <Item>Unidade de Saúde: {schedule.estab.nm_fantasia}</Item>
                 <Item>Cidade: {schedule.estab.municipio}</Item>
               </Card>
