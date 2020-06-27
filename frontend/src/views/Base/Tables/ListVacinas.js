@@ -245,7 +245,21 @@ class ListVacinas extends Component {
                             </td>
                             <td>
                               <Button
-                                style={{ marginRight: 5, width: 40 }}
+                                disabled={post.public.length >= parseInt(post.dose.substr(0, 1))}
+                                style={
+                                  post.public.length >= parseInt(post.dose.substr(0, 1))
+                                    ? {
+                                        cursor: "not-allowed",
+                                        pointerEvents: "all !important",
+                                        marginRight: 5,
+                                        width: 40,
+                                      }
+                                    : {
+                                        cursor: "pointer",
+                                        marginRight: 5,
+                                        width: 40,
+                                      }
+                                }
                                 color="success"
                                 onClick={() => this.toggleAdd(post.name)}
                                 className="mt-3"
@@ -297,7 +311,10 @@ class ListVacinas extends Component {
                       </Link>
                     </div>
                   </div>
-                  <div className="row justify-content-center">
+                  <div
+                    className="row justify-content-center"
+                    hidden={this.pagesCount < 2}
+                  >
                     <div className="col-0">
                       <Pagination>
                         <PaginationItem>

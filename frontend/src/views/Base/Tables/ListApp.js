@@ -152,7 +152,7 @@ class ListApp extends Component {
                     Adicionar
                   </Button>
                 </Link>
-                <div className="row justify-content-center">
+                <div className="row justify-content-center" hidden={this.pagesCount < 2}>
                   <div className="col-0">
                     <Pagination>
                       <PaginationItem>
