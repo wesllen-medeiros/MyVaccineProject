@@ -198,7 +198,7 @@ class addaplicacao extends Component {
                       type="text"
                       style={{ height: 38 }}
                       name="nm_agente"
-                      placeholder="Nome Agente de Saúde"
+                      placeholder="Nome do Agente de Saúde"
                       onChange={(e) =>
                         this.setState({ nm_agente: e.target.value })
                       }
@@ -344,7 +344,7 @@ class addaplicacao extends Component {
                           className="form-horizontal"
                         >
                           <FormGroup row>
-                            <Col md="3">
+                            <Col md="3" style={{ textAlign: "end" }}>
                               <Label style={{ paddingTop: 8 }} htmlFor="select">
                                 Dose
                               </Label>
@@ -366,7 +366,7 @@ class addaplicacao extends Component {
                           </FormGroup>
 
                           <FormGroup row>
-                            <Col md="3">
+                            <Col md="3" style={{ textAlign: "end" }}>
                               <Label
                                 style={{ paddingTop: 8 }}
                                 htmlFor="date-input"
@@ -391,7 +391,7 @@ class addaplicacao extends Component {
                           </FormGroup>
 
                           <FormGroup row>
-                            <Col md="3">
+                            <Col md="3" style={{ textAlign: "end" }}>
                               <Label style={{ paddingTop: 8 }} htmlFor="select">
                                 Vacina
                               </Label>

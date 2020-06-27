@@ -471,12 +471,12 @@ class ListVacinas extends Component {
                     >
                       <CardBody>
                         <FormGroup row>
-                          <Col md="3">
+                          <Col md="2" style={{ textAlign: "end" }}>
                             <Label style={{ paddingTop: 7 }} htmlFor="select">
                               Alvos
                             </Label>
                           </Col>
-                          <Col xs="12" md="9">
+                          <Col xs="12" md="10">
                             <Select
                               required
                               isClearable={true}
@@ -560,12 +560,12 @@ class ListVacinas extends Component {
                         </FormGroup>
 
                         <FormGroup row>
-                          <Col md="3">
+                          <Col md="2" style={{ textAlign: "end" }}>
                             <Label style={{ paddingTop: 7 }} htmlFor="select">
                               Tipo idade
                             </Label>
                           </Col>
-                          <Col xs="12" md="9">
+                          <Col xs="12" md="10">
                             <Select
                               required
                               isDisabled={disabelTypeAge}
@@ -617,7 +617,7 @@ class ListVacinas extends Component {
                         </FormGroup>
 
                         <FormGroup row>
-                          <Col md="3">
+                          <Col md="2" style={{ textAlign: "end" }}>
                             <Label
                               style={{ paddingTop: 7 }}
                               htmlFor="text-input"
@@ -625,7 +625,7 @@ class ListVacinas extends Component {
                               Idade Minima
                             </Label>
                           </Col>
-                          <Col xs="12" md="9">
+                          <Col xs="12" md="10">
                             <Input
                               style={
                                 disabelMinAge
@@ -652,7 +652,7 @@ class ListVacinas extends Component {
                         </FormGroup>
 
                         <FormGroup row>
-                          <Col md="3">
+                          <Col md="2" style={{ textAlign: "end" }}>
                             <Label
                               style={{ paddingTop: 7 }}
                               htmlFor="text-input"
@@ -660,7 +660,7 @@ class ListVacinas extends Component {
                               Idade Maxima
                             </Label>
                           </Col>
-                          <Col xs="12" md="9">
+                          <Col xs="12" md="10">
                             <Input
                               style={
                                 disabelMaxAge

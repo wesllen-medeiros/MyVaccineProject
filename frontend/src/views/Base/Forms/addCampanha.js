@@ -273,7 +273,7 @@ class addCampanha extends Component {
 
     return (
       <div className="animated fadeIn">
-        <Col xs="12" sm="8">
+        <Col xs="12" sm="12" md="7" lg="7" xl="7">
           <Card>
             <CardHeader>
               <strong>Cadastro de Campanhas</strong>
@@ -281,12 +281,12 @@ class addCampanha extends Component {
             <CardBody>
               <Form onSubmit={(e) => this.handleSubmit(e)}>
                 <FormGroup row>
-                  <Col md="3">
+                  <Col xs="12" md="2" style={{ textAlign: "end" }}>
                     <Label style={{ paddingTop: 8 }} htmlFor="text-input">
                       Descrição
                     </Label>
                   </Col>
-                  <Col xs="12" md="9">
+                  <Col xs="12" md="10" lg="10">
                     <Input
                       required
                       type="text"
@@ -300,13 +300,36 @@ class addCampanha extends Component {
                     />
                   </Col>
                 </FormGroup>
+
                 <FormGroup row>
-                  <Col md="3">
+                  <Col xs="12" md="2" style={{ textAlign: "end" }}>
+                    <Label style={{ paddingTop: 8, textAlign: "end" }} htmlFor="text-input">
+                      Vacina
+                    </Label>
+                  </Col>
+                  <Col xs="12" md="10" lg="10">
+                    <Select
+                      isClearable={true}
+                      isSearchable={true}
+                      options={vaccines}
+                      value={selected_vaccine}
+                      getOptionLabel={(vaccine) => vaccine.name}
+                      getOptionValue={(vaccine) => vaccine.id}
+                      onChange={(vaccine) =>
+                        this.setState({ selected_vaccine: vaccine })
+                      }
+                      placeholder="Selecione a vacina"
+                    />
+                  </Col>
+                </FormGroup>
+
+                <FormGroup row>
+                  <Col xs="12" md="2" style={{ textAlign: "end" }}>
                     <Label style={{ paddingTop: 8 }} htmlFor="date-input">
                       Inicio
                     </Label>
                   </Col>
-                  <Col xs="12" md="9">
+                  <Col xs="12" md="10">
                     <Input
                       required
                       type="date"
@@ -321,12 +344,12 @@ class addCampanha extends Component {
                   </Col>
                 </FormGroup>
                 <FormGroup row>
-                  <Col md="3">
+                  <Col xs="12" md="2" style={{ textAlign: "end" }}>
                     <Label style={{ paddingTop: 8 }} htmlFor="date-input">
                       Fim
                     </Label>
                   </Col>
-                  <Col xs="12" md="9">
+                  <Col xs="12" md="10" lg="10">
                     <Input
                       required
                       type="date"
@@ -341,12 +364,12 @@ class addCampanha extends Component {
                   </Col>
                 </FormGroup>
                 <FormGroup row>
-                  <Col md="3">
+                  <Col xs="12" md="2" style={{ textAlign: "end" }}>
                     <Label style={{ paddingTop: 8 }} htmlFor="text-input">
                       Estado
                     </Label>
                   </Col>
-                  <Col xs="12" md="9">
+                  <Col xs="12" md="10" lg="10" style={{ textAlign: "end" }}>
                     <Select
                       isClearable={true}
                       isSearchable={true}
@@ -378,12 +401,12 @@ class addCampanha extends Component {
                   </Col>
                 </FormGroup>
                 <FormGroup row>
-                  <Col md="3">
+                  <Col xs="12" md="2" style={{ textAlign: "end" }}>
                     <Label style={{ paddingTop: 8 }} htmlFor="text-input">
                       Município
                     </Label>
                   </Col>
-                  <Col xs="12" md="9">
+                  <Col xs="12" md="10" lg="10">
                     <Select
                       isDisabled={disabledCity}
                       className="disabled"
@@ -407,12 +430,12 @@ class addCampanha extends Component {
                   </Col>
                 </FormGroup>
                 <FormGroup row>
-                  <Col md="3">
+                  <Col md="2" style={{ textAlign: "end" }}>
                     <Label style={{ paddingTop: 8 }} htmlFor="select">
                       Público
                     </Label>
                   </Col>
-                  <Col xs="12" md="9">
+                  <Col xs="12" md="10">
                     <Select
                       isClearable={true}
                       isSearchable={true}
@@ -495,12 +518,12 @@ class addCampanha extends Component {
                 </FormGroup>
 
                 <FormGroup row>
-                  <Col md="3">
+                  <Col xs="12" md="2" style={{ textAlign: "end" }}>
                     <Label style={{ paddingTop: 8 }} htmlFor="select">
                       Tipo Idade
                     </Label>
                   </Col>
-                  <Col xs="12" md="9">
+                  <Col xs="12" md="10" lg="10">
                     <Select
                       isDisabled={disableTypeAge}
                       isClearable={true}
@@ -551,12 +574,12 @@ class addCampanha extends Component {
                 </FormGroup>
 
                 <FormGroup row>
-                  <Col md="3">
+                  <Col xs="12" md="2" style={{ textAlign: "end" }}>
                     <Label style={{ paddingTop: 8 }} htmlFor="text-input">
                       Idade Mínima
                     </Label>
                   </Col>
-                  <Col xs="12" md="9">
+                  <Col xs="12" md="10" lg="10">
                     <Input
                       required
                       style={
@@ -582,12 +605,12 @@ class addCampanha extends Component {
                   </Col>
                 </FormGroup>
                 <FormGroup row>
-                  <Col md="3">
+                  <Col xs="12" md="2" style={{ textAlign: "end" }}>
                     <Label style={{ paddingTop: 8 }} htmlFor="text-input">
                       Idade Máxima
                     </Label>
                   </Col>
-                  <Col xs="12" md="9">
+                  <Col xs="12" md="10" lg="10">
                     <Input
                       required
                       style={
@@ -614,12 +637,12 @@ class addCampanha extends Component {
                 </FormGroup>
 
                 <FormGroup row>
-                  <Col md="3">
+                  <Col xs="12" md="2" style={{ textAlign: "end" }}>
                     <Label style={{ paddingTop: 8 }} htmlFor="select">
                       Dose
                     </Label>
                   </Col>
-                  <Col xs="12" md="9">
+                  <Col xs="12" md="10" lg="10">
                     <Select
                       isClearable={true}
                       isSearchable={true}
@@ -634,12 +657,12 @@ class addCampanha extends Component {
                 </FormGroup>
 
                 <FormGroup row>
-                  <Col md="3">
+                  <Col xs="12" md="2" style={{ textAlign: "end" }}>
                     <Label style={{ paddingTop: 8 }} htmlFor="text-input">
                       Estabelecimento
                     </Label>
                   </Col>
-                  <Col xs="12" md="9">
+                  <Col xs="12" md="10" lg="10">
                     <Select
                       isClearable={true}
                       isSearchable={true}
@@ -651,28 +674,6 @@ class addCampanha extends Component {
                         this.setState({ selected_estab: estab })
                       }
                       placeholder="Selecione o estabelecimento"
-                    />
-                  </Col>
-                </FormGroup>
-
-                <FormGroup row>
-                  <Col md="3">
-                    <Label style={{ paddingTop: 8 }} htmlFor="text-input">
-                      Vacina
-                    </Label>
-                  </Col>
-                  <Col xs="12" md="9">
-                    <Select
-                      isClearable={true}
-                      isSearchable={true}
-                      options={vaccines}
-                      value={selected_vaccine}
-                      getOptionLabel={(vaccine) => vaccine.name}
-                      getOptionValue={(vaccine) => vaccine.id}
-                      onChange={(vaccine) =>
-                        this.setState({ selected_vaccine: vaccine })
-                      }
-                      placeholder="Selecione a vacina"
                     />
                   </Col>
                 </FormGroup>
