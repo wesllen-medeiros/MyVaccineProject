@@ -49,17 +49,16 @@ export default function Register() {
     });
   }
 
-  function populateStateSelect(){
+  function populateStateSelect() {
     fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
       .then((res) => res.json())
       .then((states) => {
         sortOn(states, "nome");
-        setSelectStates( states );
+        setSelectStates(states);
       });
   }
 
-  function populateCitySelect(statel){
-
+  function populateCitySelect(statel) {
     setState(statel);
 
     fetch(
@@ -69,7 +68,7 @@ export default function Register() {
       .then((cities) => {
         sortOn(cities, "nome");
 
-        setSelectCities( cities );
+        setSelectCities(cities);
       });
   }
 
@@ -117,7 +116,12 @@ export default function Register() {
       </Header>
       <FormGroup>
         <Form>
-          <Icon style={{ padding: 4 }} name="account-circle" size={35} color="#FFF" />
+          <Icon
+            style={{ padding: 4 }}
+            name="account-circle"
+            size={35}
+            color="#FFF"
+          />
           <FormInput
             placeholder="Nome Completo"
             type="text"
@@ -143,7 +147,12 @@ export default function Register() {
           ></FormPassword>
         </Form>
         <Form>
-          <Icon style={{ padding: 4 }} name="credit-card" size={35} color="#FFF" />
+          <Icon
+            style={{ padding: 4 }}
+            name="credit-card"
+            size={35}
+            color="#FFF"
+          />
           <TextInputMask
             keyboardType="numeric"
             placeholder="CPF"
@@ -156,7 +165,12 @@ export default function Register() {
           ></TextInputMask>
         </Form>
         <Form>
-          <Icon style={{ padding: 4 }} name="perm-identity" size={35} color="#FFF" />
+          <Icon
+            style={{ padding: 4 }}
+            name="perm-identity"
+            size={35}
+            color="#FFF"
+          />
           <FormSelect
             placeholder="Sexo"
             mode="dropdown"
@@ -169,7 +183,12 @@ export default function Register() {
           </FormSelect>
         </Form>
         <Form>
-          <Icon style={{ padding: 4 }} name="date-range" size={35} color="#FFF" />
+          <Icon
+            style={{ padding: 4 }}
+            name="date-range"
+            size={35}
+            color="#FFF"
+          />
           <TextInputMask
             placeholder="Data de Nascimento"
             keyboardType="numeric"
@@ -183,7 +202,12 @@ export default function Register() {
           ></TextInputMask>
         </Form>
         <Form>
-          <Icon style={{ padding: 4 }} name="location-on" size={35} color="#FFF" />
+          <Icon
+            style={{ padding: 4 }}
+            name="location-on"
+            size={35}
+            color="#FFF"
+          />
           <FormSelect
             id="states"
             placeholder="Estado"
@@ -192,14 +216,14 @@ export default function Register() {
             selectedValue={state}
           >
             {selectStates.map((item) => {
-            return (
-              <FormSelect.Item
-                label={item.nome}
-                value={item}
-                key={item.nome}
-              />
-            );
-          })}
+              return (
+                <FormSelect.Item
+                  label={item.nome}
+                  value={item}
+                  key={item.nome}
+                />
+              );
+            })}
           </FormSelect>
         </Form>
         <Form>
@@ -212,14 +236,14 @@ export default function Register() {
             selectedValue={city}
           >
             {selectCities.map((item) => {
-            return (
-              <FormSelect.Item
-                label={item.nome}
-                value={item}
-                key={item.nome}
-              />
-            );
-          })}
+              return (
+                <FormSelect.Item
+                  label={item.nome}
+                  value={item}
+                  key={item.nome}
+                />
+              );
+            })}
           </FormSelect>
         </Form>
         <Buttons>

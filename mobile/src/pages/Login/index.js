@@ -23,7 +23,7 @@ import {
 } from "./styles";
 
 export default function Login() {
-  console.disableYellowBox = true
+  console.disableYellowBox = true;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -45,13 +45,12 @@ export default function Login() {
         Alert.alert("Atenção", `${err.response.data.error}`);
       });
 
-      await SecureStore.setItemAsync(
-        "userSession",
-        JSON.stringify(response.user.id)
-      );
+    await SecureStore.setItemAsync(
+      "userSession",
+      JSON.stringify(response.user.id)
+    );
 
-      navigation.navigate("Main");
-
+    navigation.navigate("Main");
   }
 
   function navigateToRegister() {

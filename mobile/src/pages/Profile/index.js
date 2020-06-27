@@ -59,19 +59,18 @@ export default function Profile(user) {
     });
   }
 
-  function populateStateSelect(){
+  function populateStateSelect() {
     fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
       .then((res) => res.json())
       .then((states) => {
         sortOn(states, "nome");
         //setSelectStates( states );
-        
+
         console.log(states);
       });
   }
 
-  function populateCitySelect(statel){
-
+  function populateCitySelect(statel) {
     setState(statel);
 
     fetch(
@@ -81,7 +80,7 @@ export default function Profile(user) {
       .then((cities) => {
         sortOn(cities, "nome");
 
-        setSelectCities( cities );
+        setSelectCities(cities);
       });
   }
 
