@@ -70,7 +70,7 @@ export default function Allergy() {
         dataAllergies = data.data;
       })
       .catch(function (error) {
-        console.log(JSON.stringify(error.response.data));
+        console.log(JSON.stringify(error.response));
       });
 
     return dataAllergies;

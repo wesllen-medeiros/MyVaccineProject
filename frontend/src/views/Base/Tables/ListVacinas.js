@@ -120,7 +120,8 @@ class ListVacinas extends Component {
     });
   }
 
-  async componentDidMount() {
+  async getVaccines(){
+
     let retorno = [];
     await api
       .get("vaccine")
@@ -137,6 +138,12 @@ class ListVacinas extends Component {
     this.pagesCount = Math.ceil(retorno.rows.length / this.pageSize);
 
     this.setState({ aplication: Array.from(retorno.rows) });
+  }
+
+  componentDidMount() {
+
+    this.getVaccines();
+
   }
 
   handleSubmit = async (e) => {
@@ -463,7 +470,7 @@ class ListVacinas extends Component {
                 <Col xs="12" sm="12">
                   <Card>
                     <Form
-                      onSubmit={(e) => this.handleSubmit(e)}
+                      onSubmit={(e) => this.handleSubmit(e).then(() => this.getVaccines())}
                       action=""
                       method="post"
                       encType="multipart/form-data"
