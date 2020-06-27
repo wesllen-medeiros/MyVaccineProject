@@ -389,7 +389,7 @@ class addCampanha extends Component {
                       Estado
                     </Label>
                   </Col>
-                  <Col xs="12" md="10" lg="10" style={{ textAlign: "end" }}>
+                  <Col xs="12" md="10" lg="10">
                     <Select
                       isClearable={true}
                       isSearchable={true}
