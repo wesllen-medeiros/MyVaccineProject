@@ -325,6 +325,26 @@ class addCampanha extends Component {
 
                 <FormGroup row>
                   <Col xs="12" md="2" style={{ textAlign: "end" }}>
+                    <Label style={{ paddingTop: 8 }} htmlFor="select">
+                      Dose
+                    </Label>
+                  </Col>
+                  <Col xs="12" md="10" lg="10">
+                    <Select
+                      isClearable={true}
+                      isSearchable={true}
+                      options={doses}
+                      value={dose}
+                      getOptionLabel={(dosel) => dosel.descricao}
+                      getOptionValue={(dosel) => dosel.nm_dose}
+                      onChange={(dosel) => this.setState({ dose: dosel })}
+                      placeholder="Selecione uma dose"
+                    />
+                  </Col>
+                </FormGroup>
+
+                <FormGroup row>
+                  <Col xs="12" md="2" style={{ textAlign: "end" }}>
                     <Label style={{ paddingTop: 8 }} htmlFor="date-input">
                       Inicio
                     </Label>
@@ -632,26 +652,6 @@ class addCampanha extends Component {
                         this.setState({ max_age: e.target.value })
                       }
                       value={max_age}
-                    />
-                  </Col>
-                </FormGroup>
-
-                <FormGroup row>
-                  <Col xs="12" md="2" style={{ textAlign: "end" }}>
-                    <Label style={{ paddingTop: 8 }} htmlFor="select">
-                      Dose
-                    </Label>
-                  </Col>
-                  <Col xs="12" md="10" lg="10">
-                    <Select
-                      isClearable={true}
-                      isSearchable={true}
-                      options={doses}
-                      value={dose}
-                      getOptionLabel={(dosel) => dosel.descricao}
-                      getOptionValue={(dosel) => dosel.nm_dose}
-                      onChange={(dosel) => this.setState({ dose: dosel })}
-                      placeholder="Selecione uma dose"
                     />
                   </Col>
                 </FormGroup>
