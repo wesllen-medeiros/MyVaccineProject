@@ -24,9 +24,10 @@ class addCampanha extends Component {
     municipio: "",
     min_age: "",
     max_age: "",
-    disabelMinAge: false,
-    disabelMaxAge: false,
-    disabelTypeAge: false,
+    disableMinAge: false,
+    disableMaxAge: false,
+    disableTypeAge: false,
+    disabledCity: true,
     selected_estab: "",
     estabelecimentos: [],
     selected_vaccine: "",
@@ -97,32 +98,52 @@ class addCampanha extends Component {
         label: "Ao Nascer",
       },
     ],
-    state: {
-      nm_state: "Acre",
-    },
-    states: [
-      { nm_state: "Acre" },
-      { nm_state: "Alagoas" },
-      { nm_state: "Amapá" },
-      { nm_state: "Amazonas" },
-      { nm_state: "Bahia" },
-      { nm_state: "Ceará" },
-      { nm_state: "Distrito Federal" },
-      { nm_state: "Espírito Santo" },
-      { nm_state: "Goiás" },
-      { nm_state: "Maranhão" },
-      { nm_state: "Mato Grosso" },
-      { nm_state: "Mato Grosso do Sul" },
-      { nm_state: "Minas Gerais" },
-      { nm_state: "Pará" },
-      { nm_state: "Paraíba" },
-      { nm_state: "Paraná" },
-      { nm_state: "Santa Catarina" },
-      { nm_state: "São Paulo" },
-      { nm_state: "Sergipe" },
-      { nm_state: "Tocantins" },
-    ],
+    state: "",
+    selectStates: [],
+    selectCities: [],
   };
+
+  sortOn(arr, prop) {
+    arr.sort(function (a, b) {
+      if (a[prop] < b[prop]) {
+        return -1;
+      } else if (a[prop] > b[prop]) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  populateStateSelect() {
+    fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
+      .then((res) => res.json())
+      .then((states) => {
+        this.sortOn(states, "nome");
+        this.setState({ selectStates: states }, function () {});
+      });
+  }
+
+  populateCitySelect() {
+    var elementCities = document.getElementById("cities");
+
+    let state = this.state.state.id;
+
+    fetch(
+      `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${state}/distritos`
+    )
+      .then((res) => res.json())
+      .then((cities) => {
+        this.sortOn(cities, "nome");
+
+        elementCities.removeAttribute("disabled");
+
+        this.setState(
+          { selectCities: cities, disabledCity: false },
+          function () {}
+        );
+      });
+  }
 
   handleSubmit = async (e) => {
     e.preventDefault();
@@ -142,40 +163,61 @@ class addCampanha extends Component {
       selected_vaccine,
     } = this.state;
 
-    await api
-      .post("campaign", {
-        descricao,
-        dt_ini: dateformat(
-          new Date(dt_ini).setDate(new Date(dt_ini).getDate() + 1)
-        ),
-        dt_fim: dateformat(
-          new Date(dt_fim).setDate(new Date(dt_fim).getDate() + 1)
-        ),
-        state: state.nm_state,
-        municipio,
-        audience: audience.value,
-        min_age,
-        max_age,
-        unity_age: unity_age.value,
-        dose: dose.nm_dose,
-        estab_id: selected_estab.id,
-        vaccine_id: selected_vaccine.id,
-      })
-      .then(function () {
-        alert("Campanha cadastrada com sucesso!");
-      })
-      .catch(function (err) {
-        console.log(err.response.data.error);
-        alert(
-          `Não foi possível concluir a operação!\n${err.response.data.error}`
-        );
-      });
+    console.log(this.state);
 
-    this.props.history.push("../cards/CardCampanha");
-    //this.props.history.push('ListVacina')
+    if (state === null) {
+      alert("O campo estado deve ser preenchido");
+    } else if (municipio === null) {
+      alert("O campo município deve ser preenchido");
+    } else if (audience === null) {
+      alert("O campo público deve ser preenchido");
+    } else if (unity_age === null) {
+      alert("O campo tipo de idade deve ser preenchido");
+    } else if (min_age === null) {
+      alert("O campo idade mínima deve ser preenchido");
+    } else if (max_age === null) {
+      alert("O campo idade mínima deve ser preenchido");
+    } else if (selected_estab === null) {
+      alert("O campo estabelecimento deve ser preenchido");
+    } else if (selected_vaccine === null) {
+      alert("O campo vacina deve ser preenchido");
+    } else {
+      await api
+        .post("campaign", {
+          descricao,
+          dt_ini: dateformat(
+            new Date(dt_ini).setDate(new Date(dt_ini).getDate() + 1)
+          ),
+          dt_fim: dateformat(
+            new Date(dt_fim).setDate(new Date(dt_fim).getDate() + 1)
+          ),
+          state: state.nome,
+          municipio: municipio.nome,
+          audience: audience.value,
+          min_age,
+          max_age,
+          unity_age: unity_age.value,
+          dose: dose.nm_dose,
+          estab_id: selected_estab.id,
+          vaccine_id: selected_vaccine.id,
+        })
+        .then(function () {
+          alert("Campanha cadastrada com sucesso!");
+        })
+        .catch(function (err) {
+          console.log(err.response.data.error);
+          alert(
+            `Não foi possível concluir a operação!\n${err.response.data.error}`
+          );
+        });
+
+      this.props.history.push("../cards/CardCampanha");
+    }
   };
 
   async componentDidMount() {
+    this.populateStateSelect();
+
     let retornoEstabs = [];
     let retornoVaccines = [];
 
@@ -208,13 +250,15 @@ class addCampanha extends Component {
       dt_ini,
       dt_fim,
       state,
-      states,
+      selectStates,
+      selectCities,
       municipio,
       audience,
       audiences,
-      disabelMinAge,
-      disabelMaxAge,
-      disabelTypeAge,
+      disableMinAge,
+      disableMaxAge,
+      disableTypeAge,
+      disabledCity,
       min_age,
       max_age,
       unity_age,
@@ -244,6 +288,7 @@ class addCampanha extends Component {
                   </Col>
                   <Col xs="12" md="9">
                     <Input
+                      required
                       type="text"
                       id="text-input"
                       name="text-input"
@@ -263,6 +308,7 @@ class addCampanha extends Component {
                   </Col>
                   <Col xs="12" md="9">
                     <Input
+                      required
                       type="date"
                       id="date-input"
                       name="date-input"
@@ -282,6 +328,7 @@ class addCampanha extends Component {
                   </Col>
                   <Col xs="12" md="9">
                     <Input
+                      required
                       type="date"
                       id="date-input"
                       name="date-input"
@@ -303,12 +350,30 @@ class addCampanha extends Component {
                     <Select
                       isClearable={true}
                       isSearchable={true}
-                      options={states}
+                      options={selectStates}
                       value={state}
-                      getOptionLabel={(statel) => statel.nm_state}
-                      getOptionValue={(statel) => statel.nm_state}
-                      onChange={(statel) => this.setState({ state: statel })}
-                      placeholder="Selecione um público"
+                      getOptionLabel={(statel) => statel.nome}
+                      getOptionValue={(statel) => statel.nome}
+                      onChange={(statel) =>
+                        this.setState(
+                          {
+                            state: statel,
+                          },
+                          function () {
+                            this.state.state !== null
+                              ? this.populateCitySelect()
+                              : this.setState(
+                                  {
+                                    municipio: "",
+                                    selectCities: [],
+                                    disabledCity: true,
+                                  },
+                                  function () {}
+                                );
+                          }
+                        )
+                      }
+                      placeholder="Selecione um estado"
                     />
                   </Col>
                 </FormGroup>
@@ -319,15 +384,25 @@ class addCampanha extends Component {
                     </Label>
                   </Col>
                   <Col xs="12" md="9">
-                    <Input
-                      type="text"
-                      id="text-input"
-                      name="text-input"
-                      placeholder="Informe o município da campanha"
-                      onChange={(e) =>
-                        this.setState({ municipio: e.target.value })
-                      }
+                    <Select
+                      isDisabled={disabledCity}
+                      className="disabled"
+                      id="cities"
+                      isClearable={true}
+                      isSearchable={true}
+                      options={selectCities}
                       value={municipio}
+                      getOptionLabel={(citiel) => citiel.nome}
+                      getOptionValue={(citiel) => citiel.nome}
+                      onChange={(citiel) =>
+                        this.setState(
+                          {
+                            municipio: citiel,
+                          },
+                          function () {}
+                        )
+                      }
+                      placeholder="Selecione um município"
                     />
                   </Col>
                 </FormGroup>
@@ -349,7 +424,7 @@ class addCampanha extends Component {
                         this.setState(
                           {
                             audience: audiencel,
-                            disabelMinAge:
+                            disableMinAge:
                               (audiencel !== null &&
                                 audiencel.value === "GESTANTE") ||
                               (audiencel !== null &&
@@ -358,7 +433,7 @@ class addCampanha extends Component {
                                 unity_age.value === "AO_NASCER")
                                 ? true
                                 : false,
-                            disabelMaxAge:
+                            disableMaxAge:
                               (audiencel !== null &&
                                 audiencel.value === "GESTANTE") ||
                               (audiencel !== null &&
@@ -367,7 +442,7 @@ class addCampanha extends Component {
                                 unity_age.value === "AO_NASCER")
                                 ? true
                                 : false,
-                            disabelTypeAge:
+                            disableTypeAge:
                               (audiencel !== null &&
                                 audiencel.value === "GESTANTE") ||
                               (audiencel !== null &&
@@ -427,7 +502,7 @@ class addCampanha extends Component {
                   </Col>
                   <Col xs="12" md="9">
                     <Select
-                      isDisabled={disabelTypeAge}
+                      isDisabled={disableTypeAge}
                       isClearable={true}
                       isSearchable={true}
                       options={unity_ages}
@@ -438,14 +513,14 @@ class addCampanha extends Component {
                         this.setState(
                           {
                             unity_age: unity_agel,
-                            disabelMinAge:
+                            disableMinAge:
                               audience !== null &&
                               audience.value === "CRIANCA" &&
                               unity_agel !== null &&
                               unity_agel.value === "AO_NASCER"
                                 ? true
                                 : false,
-                            disabelMaxAge:
+                            disableMaxAge:
                               audience !== null &&
                               audience.value === "CRIANCA" &&
                               unity_agel !== null &&
@@ -483,15 +558,16 @@ class addCampanha extends Component {
                   </Col>
                   <Col xs="12" md="9">
                     <Input
+                      required
                       style={
-                        disabelMinAge
+                        disableMinAge
                           ? {
                               cursor: "not-allowed",
                               pointerEvents: "all !important",
                             }
                           : { cursor: "default" }
                       }
-                      disabled={disabelMinAge}
+                      disabled={disableMinAge}
                       type="number"
                       min="0"
                       max="99"
@@ -513,15 +589,16 @@ class addCampanha extends Component {
                   </Col>
                   <Col xs="12" md="9">
                     <Input
+                      required
                       style={
-                        disabelMaxAge
+                        disableMaxAge
                           ? {
                               cursor: "not-allowed",
                               pointerEvents: "all !important",
                             }
                           : { cursor: "default" }
                       }
-                      disabled={disabelMaxAge}
+                      disabled={disableMaxAge}
                       type="number"
                       min="0"
                       max="99"

@@ -7,7 +7,6 @@ import User from "../models/User";
 
 class CampaignController {
   async store(req, res) {
-
     const {
       descricao,
       dt_ini,
@@ -22,26 +21,11 @@ class CampaignController {
       unity_age,
       dose,
       active,
-    } = req.body; 
+    } = req.body;
 
-    let estab = [];
-    let vaccine = [];
+    const estab = await Estab.findByPk(estab_id);
 
-    await Estab.findByPk(estab_id)
-      .then(function (result) {
-        estab = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-
-    await Vaccine.findByPk(vaccine_id)
-      .then(function (result) {
-        vaccine = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    const vaccine = await Vaccine.findByPk(vaccine_id);
 
     if (!estab) {
       return res.status(400).json({ error: "Estabelecimento incorreto" });
@@ -51,8 +35,7 @@ class CampaignController {
       return res.status(400).json({ error: "Vacina incorreta" });
     }
 
-    let campaignExist = [];
-    await Campaign.findOne({
+    const campaignExist = await Campaign.findOne({
       where: {
         dt_ini,
         dt_fim,
@@ -65,13 +48,7 @@ class CampaignController {
         max_age,
         dose,
       },
-    })
-      .then(function (result) {
-        campaignExist = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    });
 
     if (campaignExist) {
       return res.status(400).json({
@@ -115,8 +92,7 @@ class CampaignController {
         .json({ error: "Deve ser informado pelo menos 0 na idade máxima" });
     }
 
-    let campaign = [];
-    await Campaign.create({
+    const campaign = await Campaign.create({
       descricao,
       dt_ini,
       dt_fim,
@@ -130,13 +106,7 @@ class CampaignController {
       unity_age,
       dose,
       active: active == null ? "ATIVA" : active,
-    })
-      .then(function (result) {
-        campaign = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    });
 
     let publico =
       campaign.audience == "CRIANCA" && campaign.unity_age == "AO_NASCER"
@@ -164,8 +134,7 @@ class CampaignController {
         ? "anos"
         : null;
 
-    let pushNotification = [];
-    await PushNotifications.create({
+    const pushNotification = await PushNotifications.create({
       message:
         campaign.descricao +
         " destinada a " +
@@ -178,47 +147,25 @@ class CampaignController {
         unidadeIdade,
       title: "Campanha de prevenção para " + vaccine.name,
       campaign_id: campaign.id,
-    })
-      .then(function (result) {
-        pushNotification = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    });
 
-    let usersExistentes = [];
-    await User.findAll()
-      .then(function (result) {
-        usersExistentes = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-
+    const usersExistentes = await User.findAll();
 
     for (let index = 0; index < usersExistentes.length; index++) {
       const userId = usersExistentes[index].id;
 
-      let userNotification = [];
-      await UserNotifications.create({
+      const userNotification = await UserNotifications.create({
         user_id: userId,
         push_notification_id: pushNotification.id,
         status: "PENDENTE",
-      })
-        .then(function (result) {
-          userNotification = result;
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
+      });
     }
 
     return res.json(campaign);
   }
 
   async index(req, res) {
-    let campaign = [];
-    await Campaign.findAll({
+    const campaign = await Campaign.findAll({
       include: [
         {
           model: Estab,
@@ -229,13 +176,7 @@ class CampaignController {
           as: "vaccine",
         },
       ],
-    })
-      .then(function (result) {
-        campaign = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    });
 
     return res.json(campaign);
   }
@@ -243,14 +184,7 @@ class CampaignController {
   async delete(req, res) {
     const { id } = req.params;
 
-    let campaign = [];
-    await Campaign.findByPk(id)
-      .then(function (result) {
-        campaign = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    const campaign = await Campaign.findByPk(id);
 
     if (!campaign)
       return res.status(400).json({ error: "Campanha não existe" });

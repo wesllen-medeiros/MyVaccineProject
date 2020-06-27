@@ -13,15 +13,7 @@ class VaccineController {
 
     const { name, prevention, dose, ...data } = req.body;
 
-    let VaccineExist = [];
-
-    await Vaccine.findOne({ where: { name } })
-      .then(function (result) {
-        VaccineExist = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    const VaccineExist = await Vaccine.findOne({ where: { name } });
 
     if (!VaccineExist) {
       await Vaccine.create({
@@ -106,9 +98,7 @@ class VaccineController {
   }
 
   async index(req, res) {
-    let retornoVacinas = [];
-
-    await Vaccine.findAndCountAll({
+    const retornoVacinas = await Vaccine.findAndCountAll({
       include: [
         {
           model: PublicVaccination,
@@ -119,13 +109,7 @@ class VaccineController {
         ["name", "ASC"],
         ["public", "audience", "ASC"],
       ],
-    })
-      .then(function (result) {
-        retornoVacinas = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    });
 
     return res.json(retornoVacinas);
   }

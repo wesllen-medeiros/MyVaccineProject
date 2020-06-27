@@ -15,50 +15,26 @@ class ApplicationController {
       user_id,
     } = req.body;
 
-    let vaccine = [];
 
-    await Vaccine.findByPk(vaccine_id)
-      .then(function (result) {
-        vaccine = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    const vaccine = await Vaccine.findByPk(vaccine_id);
 
     if (!vaccine) {
       return res.status(400).json({ error: "Vacina incorreta" });
     }
 
-    let estab = [];
-
-    await Estab.findByPk(estab_id)
-      .then(function (result) {
-        estab = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    const estab = await Estab.findByPk(estab_id);
 
     if (!estab) {
       return res.status(400).json({ error: "Estabelecimento incorreto" });
     }
 
-    let user = [];
-
-    await User.findByPk(user_id)
-      .then(function (result) {
-        user = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    const user = await User.findByPk(user_id);
 
     if (!user) {
       return res.status(400).json({ error: "Usuário incorreta" });
     }
 
-    let application = [];
-    await Application.create({
+    const application = await Application.create({
       nm_agente,
       dt_aplicacao,
       dose,
@@ -66,13 +42,7 @@ class ApplicationController {
       vaccine_id,
       estab_id,
       user_id,
-    })
-      .then(function (result) {
-        application = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    });
 
     return res.json(application);
   }
@@ -82,9 +52,7 @@ class ApplicationController {
       return res.status(400).json({ error: "Usuário não informado" });
     }
 
-    let application = [];
-
-    await Application.findAll({
+    const application = await Application.findAll({
       where: { user_id: req.query.userId },
       include: [
         {
@@ -101,21 +69,14 @@ class ApplicationController {
         },
       ],
       order: [["dt_aplicacao", "DESC"]],
-    })
-      .then(function (result) {
-        application = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    });
 
     return res.json(application);
   }
 
   async indexWeb(req, res) {
-    let retornoApplication = [];
 
-    await Application.findAndCountAll({
+    const retornoApplication = await Application.findAndCountAll({
       include: [
         {
           model: Estab,
@@ -131,13 +92,7 @@ class ApplicationController {
         },
       ],
       order: [["dt_aplicacao", "DESC"]],
-    })
-      .then(function (result) {
-        retornoApplication = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    });
 
     return res.json(retornoApplication);
   }

@@ -54,14 +54,13 @@ export const CardItemAddText = styled.Text`
 `;
 
 export const InputSelectAllergy = styled.Picker`
-  background-color: transparent;
+  border-width: ${StyleSheet.hairlineWidth}px;
+  border-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(128, 128, 128, 0.1);
   color: #fff;
   border-radius: 4px;
   padding: 6px;
   min-width: 70%;
-
-  font-size: 18px;
-  font-weight: bold;
 `;
 
 export const Button = styled.TouchableOpacity`

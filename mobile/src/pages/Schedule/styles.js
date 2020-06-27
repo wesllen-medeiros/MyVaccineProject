@@ -96,24 +96,41 @@ export default StyleSheet.create({
     backgroundColor: "rgba(128, 128, 128, 0.3)",
     color: "#FFF",
     borderRadius: 8,
-    alignItems: "center",
+    textAlign: "right",
     padding: 6,
     minWidth: 100,
+    width: "27%"
   },
 });
 
 export const InputSelectVaccine = styled.Picker`
-  background-color: transparent;
+  border-width: ${StyleSheet.hairlineWidth}px;
+  border-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(128, 128, 128, 0.3);
+  height: 30px;
   color: #fff;
   border-radius: 4px;
-  min-width: 57%;
+  min-width: 60%;
 `;
 
 export const InputSelectEstab = styled.Picker`
-  background-color: transparent;
+  border-width: ${StyleSheet.hairlineWidth}px;
+  border-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(128, 128, 128, 0.3);
+  height: 30px;
   color: #fff;
   border-radius: 4px;
-  min-width: 57%;
+  min-width: 60%;
+`;
+
+export const InputSelectDose = styled.Picker`
+  border-width: ${StyleSheet.hairlineWidth}px;
+  border-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(128, 128, 128, 0.3);
+  height: 30px;
+  color: #fff;
+  border-radius: 4px;
+  min-width: 27%;
 `;
 
 export const ItemCard = styled.View`

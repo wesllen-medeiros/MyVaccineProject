@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Card,
@@ -20,11 +20,79 @@ function Register() {
   const [nm_fantasia, setNm_fantasia] = useState("");
   const [email, setEmail] = useState("");
   const [cnpj, setCnpj] = useState("");
-  const [state, setstate] = useState("");
+  const [state, setstate] = useState({});
   const [municipio, setMunicio] = useState("");
   const [password, setPassword] = useState("");
 
   const history = useHistory();
+
+  function sortOn(arr, prop) {
+    arr.sort(function (a, b) {
+      if (a[prop] < b[prop]) {
+        return -1;
+      } else if (a[prop] > b[prop]) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  let selectStates = [];
+  let selectCities = [];
+
+  function populateStateSelect() {
+    selectStates = document.getElementById("states");
+
+    fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
+      .then((res) => res.json())
+      .then((states) => {
+        sortOn(states, "nome");
+        states.map((state) => {
+          const option = document.createElement("option");
+
+          option.setAttribute("value", state.id);
+          option.setAttribute("label", state.nome);
+          option.textContent = state.nome;
+
+          selectStates.appendChild(option);
+
+          return selectStates;
+        });
+      });
+  }
+
+  function populateCitySelect() {
+    selectCities = document.getElementById("cities");
+    selectStates.addEventListener("change", () => {
+      let nodesSelectCities = selectCities.childNodes;
+
+      [...nodesSelectCities].map((node) => node.remove());
+
+      let state = selectStates.options[selectStates.selectedIndex].value;
+
+      fetch(
+        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${state}/distritos`
+      )
+        .then((res) => res.json())
+        .then((cities) => {
+          sortOn(cities, "nome");
+
+          selectCities.removeAttribute("disabled");
+
+          cities.map((city) => {
+            const option = document.createElement("option");
+
+            option.setAttribute("value", city.nome);
+            option.textContent = city.nome;
+
+            selectCities.appendChild(option);
+
+            return selectCities;
+          });
+        });
+    });
+  }
 
   async function handleRegister(e) {
     e.preventDefault();
@@ -33,10 +101,12 @@ function Register() {
       nm_fantasia,
       email,
       cnpj: cnpj.replace(/[./-]/g, ""),
-      state,
+      state: state.name,
       municipio,
       password,
     };
+
+    console.log(data);
 
     await api
       .post("estab", data)
@@ -49,6 +119,11 @@ function Register() {
 
     history.push("/");
   }
+
+  useEffect(() => {
+    populateStateSelect();
+    populateCitySelect();
+  });
 
   return (
     <div className="app flex-row align-items-center">
@@ -106,57 +181,44 @@ function Register() {
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="icon-user"></i>
+                        <i className="icon-map"></i>
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input
                       type="select"
-                      name="select"
-                      id="select"
+                      name="states"
+                      id="states"
                       placeholder="Estado"
-                      autoComplete="state"
-                      value={state}
-                      onChange={(e) => setstate(e.target.value)}
+                      value={state.id}
+                      onChange={(e) =>
+                        setstate({
+                          name: e.target[e.target.selectedIndex].text,
+                          id: e.target.value,
+                        })
+                      }
                       required
                     >
-                      <option value="Acre">Acre</option>
-                      <option value="Alagoas">Alagoas</option>
-                      <option value="Amapá">Amapá</option>
-                      <option value="Amazonas">Amazonas</option>
-                      <option value="Bahia">Bahia</option>
-                      <option value="Ceará">Ceará</option>
-                      <option value="Distrito Federal">Distrito Federal</option>
-                      <option value="Espírito Santo">Espírito Santo</option>
-                      <option value="Goiás">Goiás</option>
-                      <option value="Maranhão">Maranhão</option>
-                      <option value="Mato Grosso">Mato Grosso</option>
-                      <option value="Mato Grosso do Sul">
-                        Mato Grosso do Sul
-                      </option>
-                      <option value="Minas Gerais">Minas Gerais</option>
-                      <option value="Pará">Pará</option>
-                      <option value="Paraíba">Paraíba</option>
-                      <option value="Paraná">Paraná</option>
-                      <option value="Santa Catarina">Santa Catarina</option>
-                      <option value="São Paulo">São Paulo</option>
-                      <option value="Sergipe">Sergipe</option>
-                      <option value="Tocantins">Tocantins</option>
+                      <option value="">Selecione um estado</option>
                     </Input>
                   </InputGroup>
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="icon-user"></i>
+                        <i className="icon-pin"></i>
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input
-                      type="text"
-                      placeholder="Municipio"
-                      autoComplete="municipio"
+                      type="select"
+                      name="cities"
+                      id="cities"
+                      disabled
+                      placeholder="Município"
                       value={municipio}
                       onChange={(e) => setMunicio(e.target.value)}
                       required
-                    />
+                    >
+                      <option value="">Selecione um município</option>
+                    </Input>
                   </InputGroup>
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">

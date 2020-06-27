@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
-import { Image } from "react-native";
+import { Alert, Image } from "react-native";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -23,6 +23,7 @@ import {
 } from "./styles";
 
 export default function Login() {
+  console.disableYellowBox = true
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -41,7 +42,7 @@ export default function Login() {
         response = result.data;
       })
       .catch(function (err) {
-        console.log(err);
+        Alert.alert("Atenção", `${err.response.data.error}`);
       });
 
       await SecureStore.setItemAsync(

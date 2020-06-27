@@ -91,6 +91,7 @@ class addVacina extends Component {
                 <FormGroup>
                   <Label htmlFor="company">Nome Vacina</Label>
                   <Input
+                    required
                     type="text"
                     name="descricao"
                     placeholder="Descrição da Vacina"
@@ -105,6 +106,7 @@ class addVacina extends Component {
                   </Col>
                   <Col xs="12" md="9">
                     <Input
+                      required
                       type="textarea"
                       id="text-input"
                       name="text-input"

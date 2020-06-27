@@ -8,17 +8,9 @@ class EstabSessionController {
   async store(req, res) {
     const { email, password } = req.body;
 
-    let estab = [];
-
-    await Estab.findOne({
+    const estab = await Estab.findOne({
       where: { email },
-    })
-      .then(function (result) {
-        estab = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      }); /*verifica se ja tem o email cadastrado */
+    }); /*verifica se ja tem o email cadastrado */
 
     if (!estab) {
       return res.status(401).json({

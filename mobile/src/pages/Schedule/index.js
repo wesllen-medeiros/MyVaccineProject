@@ -33,6 +33,7 @@ import {
   CardHeaderItem,
   Item,
   InputSelectEstab,
+  InputSelectDose,
 } from "./styles";
 
 export default function Schedule() {
@@ -41,6 +42,7 @@ export default function Schedule() {
   const [estabs, setEstabs] = useState([]);
   const [vaccine, setVaccine] = useState([]);
   const [estab, setEstab] = useState([]);
+  const [dose, setDose] = useState(null);
   const [scheduleDate, setSchedulingDate] = useState("");
 
   async function loadContent() {
@@ -138,7 +140,7 @@ export default function Schedule() {
 
     const responseSaveSchedule = await api
       .post("schedule", {
-        dose: 1,
+        dose: dose === null ? "1º Dose" : dose,
         scheduling_date: moment(year + "-" + month + "-" + day).toISOString(),
         vaccine_id: vaccine.id,
         user_id: await SecureStore.getItemAsync("userSession"),
@@ -244,10 +246,11 @@ export default function Schedule() {
             </ItemCard>
             <ItemCard>
               <LabelInput>Estabelecimento</LabelInput>
+              <LabelInput>Doses</LabelInput>
             </ItemCard>
             <ItemCard>
               <InputSelectEstab
-                placeholder="Vacinas"
+                placeholder="Estabelecimentos"
                 mode="dropdown"
                 onValueChange={(itemValue, itemIndex) =>
                   setEstab({ id: itemValue })
@@ -264,6 +267,17 @@ export default function Schedule() {
                   );
                 })}
               </InputSelectEstab>
+              <InputSelectDose
+                placeholder="Doses"
+                mode="dropdown"
+                onValueChange={(itemValue) => setDose(itemValue)}
+                selectedValue={dose}
+              >
+                <InputSelectDose.Item label="1º Dose" value="1º Dose" />
+                <InputSelectDose.Item label="2º Dose" value="2º Dose" />
+                <InputSelectDose.Item label="3º Dose" value="3º Dose" />
+                <InputSelectDose.Item label="4º Dose" value="4º Dose" />
+              </InputSelectDose>
             </ItemCard>
             <ItemCardButton>
               <Button

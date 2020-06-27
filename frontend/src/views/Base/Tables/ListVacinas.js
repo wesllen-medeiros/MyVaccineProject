@@ -144,27 +144,39 @@ class ListVacinas extends Component {
 
     const { audience, min_age, max_age, unity_age, name_vaccine } = this.state;
 
-    await api
-      .post("vaccine", {
-        name: name_vaccine,
-        public: [
-          {
-            audience: audience.value,
-            min_age,
-            max_age,
-            unity_age: unity_age.value,
-          },
-        ],
-      })
-      .then(function (data) {
-        alert(`Público alvo cadastrado com sucesso!`);
-      })
-      .catch(function (err) {
-        let erro = err.response.data.erro_mensagem_publico;
-        alert(`Algo inesperado aconteceu!\n ${erro}`);
-      });
+    console.log(audience, min_age, max_age, unity_age, name_vaccine);
 
-    this.toggleAdd();
+    if (audience === null) {
+      alert("O campo público deve ser preenchido");
+    } else if (unity_age === null) {
+      alert("O campo tipo de idade deve ser preenchido");
+    } else if (min_age === null) {
+      alert("O  campoidade mínima deve ser preenchido");
+    } else if (max_age === null) {
+      alert("O campo idade mínima deve ser preenchido");
+    } else {
+      await api
+        .post("vaccine", {
+          name: name_vaccine,
+          public: [
+            {
+              audience: audience.value,
+              min_age,
+              max_age,
+              unity_age: unity_age.value,
+            },
+          ],
+        })
+        .then(function (data) {
+          alert(`Público alvo cadastrado com sucesso!`);
+        })
+        .catch(function (err) {
+          let erro = err.response.data.erro_mensagem_publico;
+          alert(`Algo inesperado aconteceu!\n ${erro}`);
+        });
+
+      this.toggleAdd();
+    }
   };
 
   handleClick(e, index) {
@@ -466,6 +478,7 @@ class ListVacinas extends Component {
                           </Col>
                           <Col xs="12" md="9">
                             <Select
+                              required
                               isClearable={true}
                               isSearchable={true}
                               options={audiences}
@@ -554,6 +567,7 @@ class ListVacinas extends Component {
                           </Col>
                           <Col xs="12" md="9">
                             <Select
+                              required
                               isDisabled={disabelTypeAge}
                               isClearable={true}
                               isSearchable={true}
@@ -621,6 +635,7 @@ class ListVacinas extends Component {
                                     }
                                   : { cursor: "default" }
                               }
+                              required
                               disabled={disabelMinAge}
                               type="number"
                               min="0"
@@ -655,6 +670,7 @@ class ListVacinas extends Component {
                                     }
                                   : { cursor: "default" }
                               }
+                              required
                               disabled={disabelMaxAge}
                               type="number"
                               min="0"

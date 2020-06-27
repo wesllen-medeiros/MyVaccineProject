@@ -4,47 +4,24 @@ import UserAllergies from "../models/UserAllergies";
 
 class AllergyController {
   async store(req, res) {
-    let AllergyExist = [];
-
-    await Allergy.findOne({
+    const AllergyExist = await Allergy.findOne({
       where: { descricao: req.body.descricao },
-    })
-      .then(function (result) {
-        AllergyExist = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    });
 
     if (AllergyExist) {
       return res.status(400).json({ error: "Alergia já cadastrado!" });
     }
 
-    let allergy = [];
-
-    await Allergy.create(req.body)
-      .then(function (result) {
-        allergy = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    const allergy = await Allergy.create(req.body);
 
     return res.json({
-      allergy,
+      allergy
     });
   }
 
   async index(req, res) {
-    let allergy = [];
 
-    await Allergy.findAll()
-      .then(function (result) {
-        allergy = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    const allergy = await Allergy.findAll();
 
     return res.json(allergy);
   }
@@ -52,17 +29,9 @@ class AllergyController {
   async storeUserAllergy(req, res) {
     const { descricao, ...data } = req.body;
 
-    let AllergyExist = [];
-
-    await Allergy.findOne({
+    const AllergyExist = await Allergy.findOne({
       where: { descricao: descricao },
-    })
-      .then(function (result) {
-        AllergyExist = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    });
 
     if (!AllergyExist) {
       return res
@@ -70,15 +39,7 @@ class AllergyController {
         .json({ error: "Não existe alergia cadastrada com esta descrição!" });
     }
 
-    let UserExist = [];
-
-    await User.findByPk(data.user_id)
-      .then(function (result) {
-        UserExist = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    const UserExist =await User.findByPk(data.user_id)
 
     if (!UserExist) {
       return res
@@ -86,17 +47,9 @@ class AllergyController {
         .json({ error: "Não existe usuário cadastrada com este código!" });
     }
 
-    let UserAllergyExist = [];
-
-    await UserAllergies.findOne({
+    const UserAllergyExist =await UserAllergies.findOne({
       where: { allergy_id: AllergyExist.id, user_id: UserExist.id },
-    })
-      .then(function (result) {
-        UserAllergyExist = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    });
 
     if (UserAllergyExist) {
       return res.status(400).json({
@@ -105,27 +58,18 @@ class AllergyController {
       });
     }
 
-    let retornoUserAllergy = [];
-
-    await UserAllergies.create({
+    const retornoUserAllergy = await UserAllergies.create({
       allergy_id: AllergyExist.id,
       user_id: UserExist.id,
-    })
-      .then(function (result) {
-        retornoUserAllergy = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    });
 
     return res.json({
-      retornoUserAllergy,
+      retornoUserAllergy
     });
   }
 
   async indexUserAllergy(req, res) {
-    let userAllergy = [];
-    await UserAllergies.findAll({
+    const userAllergy = await UserAllergies.findAll({
       where: { user_id: req.params.userId },
       include: [
         {
@@ -134,13 +78,7 @@ class AllergyController {
           attributes: ["descricao"],
         },
       ],
-    })
-      .then(function (result) {
-        userAllergy = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    });
 
     return res.json(userAllergy);
   }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { TextInputMask } from "react-native-masked-text";
 import moment from "moment";
@@ -32,8 +32,46 @@ export default function Register() {
   const [birthday, setBirthday] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
+  const [selectStates, setSelectStates] = useState([]);
+  const [selectCities, setSelectCities] = useState([]);
 
   const navigation = useNavigation();
+
+  function sortOn(arr, prop) {
+    arr.sort(function (a, b) {
+      if (a[prop] < b[prop]) {
+        return -1;
+      } else if (a[prop] > b[prop]) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  function populateStateSelect(){
+    fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
+      .then((res) => res.json())
+      .then((states) => {
+        sortOn(states, "nome");
+        setSelectStates( states );
+      });
+  }
+
+  function populateCitySelect(statel){
+
+    setState(statel);
+
+    fetch(
+      `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${statel.id}/distritos`
+    )
+      .then((res) => res.json())
+      .then((cities) => {
+        sortOn(cities, "nome");
+
+        setSelectCities( cities );
+      });
+  }
 
   function navigateToLogin() {
     navigation.navigate("Login");
@@ -51,8 +89,8 @@ export default function Register() {
       cpf: cpf.replace(/[.-]/g, ""),
       sexo: sexo,
       dt_nascimento: moment(year + "-" + month + "-" + day).toISOString(),
-      state: state,
-      municipio: city,
+      state: state.sigla,
+      municipio: city.nome,
       tipo_sanguineo: "O-",
     };
 
@@ -67,6 +105,10 @@ export default function Register() {
         console.log(err);
       });
   }
+
+  useEffect(() => {
+    populateStateSelect();
+  }, []);
 
   return (
     <Container>
@@ -143,41 +185,42 @@ export default function Register() {
         <Form>
           <Icon style={{ padding: 4 }} name="face" size={35} color="#FFF" />
           <FormSelect
+            id="states"
             placeholder="Estado"
             mode="dropdown"
-            onValueChange={(inputVal) => setState(inputVal)}
+            onValueChange={(inputVal) => populateCitySelect(inputVal)}
             selectedValue={state}
           >
-            <FormSelect.Item label="Selecione um estado" value="NN" />
-            <FormSelect.Item label="Acre" value="AC" />
-            <FormSelect.Item label="Alagoas" value="AL" />
-            <FormSelect.Item label="Amapá" value="AP" />
-            <FormSelect.Item label="Amazonas" value="AM" />
-            <FormSelect.Item label="Bahia" value="BA" />
-            <FormSelect.Item label="Ceará" value="CE" />
-            <FormSelect.Item label="Distrito Federal" value="DF" />
-            <FormSelect.Item label="Espírito Santo" value="ES" />
-            <FormSelect.Item label="Goiás" value="GO" />
-            <FormSelect.Item label="Maranhão" value="MA" />
-            <FormSelect.Item label="Mato Grosso" value="MT" />
-            <FormSelect.Item label="Mato Grosso do Sul" value="MS" />
-            <FormSelect.Item label="Minas Gerais" value="MG" />
-            <FormSelect.Item label="Pará" value="PA" />
-            <FormSelect.Item label="Paraíba" value="PB" />
-            <FormSelect.Item label="Paraná" value="PR" />
-            <FormSelect.Item label="Santa Catarina" value="SC" />
-            <FormSelect.Item label="São Paulo" value="SP" />
-            <FormSelect.Item label="Sergipe" value="SE" />
-            <FormSelect.Item label="Tocantins" value="TO" />
+            {selectStates.map((item) => {
+            return (
+              <FormSelect.Item
+                label={item.nome}
+                value={item}
+                key={item.nome}
+              />
+            );
+          })}
           </FormSelect>
         </Form>
         <Form>
           <Icon style={{ padding: 4 }} name="face" size={35} color="#FFF" />
-          <FormInput
+          <FormSelect
+            id="cities"
             placeholder="Cidade"
-            type="text"
-            onChangeText={(inputVal) => setCity(inputVal)}
-          ></FormInput>
+            mode="dropdown"
+            onValueChange={(inputVal) => setCity(inputVal)}
+            selectedValue={city}
+          >
+            {selectCities.map((item) => {
+            return (
+              <FormSelect.Item
+                label={item.nome}
+                value={item}
+                key={item.nome}
+              />
+            );
+          })}
+          </FormSelect>
         </Form>
         <Buttons>
           <Button

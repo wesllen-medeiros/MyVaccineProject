@@ -42,8 +42,48 @@ export default function Profile(user) {
   const [bloodType, setBloodType] = useState("");
   const [passwordHash, setPasswordHash] = useState("");
   const [id, setId] = useState("");
+  const [selectStates, setSelectStates] = useState([]);
+  const [selectCities, setSelectCities] = useState([]);
 
   const navigation = useNavigation();
+
+  function sortOn(arr, prop) {
+    arr.sort(function (a, b) {
+      if (a[prop] < b[prop]) {
+        return -1;
+      } else if (a[prop] > b[prop]) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  function populateStateSelect(){
+    fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados")
+      .then((res) => res.json())
+      .then((states) => {
+        sortOn(states, "nome");
+        //setSelectStates( states );
+        
+        console.log(states);
+      });
+  }
+
+  function populateCitySelect(statel){
+
+    setState(statel);
+
+    fetch(
+      `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${statel.id}/distritos`
+    )
+      .then((res) => res.json())
+      .then((cities) => {
+        sortOn(cities, "nome");
+
+        setSelectCities( cities );
+      });
+  }
 
   function getUser() {
     //Carga inicial dos dados

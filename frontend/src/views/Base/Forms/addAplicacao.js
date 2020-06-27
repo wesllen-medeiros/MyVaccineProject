@@ -186,10 +186,15 @@ class addaplicacao extends Component {
                 <strong>Cadastro de Aplicação</strong>
               </CardHeader>
               <CardBody>
-                <Form onSubmit={(e) => this.handleSubmit(e)}>
+                <Form
+                  onSubmit={(e) =>
+                    this.handleSubmit(e).then(() => this.toggleLarge())
+                  }
+                >
                   <FormGroup>
                     <Label htmlFor="company">Nome Agente</Label>
                     <Input
+                      required
                       type="text"
                       style={{ height: 38 }}
                       name="nm_agente"
@@ -205,6 +210,7 @@ class addaplicacao extends Component {
                       <FormGroup>
                         <Label htmlFor="date-input">Data Aplicação</Label>
                         <Input
+                          required
                           type="date"
                           id="date-input"
                           name="DataAplicaca"
@@ -271,6 +277,7 @@ class addaplicacao extends Component {
                       <FormGroup>
                         <Label htmlFor="postal-code">Código do Paciente:</Label>
                         <Input
+                          required
                           style={{ height: 38 }}
                           valid={user_id !== ""}
                           id="inputIsValid"
@@ -288,6 +295,7 @@ class addaplicacao extends Component {
                       <FormGroup>
                         <Label htmlFor="postal-code">Alguma Reação?</Label>
                         <Input
+                          required
                           type="textarea"
                           name="reacao"
                           placeholder="Caso tenha Reação descreva"
@@ -301,7 +309,6 @@ class addaplicacao extends Component {
                     <Col xs="5">
                       <Button
                         type="submit"
-                        onClick={this.toggleLarge}
                         color="primary"
                         className="mt-4"
                         active

@@ -6,32 +6,18 @@ const Op = Sequelize.Op;
 
 class PushNotification {
   async updateNotification(req, res) {
-    let user = [];
-    await User.findOne({ where: { id: req.body.userId } })
-      .then(function (result) {
-        user = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    const user = await User.findOne({ where: { id: req.body.userId } });
 
     if (!user) {
       return res.status(400).json({ error: "Usuário não existe" });
     }
 
-    let userNotification = [];
-    await UserNotifications.findOne({
+    const userNotification = await UserNotifications.findOne({
       where: {
         push_notification_id: req.body.userNotificationId,
         user_id: req.body.userId,
       },
-    })
-      .then(function (result) {
-        userNotification = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    });
 
     if (!userNotification) {
       return res
@@ -39,9 +25,7 @@ class PushNotification {
         .json({ error: "Não existe notificação pendente para este usuário" });
     }
 
-    let userNotificationsUp = [];
-
-    await UserNotifications.update(
+    const userNotificationsUp = await UserNotifications.update(
       {
         status: "ENVIADA",
       },
@@ -52,19 +36,12 @@ class PushNotification {
           user_id: req.body.userId,
         },
       }
-    )
-      .then(function (result) {
-        userNotificationsUp = result;
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    );
 
     return res.json(userNotificationsUp);
   }
 
   async index(req, res) {
-
     const user = await User.findOne({ where: { id: req.query.userId } });
 
     if (!user) {
