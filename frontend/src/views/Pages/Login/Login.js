@@ -49,8 +49,10 @@ function Login() {
               <Card className="p-4">
                 <CardBody>
                   <Form onSubmit={handleLogin}>
-                    <h1>Cadastre-se</h1>
-                    <p className="text-muted">Crie um novo Cadastro!</p>
+                    <h1>Entrar</h1>
+                    <p className="text-muted">
+                      Acesse o painel administrativo!
+                    </p>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
@@ -88,7 +90,12 @@ function Login() {
                         </Button>
                       </Col>
                       <Col xs="6" className="text-right">
-                        <Button type="button" onClick={undefined} color="link" className="px-0">
+                        <Button
+                          type="button"
+                          onClick={undefined}
+                          color="link"
+                          className="px-0"
+                        >
                           Esqueceu sua Senha?
                         </Button>
                       </Col>

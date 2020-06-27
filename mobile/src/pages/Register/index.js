@@ -117,7 +117,7 @@ export default function Register() {
       </Header>
       <FormGroup>
         <Form>
-          <Icon style={{ padding: 4 }} name="face" size={35} color="#FFF" />
+          <Icon style={{ padding: 4 }} name="account-circle" size={35} color="#FFF" />
           <FormInput
             placeholder="Nome Completo"
             type="text"
@@ -126,7 +126,7 @@ export default function Register() {
           ></FormInput>
         </Form>
         <Form>
-          <Icon style={{ padding: 4 }} name="face" size={35} color="#FFF" />
+          <Icon style={{ padding: 4 }} name="email" size={35} color="#FFF" />
           <FormInput
             placeholder="E-mail"
             type="text"
@@ -135,7 +135,7 @@ export default function Register() {
           ></FormInput>
         </Form>
         <Form>
-          <Icon style={{ padding: 4 }} name="face" size={35} color="#FFF" />
+          <Icon style={{ padding: 4 }} name="lock" size={35} color="#FFF" />
           <FormPassword
             placeholder="Senha"
             secureTextEntry={true}
@@ -143,7 +143,7 @@ export default function Register() {
           ></FormPassword>
         </Form>
         <Form>
-          <Icon style={{ padding: 4 }} name="face" size={35} color="#FFF" />
+          <Icon style={{ padding: 4 }} name="credit-card" size={35} color="#FFF" />
           <TextInputMask
             keyboardType="numeric"
             placeholder="CPF"
@@ -156,7 +156,7 @@ export default function Register() {
           ></TextInputMask>
         </Form>
         <Form>
-          <Icon style={{ padding: 4 }} name="face" size={35} color="#FFF" />
+          <Icon style={{ padding: 4 }} name="perm-identity" size={35} color="#FFF" />
           <FormSelect
             placeholder="Sexo"
             mode="dropdown"
@@ -169,7 +169,7 @@ export default function Register() {
           </FormSelect>
         </Form>
         <Form>
-          <Icon style={{ padding: 4 }} name="face" size={35} color="#FFF" />
+          <Icon style={{ padding: 4 }} name="date-range" size={35} color="#FFF" />
           <TextInputMask
             placeholder="Data de Nascimento"
             keyboardType="numeric"
@@ -183,7 +183,7 @@ export default function Register() {
           ></TextInputMask>
         </Form>
         <Form>
-          <Icon style={{ padding: 4 }} name="face" size={35} color="#FFF" />
+          <Icon style={{ padding: 4 }} name="location-on" size={35} color="#FFF" />
           <FormSelect
             id="states"
             placeholder="Estado"
@@ -203,7 +203,7 @@ export default function Register() {
           </FormSelect>
         </Form>
         <Form>
-          <Icon style={{ padding: 4 }} name="face" size={35} color="#FFF" />
+          <Icon style={{ padding: 4 }} name="pin-drop" size={35} color="#FFF" />
           <FormSelect
             id="cities"
             placeholder="Cidade"

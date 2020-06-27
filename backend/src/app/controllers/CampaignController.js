@@ -176,6 +176,7 @@ class CampaignController {
           as: "vaccine",
         },
       ],
+      order: [["id", "DESC"]],
     });
 
     return res.json(campaign);

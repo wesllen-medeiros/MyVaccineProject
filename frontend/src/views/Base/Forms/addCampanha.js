@@ -303,7 +303,10 @@ class addCampanha extends Component {
 
                 <FormGroup row>
                   <Col xs="12" md="2" style={{ textAlign: "end" }}>
-                    <Label style={{ paddingTop: 8, textAlign: "end" }} htmlFor="text-input">
+                    <Label
+                      style={{ paddingTop: 8, textAlign: "end" }}
+                      htmlFor="text-input"
+                    >
                       Vacina
                     </Label>
                   </Col>

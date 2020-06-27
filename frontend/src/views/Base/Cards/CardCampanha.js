@@ -30,7 +30,7 @@ class CardCampanha extends Component {
     };
 
     this.state = {
-      campanhas: []
+      campanhas: [],
     };
   }
 

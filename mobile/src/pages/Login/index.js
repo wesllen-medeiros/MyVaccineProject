@@ -65,7 +65,7 @@ export default function Login() {
       </Header>
       <FormGroup>
         <Form>
-          <Icon style={{ padding: 4 }} name="face" size={35} color="#FFF" />
+          <Icon style={{ padding: 4 }} name="email" size={35} color="#FFF" />
           <FormInput
             placeholder="E-mail"
             type="text"

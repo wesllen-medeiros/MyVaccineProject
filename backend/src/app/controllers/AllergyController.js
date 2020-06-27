@@ -15,12 +15,11 @@ class AllergyController {
     const allergy = await Allergy.create(req.body);
 
     return res.json({
-      allergy
+      allergy,
     });
   }
 
   async index(req, res) {
-
     const allergy = await Allergy.findAll();
 
     return res.json(allergy);
@@ -39,7 +38,7 @@ class AllergyController {
         .json({ error: "Não existe alergia cadastrada com esta descrição!" });
     }
 
-    const UserExist =await User.findByPk(data.user_id)
+    const UserExist = await User.findByPk(data.user_id);
 
     if (!UserExist) {
       return res
@@ -47,7 +46,7 @@ class AllergyController {
         .json({ error: "Não existe usuário cadastrada com este código!" });
     }
 
-    const UserAllergyExist =await UserAllergies.findOne({
+    const UserAllergyExist = await UserAllergies.findOne({
       where: { allergy_id: AllergyExist.id, user_id: UserExist.id },
     });
 
@@ -64,7 +63,7 @@ class AllergyController {
     });
 
     return res.json({
-      retornoUserAllergy
+      retornoUserAllergy,
     });
   }
 

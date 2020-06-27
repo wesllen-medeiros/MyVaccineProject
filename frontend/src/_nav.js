@@ -2,55 +2,57 @@ export default {
   items: [
     {
       title: true,
-      name: 'INICIO',
-      wrapper: {            // optional wrapper object
-        element: '',        // required valid HTML5 element tag
-        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
+      name: "INICIO",
+      wrapper: {
+        // optional wrapper object
+        element: "", // required valid HTML5 element tag
+        attributes: {}, // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
       },
-      class: ''             // optional class names space delimited list for title item ex: "text-center"
+      class: "", // optional class names space delimited list for title item ex: "text-center"
     },
     {
-      name: 'DASHBOARD',
-      url: '/dashboard',
-      icon: 'icon-speedometer',
+      name: "DASHBOARD",
+      url: "/dashboard",
+      icon: "icon-speedometer",
       badge: {
-        variant: 'info',
+        variant: "info",
       },
     },
     {
       title: true,
-      name: 'MENU',
-      wrapper: {            // optional wrapper object
-        element: '',        // required valid HTML5 element tag
-        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
+      name: "MENU",
+      wrapper: {
+        // optional wrapper object
+        element: "", // required valid HTML5 element tag
+        attributes: {}, // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
       },
-      class: ''             // optional class names space delimited list for title item ex: "text-center"
+      class: "", // optional class names space delimited list for title item ex: "text-center"
     },
     {
-      name: 'APLICAÇÕES',
-      url: '/base/tables/ListApp',
-      icon: 'fa fa-users',
+      name: "APLICAÇÕES",
+      url: "/base/tables/ListApp",
+      icon: "fa fa-users",
     },
     {
-      name: 'VACINAS',
-      url: '/base/tables/ListVacinas',
-      icon: 'fa fa-address-card-o',
+      name: "VACINAS",
+      url: "/base/tables/ListVacinas",
+      icon: "fa fa-address-card-o",
     },
     {
-      name: 'CAMPANHAS',
-      url: '/base/cards/CardCampanha',
-      icon: 'fa fa-heartbeat'
+      name: "CAMPANHAS",
+      url: "/base/cards/CardCampanha",
+      icon: "fa fa-heartbeat",
     },
 
     {
-      name: 'DIVULGAÇÕES',
-      url: 'http://www.saude.gov.br/campanhas',
-      icon: 'icon-cloud-download',
-      class: 'mt-auto',
-      variant: 'success',
-      attributes: { target: '_blank', rel: "noopener" },
+      name: "DIVULGAÇÕES",
+      url: "http://www.saude.gov.br/campanhas",
+      icon: "icon-cloud-download",
+      class: "mt-auto",
+      variant: "success",
+      attributes: { target: "_blank", rel: "noopener" },
     },
-  
+
     /*{
       title: true,
       name: 'Components',

@@ -120,8 +120,7 @@ class ListVacinas extends Component {
     });
   }
 
-  async getVaccines(){
-
+  async getVaccines() {
     let retorno = [];
     await api
       .get("vaccine")
@@ -141,9 +140,7 @@ class ListVacinas extends Component {
   }
 
   componentDidMount() {
-
     this.getVaccines();
-
   }
 
   handleSubmit = async (e) => {
@@ -470,7 +467,9 @@ class ListVacinas extends Component {
                 <Col xs="12" sm="12">
                   <Card>
                     <Form
-                      onSubmit={(e) => this.handleSubmit(e).then(() => this.getVaccines())}
+                      onSubmit={(e) =>
+                        this.handleSubmit(e).then(() => this.getVaccines())
+                      }
                       action=""
                       method="post"
                       encType="multipart/form-data"

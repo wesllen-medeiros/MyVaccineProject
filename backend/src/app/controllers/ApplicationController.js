@@ -15,7 +15,6 @@ class ApplicationController {
       user_id,
     } = req.body;
 
-
     const vaccine = await Vaccine.findByPk(vaccine_id);
 
     if (!vaccine) {
@@ -75,7 +74,6 @@ class ApplicationController {
   }
 
   async indexWeb(req, res) {
-
     const retornoApplication = await Application.findAndCountAll({
       include: [
         {
