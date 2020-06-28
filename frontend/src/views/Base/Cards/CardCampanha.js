@@ -111,7 +111,7 @@ class CardCampanha extends Component {
                   <Card>
                     <CardHeader className="text-white bg-info">
                       <Badge
-                        style={{ marginRight: "3%" }}
+                        style={{ marginRight: "3%", padding: 6, width: 61}}
                         color={
                           new Date(post.dt_fim) < new Date()
                             ? "danger"
@@ -139,7 +139,7 @@ class CardCampanha extends Component {
                           data-target="#collapseExample"
                           onClick={() => this.toggle(post.id)}
                         >
-                          <i className={this.state.collapse === post.id ? "icon-arrow-up" : "icon-arrow-down" }></i>
+                          <i className={this.state.collapse === post.id ? "icon-arrow-down rotateup" : "icon-arrow-down rotatedown" }></i>
                         </a>
                         {/*eslint-disable-next-line*/}
                         <a

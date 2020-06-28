@@ -217,7 +217,7 @@ class ListVacinas extends Component {
                   <i className="fa fa-align-justify"></i>Vacinas
                 </CardHeader>
                 <CardBody>
-                  <Table responsive>
+                  <Table responsive className="tableline">
                     <thead>
                       <tr>
                         <th style={{ width: 360 }}>Nome</th>
@@ -234,7 +234,7 @@ class ListVacinas extends Component {
                           (currentPage + 1) * this.pageSize
                         )
                         .map((post) => (
-                          <tr key={post.id}>
+                          <tr key={post.id} >
                             <td style={{ paddingTop: 30 }}>{post.name}</td>
                             <td style={{ paddingTop: 30 }}>
                               {post.prevention}

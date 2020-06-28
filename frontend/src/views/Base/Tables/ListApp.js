@@ -99,7 +99,7 @@ class ListApp extends Component {
                 <i className="fa fa-align-justify"></i> Aplicações
               </CardHeader>
               <CardBody>
-                <Table responsive>
+                <Table responsive className="tableline">
                   <thead>
                     <tr>
                       <th style={{ width: 470 }}>Paciente</th>

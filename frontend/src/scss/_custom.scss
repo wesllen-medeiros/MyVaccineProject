@@ -28,3 +28,17 @@
   cursor: not-allowed;
   pointer-events: all !important;
 }
+
+.rotateup {
+  transform: rotate(180deg);
+  transition: 1s
+}
+
+.rotatedown {
+  transform: rotate(0deg);
+  transition: 1s
+}
+
+table.tableline tr:hover {
+  background: #F0F0F0;
+}

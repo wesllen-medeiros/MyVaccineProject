@@ -3,7 +3,7 @@ import { UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav }
 import PropTypes from 'prop-types';
 
 import { AppSidebarToggler,AppNavbarBrand } from '@coreui/react';
-import LogoMyVaccine from '../../assets/img/brand/LogoMyVaccine.svg'
+import LogoMyVaccine from '../../assets/img/brand/logoMyVaccine.png'
 import sygnet from '../../assets/img/brand/sygnet.svg'
 
 
