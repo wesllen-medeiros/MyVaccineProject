@@ -37,6 +37,7 @@ class Breadcrumbs extends Component {
                 <Breadcrumb>
                   {/*eslint-disable-next-line*/}
                   <BreadcrumbItem>
+                    {/*eslint-disable-next-line*/}
                     <a href="#">Home</a>
                   </BreadcrumbItem>
                   <BreadcrumbItem active>Library</BreadcrumbItem>
@@ -44,10 +45,12 @@ class Breadcrumbs extends Component {
                 <Breadcrumb>
                   {/*eslint-disable-next-line*/}
                   <BreadcrumbItem>
+                    {/*eslint-disable-next-line*/}
                     <a href="#">Home</a>
                   </BreadcrumbItem>
                   {/* eslint-disable-next-line*/}
                   <BreadcrumbItem>
+                    {/*eslint-disable-next-line*/}
                     <a href="#">Library</a>
                   </BreadcrumbItem>
                   <BreadcrumbItem active>Data</BreadcrumbItem>

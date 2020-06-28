@@ -73,7 +73,7 @@ class Alerts extends Component {
               <CardBody>
                 <Alert color="primary">
                   {/*eslint-disable-next-line*/}
-                  This is a primary alert with{" "}
+                  This is a primary alert with {/*eslint-disable-next-line*/}
                   <a href="#" className="alert-link">
                     an example link
                   </a>
@@ -81,7 +81,7 @@ class Alerts extends Component {
                 </Alert>
                 <Alert color="secondary">
                   {/*eslint-disable-next-line*/}
-                  This is a secondary alert with{" "}
+                  This is a secondary alert with {/*eslint-disable-next-line*/}
                   <a href="#" className="alert-link">
                     an example link
                   </a>
@@ -89,7 +89,7 @@ class Alerts extends Component {
                 </Alert>
                 <Alert color="success">
                   {/*eslint-disable-next-line*/}
-                  This is a success alert with{" "}
+                  This is a success alert with {/*eslint-disable-next-line*/}
                   <a href="#" className="alert-link">
                     an example link
                   </a>
@@ -97,7 +97,7 @@ class Alerts extends Component {
                 </Alert>
                 <Alert color="danger">
                   {/*eslint-disable-next-line*/}
-                  This is a danger alert with{" "}
+                  This is a danger alert with {/*eslint-disable-next-line*/}
                   <a href="#" className="alert-link">
                     an example link
                   </a>
@@ -105,7 +105,7 @@ class Alerts extends Component {
                 </Alert>
                 <Alert color="warning">
                   {/*eslint-disable-next-line*/}
-                  This is a warning alert with{" "}
+                  This is a warning alert with {/*eslint-disable-next-line*/}
                   <a href="#" className="alert-link">
                     an example link
                   </a>
@@ -113,7 +113,7 @@ class Alerts extends Component {
                 </Alert>
                 <Alert color="info">
                   {/*eslint-disable-next-line*/}
-                  This is a info alert with{" "}
+                  This is a info alert with {/*eslint-disable-next-line*/}
                   <a href="#" className="alert-link">
                     an example link
                   </a>
@@ -121,7 +121,7 @@ class Alerts extends Component {
                 </Alert>
                 <Alert color="light">
                   {/*eslint-disable-next-line*/}
-                  This is a light alert with{" "}
+                  This is a light alert with {/*eslint-disable-next-line*/}
                   <a href="#" className="alert-link">
                     an example link
                   </a>
@@ -129,7 +129,7 @@ class Alerts extends Component {
                 </Alert>
                 <Alert color="dark">
                   {/*eslint-disable-next-line*/}
-                  This is a dark alert with{" "}
+                  This is a dark alert with {/*eslint-disable-next-line*/}
                   <a href="#" className="alert-link">
                     an example link
                   </a>

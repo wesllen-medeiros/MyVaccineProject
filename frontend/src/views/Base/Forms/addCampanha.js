@@ -217,6 +217,10 @@ class addCampanha extends Component {
 
   async componentDidMount() {
     this.populateStateSelect();
+    this.setState({dt_ini: dateformat(new Date(), 'yyyy-mm-dd')},
+    function(){
+      console.log(this.state.dt_ini);
+    });
 
     let retornoEstabs = [];
     let retornoVaccines = [];

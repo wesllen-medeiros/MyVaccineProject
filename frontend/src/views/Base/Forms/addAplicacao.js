@@ -137,6 +137,10 @@ class addaplicacao extends Component {
   async componentDidMount() {
     let retornoEstabs = [];
     let retornoVaccines = [];
+    this.setState({dt_aplicacao: dateformat(new Date(), 'yyyy-mm-dd')},
+    function(){
+      console.log(this.state.dt_ini);
+    });
 
     await api
       .get("estab")

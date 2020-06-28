@@ -105,7 +105,7 @@ class Tooltips extends Component {
           <CardBody>
             {/*eslint-disable-next-line*/}
             <p>
-              Somewhere in here is a{" "}
+              Somewhere in here is a {/*eslint-disable-next-line*/}
               <a href="#" id="TooltipExample">
                 tooltip
               </a>
@@ -133,6 +133,7 @@ class Tooltips extends Component {
             {/*eslint-disable-next-line*/}
             <p>
               Sometimes you need to allow users to select text within a{" "}
+              {/*eslint-disable-next-line*/}
               <a href="#" id="DisabledAutoHideExample">
                 tooltip
               </a>
@@ -172,7 +173,7 @@ class Tooltips extends Component {
           <CardBody>
             {/*eslint-disable-next-line*/}
             <p>
-              Somewhere in here is a{" "}
+              Somewhere in here is a {/*eslint-disable-next-line*/}
               <a href="#" id="UncontrolledTooltipExample">
                 tooltip
               </a>

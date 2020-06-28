@@ -245,21 +245,22 @@ class ListVacinas extends Component {
                             </td>
                             <td>
                               <Button
-                                disabled={post.public.length >= parseInt(post.dose.substr(0, 1))}
-                                style={
-                                  post.public.length >= parseInt(post.dose.substr(0, 1))
-                                    ? {
-                                        cursor: "not-allowed",
-                                        pointerEvents: "all !important",
-                                        marginRight: 5,
-                                        width: 40,
-                                      }
-                                    : {
-                                        cursor: "pointer",
-                                        marginRight: 5,
-                                        width: 40,
-                                      }
-                                }
+                                //   disabled={post.public.length >= parseInt(post.dose.substr(0, 1))}
+                                //   style={
+                                //     post.public.length >= parseInt(post.dose.substr(0, 1))
+                                //       ? {
+                                //           cursor: "not-allowed",
+                                //           pointerEvents: "all !important",
+                                //           marginRight: 5,
+                                //           width: 40,
+                                //         }
+                                //       : {
+                                //           cursor: "pointer",
+                                //           marginRight: 5,
+                                //           width: 40,
+                                //         }
+                                //   }
+                                style={{ marginRight: 5, width: 40 }}
                                 color="success"
                                 onClick={() => this.toggleAdd(post.name)}
                                 className="mt-3"
