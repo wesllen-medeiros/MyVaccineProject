@@ -139,7 +139,7 @@ class CardCampanha extends Component {
                           data-target="#collapseExample"
                           onClick={() => this.toggle(post.id)}
                         >
-                          <i className="icon-arrow-up"></i>
+                          <i className={this.state.collapse === post.id ? "icon-arrow-up" : "icon-arrow-down" }></i>
                         </a>
                         {/*eslint-disable-next-line*/}
                         <a
