@@ -458,7 +458,7 @@ class ListVacinas extends Component {
                                       ? "Anos"
                                       : item.unity_age === "MESES"
                                       ? "Meses"
-                                      : "AO_NASCER"}
+                                      : "Ao nascer"}
                                   </CardText>
                                 </div>
                               </div>
