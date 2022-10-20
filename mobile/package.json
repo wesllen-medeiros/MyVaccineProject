@@ -29,7 +29,7 @@
     "react-native-masked-text": "^1.13.0",
     "react-native-paper": "^3.8.0",
     "react-native-qrcode": "wanxsb/react-native-qrcode#6c545b2",
-    "react-native-reanimated": "~1.7.0",
+    "react-native-reanimated": "~2.10.0",
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
     "react-native-web": "~0.12.2",
